@@ -1,12 +1,12 @@
-package com.mycompany.pharmacystore.DAO;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mycompany.pharmacystore.DTO.TaiKhoanDTO;
-import com.mycompany.pharmacystore.database.JDBCUtil;
+import DTO.TaiKhoanDTO;
+import database.JDBCUtil;
 
 public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
 

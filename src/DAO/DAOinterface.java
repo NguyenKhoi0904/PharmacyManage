@@ -1,4 +1,4 @@
-package com.mycompany.pharmacystore.DAO;
+package DAO;
 
 import java.util.ArrayList;
 

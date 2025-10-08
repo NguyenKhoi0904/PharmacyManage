@@ -1,4 +1,4 @@
-package com.mycompany.pharmacystore.DTO;
+package DTO;
 
 public class TaiKhoanDTO {
     private int maTk;

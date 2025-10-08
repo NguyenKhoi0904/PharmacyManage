@@ -1,4 +1,4 @@
-package com.mycompany.pharmacystore.DTO;
+package DTO;
 
 import java.math.BigDecimal; // Sử dụng BigDecimal cho kiểu DECIMAL
 import java.sql.Date;
