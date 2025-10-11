@@ -13,8 +13,8 @@ public interface DAOinterface<T> {
     public int insert(T t);
 
     // update 
-    public void update(T t);
+    public int update(T t);
 
     // delete
-    public void deleteById(String id);
+    public int deleteById(String id);
 }

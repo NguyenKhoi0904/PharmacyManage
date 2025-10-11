@@ -6,22 +6,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DTO.TaiKhoanDTO;
+import DTO.KhachHangDTO;
 import database.JDBCUtil;
 
-public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
+public class KhachHangDAO implements DAOinterface<KhachHangDTO> {
 
     @Override
-    public ArrayList<TaiKhoanDTO> selectAll() {
-        ArrayList<TaiKhoanDTO> result = new ArrayList<TaiKhoanDTO>();
+    public ArrayList<KhachHangDTO> selectAll() {
+        ArrayList<KhachHangDTO> result = new ArrayList<KhachHangDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM taikhoan";
+            String sql = "SELECT * FROM khachhang";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
-                result.add(new TaiKhoanDTO(rs.getInt("ma_tk"), rs.getString("tai_khoan"), rs.getString("mat_khau"),
-                        rs.getString("ten"), rs.getString("sdt"), rs.getString("vai_tro"), rs.getInt("trang_thai")));
+                result.add(new KhachHangDTO(rs.getInt("ma_kh"), rs.getInt("ma_tk"), rs.getDate("ngay_dang_ky"),
+                        rs.getInt("diem_tich_luy"), rs.getInt("trang_thai")));
             }
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -31,17 +31,16 @@ public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
     }
 
     @Override
-    public TaiKhoanDTO selectById(String id) {
+    public KhachHangDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM taikhoan WHERE ma_tk=?";
+            String sql = "SELECT * FROM khachhang WHERE ma_kh=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new TaiKhoanDTO(rs.getInt("ma_tk"), rs.getString("tai_khoan"), rs.getString("mat_khau"),
-                        rs.getString("ten"), rs.getString("sdt"), rs.getString("vai_tro"), rs.getInt("trang_thai"));
-
+                return new KhachHangDTO(rs.getInt("ma_kh"), rs.getInt("ma_tk"), rs.getDate("ngay_dang_ky"),
+                        rs.getInt("diem_tich_luy"), rs.getInt("trang_thai"));
             }
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -51,20 +50,18 @@ public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
     }
 
     @Override
-    public int insert(TaiKhoanDTO data) {
+    public int insert(KhachHangDTO data) {
         int result = 0;
         try {
             // init connection
-            String sql = "INSERT INTO taikhoan (ma_tk,tai_khoan,mat_khau,ten,sdt,vai_tro,trang_thai) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO khachhang (ma_kh,ma_tk,ngay_dang_ki,diem_tich_luy,trang_thai) VALUES (?,?,?,?,?)";
             Connection conn = JDBCUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, data.getMaTk());
-            ps.setString(2, data.getTaiKhoan());
-            ps.setString(3, data.getMatKhau());
-            ps.setString(4, data.getTen());
-            ps.setString(5, data.getSdt());
-            ps.setString(6, data.getVaiTro());
-            ps.setInt(7, data.getTrangThai());
+            ps.setInt(1, data.getMaKh());
+            ps.setInt(2, data.getMaTk());
+            ps.setDate(3, data.getNgayDangKy());
+            ps.setInt(4, data.getDiemTichLuy());
+            ps.setInt(5, data.getTrangThai());
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -74,20 +71,17 @@ public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
     }
 
     @Override
-    public int update(TaiKhoanDTO data) {
-        // tai_khoan,mat_khau,ten,sdt,vai_tro
+    public int update(KhachHangDTO data) {
         int result = 0;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "UPDATE taikhoan SET tai_khoan=?,mat_khau=?,ten=?,sdt=?,vai_tro=?,trang_thai=? WHERE ma_tk=?";
+            String sql = "UPDATE khachhang SET ma_tk=?,ngay_dang_ki=?,diem_tich_luy=?,trang_thai=? WHERE ma_kh=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, data.getTaiKhoan());
-            ps.setString(2, data.getMatKhau());
-            ps.setString(3, data.getTen());
-            ps.setString(4, data.getSdt());
-            ps.setString(5, data.getVaiTro());
-            ps.setInt(6, data.getTrangThai());
-            ps.setInt(7, data.getMaTk());
+            ps.setInt(1, data.getMaTk());
+            ps.setDate(2, data.getNgayDangKy());
+            ps.setInt(3, data.getDiemTichLuy());
+            ps.setInt(4, data.getTrangThai());
+            ps.setInt(5, data.getMaKh());
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -101,7 +95,7 @@ public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
         int result = 0;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "UPDATE taikhoan SET trang_thai=0 WHERE ma_tk=?";
+            String sql = "UPDATE khachhang SET trang_thai=0 WHERE ma_kh=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             result = ps.executeUpdate();

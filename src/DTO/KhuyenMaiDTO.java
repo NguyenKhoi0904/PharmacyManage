@@ -12,9 +12,11 @@ public class KhuyenMaiDTO {
     private Date ngayBatDau;
     private Date ngayKetThuc;
     private boolean hieuLuc;
+    private int trangThai;
 
     // Constructor
-    public KhuyenMaiDTO(int maKm, String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau, Date ngayKetThuc, boolean hieuLuc) {
+    public KhuyenMaiDTO(int maKm, String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
+            Date ngayKetThuc, boolean hieuLuc, int trangThai) {
         this.maKm = maKm;
         this.tenKm = tenKm;
         this.loaiKm = loaiKm;
@@ -23,35 +25,91 @@ public class KhuyenMaiDTO {
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.hieuLuc = hieuLuc;
+        this.trangThai = trangThai;
     }
 
     // get
-    public int getMaKm() { return maKm; }
-    public String getTenKm() { return tenKm; }
-    public String getLoaiKm() { return loaiKm; }
-    public BigDecimal getGiaTriKm() { return giaTriKm; }
-    public String getDieuKienKm() { return dieuKienKm; }
-    public Date getNgayBatDau() { return ngayBatDau; }
-    public Date getNgayKetThuc() { return ngayKetThuc; }
-    public boolean isHieuLuc() { return hieuLuc; }
+    public int getMaKm() {
+        return this.maKm;
+    }
+
+    public String getTenKm() {
+        return this.tenKm;
+    }
+
+    public String getLoaiKm() {
+        return this.loaiKm;
+    }
+
+    public BigDecimal getGiaTriKm() {
+        return this.giaTriKm;
+    }
+
+    public String getDieuKienKm() {
+        return this.dieuKienKm;
+    }
+
+    public Date getNgayBatDau() {
+        return this.ngayBatDau;
+    }
+
+    public Date getNgayKetThuc() {
+        return this.ngayKetThuc;
+    }
+
+    public boolean isHieuLuc() {
+        return this.hieuLuc;
+    }
+
+    public int getTrangThai() {
+        return this.trangThai;
+    }
 
     // set
-    public void setMaKm(int maKm) { this.maKm = maKm; }
-    public void setTenKm(String tenKm) { this.tenKm = tenKm; }
-    public void setLoaiKm(String loaiKm) { this.loaiKm = loaiKm; }
-    public void setGiaTriKm(BigDecimal giaTriKm) { this.giaTriKm = giaTriKm; }
-    public void setDieuKienKm(String dieuKienKm) { this.dieuKienKm = dieuKienKm; }
-    public void setNgayBatDau(Date ngayBatDau) { this.ngayBatDau = ngayBatDau; }
-    public void setNgayKetThuc(Date ngayKetThuc) { this.ngayKetThuc = ngayKetThuc; }
-    public void setHieuLuc(boolean hieuLuc) { this.hieuLuc = hieuLuc; }
+    public void setMaKm(int maKm) {
+        this.maKm = maKm;
+    }
+
+    public void setTenKm(String tenKm) {
+        this.tenKm = tenKm;
+    }
+
+    public void setLoaiKm(String loaiKm) {
+        this.loaiKm = loaiKm;
+    }
+
+    public void setGiaTriKm(BigDecimal giaTriKm) {
+        this.giaTriKm = giaTriKm;
+    }
+
+    public void setDieuKienKm(String dieuKienKm) {
+        this.dieuKienKm = dieuKienKm;
+    }
+
+    public void setNgayBatDau(Date ngayBatDau) {
+        this.ngayBatDau = ngayBatDau;
+    }
+
+    public void setNgayKetThuc(Date ngayKetThuc) {
+        this.ngayKetThuc = ngayKetThuc;
+    }
+
+    public void setHieuLuc(boolean hieuLuc) {
+        this.hieuLuc = hieuLuc;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
 
     @Override
     public String toString() {
         return "KhuyenMaiDTO{" +
                 "maKm=" + maKm +
                 ", tenKm='" + tenKm + '\'' +
-                ", giaTriKm=" + giaTriKm +
-                ", hieuLuc=" + hieuLuc +
+                ", giaTriKm=" + giaTriKm + '\'' +
+                ", hieuLuc=" + hieuLuc + '\'' +
+                ", trangthai=" + this.trangThai + '\'' +
                 '}';
     }
 }
