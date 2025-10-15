@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package enitities;
 
 /**
  *
@@ -15,19 +15,20 @@ public class User {
     private String Name;
     private String PhoneNumber;
     private String VaiTro;
-
+    private int state;
     
     public User() {
         
     }
     
-    public User(String id, String TaiKhoan, String MatKhau, String Name, String PhoneNumber, String VaiTro) {
+    public User(String id, String TaiKhoan, String MatKhau, String Name, String PhoneNumber, String VaiTro, int state) {
         this.id = id;
         this.TaiKhoan = TaiKhoan;
         this.MatKhau = MatKhau;
         this.Name = Name;
         this.PhoneNumber = PhoneNumber;
         this.VaiTro = VaiTro;
+        this.state = state;
     }
 
     public String getId() {
@@ -78,11 +79,19 @@ public class User {
         this.VaiTro = VaiTro;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", TaiKhoan=" + TaiKhoan + ", MatKhau=" + MatKhau + ", Name=" + Name + ", PhoneNumber=" + PhoneNumber + ", VaiTro=" + VaiTro + '}';
+    public int getState() {
+        return state;
     }
 
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", TaiKhoan=" + TaiKhoan + ", MatKhau=" + MatKhau + ", Name=" + Name + ", PhoneNumber=" + PhoneNumber + ", VaiTro=" + VaiTro + ", state=" + state + '}';
+    }
+    
     public static void main(String args[]){
         
     }

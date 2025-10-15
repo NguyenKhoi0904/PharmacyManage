@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package enitities;
 
 import java.util.Date;
 
@@ -21,9 +21,9 @@ public class KhachHang extends User{
         this.NgayDangKy = NgayDangKy;
         this.DiemTichLuy = DiemTichLuy;
     }
-
-    public KhachHang(Date NgayDangKy, int DiemTichLuy, String id, String TaiKhoan, String MatKhau, String Name, String PhoneNumber, String VaiTro) {
-        super(id, TaiKhoan, MatKhau, Name, PhoneNumber, VaiTro);
+    
+    public KhachHang(Date NgayDangKy, int DiemTichLuy, String id, String TaiKhoan, String MatKhau, String Name, String PhoneNumber, String VaiTro, int state) {
+        super(id, TaiKhoan, MatKhau, Name, PhoneNumber, VaiTro, state);
         this.NgayDangKy = NgayDangKy;
         this.DiemTichLuy = DiemTichLuy;
     }
