@@ -71,19 +71,19 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="btnThem" min="-2" pref="85" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton2" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="btnSua" min="-2" pref="85" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="btnXoa" min="-2" pref="85" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="btnInfo" min="-2" pref="85" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton5" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="btnImport" min="-2" pref="85" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                  <Component id="jButton6" min="-2" pref="102" max="-2" attributes="0"/>
+                  <Component id="btnExport" min="-2" pref="102" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton7" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnThuoctinh" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="26" max="32767" attributes="0"/>
                   <Component id="jComboBox4" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -102,18 +102,18 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButton1" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
-                                  <Component id="jButton2" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
-                                  <Component id="jButton3" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
-                                  <Component id="jButton4" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
-                                  <Component id="jButton5" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
+                                  <Component id="btnThem" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
+                                  <Component id="btnSua" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
+                                  <Component id="btnXoa" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
+                                  <Component id="btnInfo" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
+                                  <Component id="btnImport" alignment="3" min="-2" pref="84" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jButton6" pref="84" max="32767" attributes="0"/>
-                                  <Component id="jButton7" max="32767" attributes="0"/>
+                                  <Component id="btnExport" pref="84" max="32767" attributes="0"/>
+                                  <Component id="btnThuoctinh" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -131,7 +131,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnThem">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="50" green="50" red="50" type="rgb"/>
@@ -145,7 +145,7 @@
             <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnSua">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="50" green="50" red="50" type="rgb"/>
@@ -159,7 +159,7 @@
             <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="btnXoa">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="50" green="50" red="50" type="rgb"/>
@@ -173,7 +173,7 @@
             <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="btnInfo">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="50" green="50" red="50" type="rgb"/>
@@ -187,7 +187,7 @@
             <Property name="text" type="java.lang.String" value="Info"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton5">
+        <Component class="javax.swing.JButton" name="btnImport">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="50" green="50" red="50" type="rgb"/>
@@ -201,7 +201,7 @@
             <Property name="text" type="java.lang.String" value="Import"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton6">
+        <Component class="javax.swing.JButton" name="btnExport">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="50" green="50" red="50" type="rgb"/>
@@ -215,7 +215,7 @@
             <Property name="text" type="java.lang.String" value="Export"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton7">
+        <Component class="javax.swing.JButton" name="btnThuoctinh">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="50" green="50" red="50" type="rgb"/>
@@ -272,13 +272,13 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jComboBox3" min="-2" pref="270" max="-2" attributes="0"/>
+                          <Component id="cbDonvitinh" min="-2" pref="270" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jComboBox2" alignment="0" min="-2" pref="274" max="-2" attributes="0"/>
-                              <Component id="jComboBox1" min="-2" pref="274" max="-2" attributes="0"/>
+                              <Component id="cbXuatxu" alignment="0" min="-2" pref="274" max="-2" attributes="0"/>
+                              <Component id="cbDanhmuc" min="-2" pref="274" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -289,11 +289,11 @@
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                          <Component id="jTextField1" min="-2" pref="107" max="-2" attributes="0"/>
+                                          <Component id="txtHantu" min="-2" pref="107" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextField2" min="-2" pref="86" max="-2" attributes="0"/>
+                                  <Component id="txtHanden" min="-2" pref="86" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -308,21 +308,21 @@
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jComboBox1" min="-2" pref="29" max="-2" attributes="0"/>
+                  <Component id="cbDanhmuc" min="-2" pref="29" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jComboBox2" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="cbXuatxu" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jComboBox3" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="cbDonvitinh" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" pref="33" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField1" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="txtHantu" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="txtHanden" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="71" max="32767" attributes="0"/>
               </Group>
@@ -374,7 +374,7 @@
             <Property name="text" type="java.lang.String" value="H&#x1ea1;n s&#x1eed; d&#x1ee5;ng"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="cbDanhmuc">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -387,7 +387,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="cbXuatxu">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -400,7 +400,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox3">
+        <Component class="javax.swing.JComboBox" name="cbDonvitinh">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -413,14 +413,14 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtHantu">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="txtHanden">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -489,7 +489,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="tblThuoc">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
