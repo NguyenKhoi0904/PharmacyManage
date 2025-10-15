@@ -4,15 +4,17 @@ import java.math.BigDecimal;
 
 public class ThuocDTO {
     private int maThuoc;
-    private int maDmt; 
+    private int maDmt;
     private String tenThuoc;
     private BigDecimal gia;
     private String donViTinh;
     private String nhaSanXuat;
     private String xuatXu;
+    private int trangThai;
 
     // Constructor
-    public ThuocDTO(int maThuoc, int maDmt, String tenThuoc, BigDecimal gia, String donViTinh, String nhaSanXuat, String xuatXu) {
+    public ThuocDTO(int maThuoc, int maDmt, String tenThuoc, BigDecimal gia, String donViTinh, String nhaSanXuat,
+            String xuatXu, int trangThai) {
         this.maThuoc = maThuoc;
         this.maDmt = maDmt;
         this.tenThuoc = tenThuoc;
@@ -20,33 +22,83 @@ public class ThuocDTO {
         this.donViTinh = donViTinh;
         this.nhaSanXuat = nhaSanXuat;
         this.xuatXu = xuatXu;
+        this.trangThai = trangThai;
     }
 
     // get
-    public int getMaThuoc() { return maThuoc; }
-    public int getMaDmt() { return maDmt; }
-    public String getTenThuoc() { return tenThuoc; }
-    public BigDecimal getGia() { return gia; }
-    public String getDonViTinh() { return donViTinh; }
-    public String getNhaSanXuat() { return nhaSanXuat; }
-    public String getXuatXu() { return xuatXu; }
+    public int getMaThuoc() {
+        return this.maThuoc;
+    }
+
+    public int getMaDmt() {
+        return this.maDmt;
+    }
+
+    public String getTenThuoc() {
+        return this.tenThuoc;
+    }
+
+    public BigDecimal getGia() {
+        return this.gia;
+    }
+
+    public String getDonViTinh() {
+        return this.donViTinh;
+    }
+
+    public String getNhaSanXuat() {
+        return this.nhaSanXuat;
+    }
+
+    public String getXuatXu() {
+        return this.xuatXu;
+    }
+
+    public int getTrangThai() {
+        return this.trangThai;
+    }
 
     // set
-    public void setMaThuoc(int maThuoc) { this.maThuoc = maThuoc; }
-    public void setMaDmt(int maDmt) { this.maDmt = maDmt; }
-    public void setTenThuoc(String tenThuoc) { this.tenThuoc = tenThuoc; }
-    public void setGia(BigDecimal gia) { this.gia = gia; }
-    public void setDonViTinh(String donViTinh) { this.donViTinh = donViTinh; }
-    public void setNhaSanXuat(String nhaSanXuat) { this.nhaSanXuat = nhaSanXuat; }
-    public void setXuatXu(String xuatXu) { this.xuatXu = xuatXu; }
+    public void setMaThuoc(int maThuoc) {
+        this.maThuoc = maThuoc;
+    }
+
+    public void setMaDmt(int maDmt) {
+        this.maDmt = maDmt;
+    }
+
+    public void setTenThuoc(String tenThuoc) {
+        this.tenThuoc = tenThuoc;
+    }
+
+    public void setGia(BigDecimal gia) {
+        this.gia = gia;
+    }
+
+    public void setDonViTinh(String donViTinh) {
+        this.donViTinh = donViTinh;
+    }
+
+    public void setNhaSanXuat(String nhaSanXuat) {
+        this.nhaSanXuat = nhaSanXuat;
+    }
+
+    public void setXuatXu(String xuatXu) {
+        this.xuatXu = xuatXu;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
 
     @Override
     public String toString() {
         return "ThuocDTO{" +
-                "maThuoc=" + maThuoc +
-                ", tenThuoc='" + tenThuoc + '\'' +
-                ", gia=" + gia +
-                ", nhaSanXuat='" + nhaSanXuat + '\'' +
+                "maThuoc=" + this.maThuoc +
+                ", tenThuoc='" + this.tenThuoc + '\'' +
+                ", gia=" + this.gia +
+                ", nhaSanXuat='" + this.nhaSanXuat + '\'' +
+                ", trangthai='" + this.trangThai + '\'' +
                 '}';
     }
 }
