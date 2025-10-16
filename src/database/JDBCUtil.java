@@ -17,7 +17,7 @@ public class JDBCUtil {
             // tạo driver bằng driver manager
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 
-            String url = "jdbc:mySQL://localhost:3306/khohang";
+            String url = "jdbc:mySQL://localhost:3306/pharmacy_store";
             String username = "root";
             String password = "";
 
