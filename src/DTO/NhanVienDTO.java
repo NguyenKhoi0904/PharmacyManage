@@ -108,7 +108,7 @@ public class NhanVienDTO {
         this.viTri = viTri;
     }
 
-    public void setTrangThao(int trangThai) {
+    public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
 

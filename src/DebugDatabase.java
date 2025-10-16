@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.Random;
 
+import BUS.TaiKhoanBUS;
 import DAO.ChiTietHdDAO;
 import DAO.ChiTietPnDAO;
-import DAO.DAOinterface;
 import DAO.DanhMucThuocDAO;
 import DAO.HoaDonDAO;
 import DAO.KhachHangDAO;
@@ -25,59 +26,55 @@ import DTO.NhanVienDTO;
 import DTO.PhieuNhapDTO;
 import DTO.TaiKhoanDTO;
 import DTO.ThuocDTO;
+import helper.BCrypt;
 
 public class DebugDatabase {
-    private ArrayList<TaiKhoanDTO> listTaiKhoan;
-    private ArrayList<ThuocDTO> listThuoc;
-    private ArrayList<PhieuNhapDTO> listPhieuNhap;
-    private ArrayList<NhanVienDTO> listNhanVien;
-    private ArrayList<NhaCungCapDTO> listNhaCungCap;
-    private ArrayList<LoHangDTO> listLoHang;
-    private ArrayList<KhuyenMaiDTO> listKhuyenMai;
-    private ArrayList<KhachHangDTO> listKhachHang;
-    private ArrayList<HoaDonDTO> listHoaDon;
-    private ArrayList<DanhMucThuocDTO> listDanhMucThuoc;
-    private ArrayList<ChiTietPnDTO> listChiTietPn;
-    private ArrayList<ChiTietHdDTO> listChiTietHd;
+    // bus
+    private TaiKhoanBUS taiKhoanBUS;
 
     public DebugDatabase() {
-        this.listTaiKhoan = new TaiKhoanDAO().selectAll();
-        this.listThuoc = new ThuocDAO().selectAll();
-        this.listPhieuNhap = new PhieuNhapDAO().selectAll();
-        this.listNhanVien = new NhanVienDAO().selectAll();
-        this.listNhaCungCap = new NhaCungCapDAO().selectAll();
-        this.listLoHang = new LoHangDAO().selectAll();
-        this.listKhuyenMai = new KhuyenMaiDAO().selectAll();
-        this.listKhachHang = new KhachHangDAO().selectAll();
-        this.listHoaDon = new HoaDonDAO().selectAll();
-        this.listDanhMucThuoc = new DanhMucThuocDAO().selectAll();
-        this.listChiTietPn = new ChiTietPnDAO().selectAll();
-        this.listChiTietHd = new ChiTietHdDAO().selectAll();
+
+        // bus
+        this.taiKhoanBUS = new TaiKhoanBUS();
     }
 
     public static void main(String[] args) {
         DebugDatabase store = new DebugDatabase();
-        store.showList();
+        // store.deleteTaiKhoan(2);
+        // store.addNewTaiKhoan();
+        // store.showList();
+        if (store.loginTaiKhoan("kh_vip", "khachhang") != null) {
+            System.out.println("Đăng nhập thành công");
+        } else {
+            System.out.println("Đăng nhập thất bại");
+        }
+
+        // System.out.println(BCrypt.hashpw("admin", BCrypt.gensalt()));
+        // System.out.println(BCrypt.hashpw("123", BCrypt.gensalt()));
+        // System.out.println(BCrypt.hashpw("khachhang", BCrypt.gensalt()));
     }
 
-    public static <T> void printList(ArrayList<T> list) {
+    private static <T> void printList(ArrayList<T> list) {
         for (T t : list) {
             System.out.println(t);
         }
     }
 
+    private void deleteTaiKhoan(int id) {
+        this.taiKhoanBUS.deleteTaiKhoan(id);
+    }
+
+    private void addNewTaiKhoan() {
+        int random = new Random().nextInt(1000);
+        this.taiKhoanBUS.addTaiKhoan(new TaiKhoanDTO(random, String.valueOf(random), "abcd", "ten", "88753", "admin", 1));
+    }
+    private TaiKhoanDTO loginTaiKhoan(String taiKhoan,String matKhau) {
+        return this.taiKhoanBUS.login(taiKhoan, matKhau);
+    }
     private void showList() {
-        printList(this.listTaiKhoan);
-        printList(this.listThuoc);
-        printList(this.listPhieuNhap);
-        printList(this.listNhanVien);
-        printList(this.listNhaCungCap);
-        printList(this.listLoHang);
-        printList(this.listKhuyenMai);
-        printList(this.listKhachHang);
-        printList(this.listHoaDon);
-        printList(this.listDanhMucThuoc);
-        printList(this.listChiTietPn);
-        printList(this.listChiTietHd);
+        ArrayList<TaiKhoanDTO> taiKhoanDTO = taiKhoanBUS.getListTaiKhoan();
+        for (TaiKhoanDTO taikhoan : taiKhoanDTO) {
+            System.out.println(taikhoan);
+        }
     }
 }

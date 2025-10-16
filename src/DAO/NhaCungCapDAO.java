@@ -10,12 +10,16 @@ import DTO.NhaCungCapDTO;
 import database.JDBCUtil;
 
 public class NhaCungCapDAO implements DAOinterface<NhaCungCapDTO> {
+    public static NhaCungCapDAO getInstance() {
+        return new NhaCungCapDAO();
+    }
+
     @Override
     public ArrayList<NhaCungCapDTO> selectAll() {
         ArrayList<NhaCungCapDTO> result = new ArrayList<NhaCungCapDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM nhacungcap";
+            String sql = "SELECT * FROM nhacungcap WHERE trang_thai=1";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -33,7 +37,7 @@ public class NhaCungCapDAO implements DAOinterface<NhaCungCapDTO> {
     public NhaCungCapDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM nhacungcap WHERE ma_ncc=?";
+            String sql = "SELECT * FROM nhacungcap WHERE ma_ncc=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();

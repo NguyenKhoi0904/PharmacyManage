@@ -6,12 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DTO.ChiTietPnDTO; // Giả định
-import database.JDBCUtil; // Giả định
+import DTO.ChiTietPnDTO;
+import database.JDBCUtil;
 
-public class ChiTietPnDAO implements DAOinterface<ChiTietPnDTO> {
+public class ChiTietPnDAO {
 
-    @Override
+    public static ChiTietPnDAO getInstance() {
+        return new ChiTietPnDAO();
+    }
+
     public ArrayList<ChiTietPnDTO> selectAll() {
         ArrayList<ChiTietPnDTO> result = new ArrayList<ChiTietPnDTO>();
         try {
@@ -31,15 +34,36 @@ public class ChiTietPnDAO implements DAOinterface<ChiTietPnDTO> {
         return result;
     }
 
-    @Override
-    public ChiTietPnDTO selectById(String id) {
+    public ArrayList<ChiTietPnDTO> selectAllByMa(int ma_pn, int ma_lh) {
+        ArrayList<ChiTietPnDTO> result = new ArrayList<ChiTietPnDTO>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM chitiet_pn WHERE ma_pn=? AND ma_lh=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, ma_pn);
+            pst.setInt(2, ma_lh);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                // ma_pn (int), ma_lh (int), don_gia (BigDecimal), so_luong (int)
+                result.add(new ChiTietPnDTO(rs.getInt("ma_pn"), rs.getInt("ma_lh"), rs.getBigDecimal("don_gia"),
+                        rs.getInt("so_luong")));
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public ChiTietPnDTO selectById(int ma_pn, int ma_lh) {
         ChiTietPnDTO result = null;
         try {
             Connection conn = JDBCUtil.getConnection();
             // Lấy chi tiết dựa trên ma_pn (Primary Key)
-            String sql = "SELECT * FROM chitiet_pn WHERE ma_pn=?";
+            String sql = "SELECT * FROM chitiet_pn WHERE ma_pn=?,ma_lh=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, id);
+            ps.setInt(1, ma_pn);
+            ps.setInt(2, ma_lh);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 result = new ChiTietPnDTO(rs.getInt("ma_pn"), rs.getInt("ma_lh"), rs.getBigDecimal("don_gia"),
@@ -52,7 +76,6 @@ public class ChiTietPnDAO implements DAOinterface<ChiTietPnDTO> {
         return result;
     }
 
-    @Override
     public int insert(ChiTietPnDTO data) {
         int result = 0;
         try {
@@ -71,7 +94,6 @@ public class ChiTietPnDAO implements DAOinterface<ChiTietPnDTO> {
         return result;
     }
 
-    @Override
     public int update(ChiTietPnDTO data) {
         int result = 0;
         try {
@@ -93,14 +115,14 @@ public class ChiTietPnDAO implements DAOinterface<ChiTietPnDTO> {
         return result;
     }
 
-    @Override
-    public int deleteById(String id) {
+    public int deleteById(int ma_pn, int ma_lh) {
         int result = 0;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "DELETE FROM chitiet_pn WHERE ma_pn=?";
+            String sql = "DELETE FROM chitiet_pn WHERE ma_pn=? AND ma_lh=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, id);
+            ps.setInt(1, ma_pn);
+            ps.setInt(2, ma_lh);
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {

@@ -11,12 +11,16 @@ import database.JDBCUtil;
 
 public class KhachHangDAO implements DAOinterface<KhachHangDTO> {
 
+    public static KhachHangDAO getInstance() {
+        return new KhachHangDAO();
+    }
+
     @Override
     public ArrayList<KhachHangDTO> selectAll() {
         ArrayList<KhachHangDTO> result = new ArrayList<KhachHangDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khachhang";
+            String sql = "SELECT * FROM khachhang WHERE trang_thai=1";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -34,7 +38,7 @@ public class KhachHangDAO implements DAOinterface<KhachHangDTO> {
     public KhachHangDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khachhang WHERE ma_kh=?";
+            String sql = "SELECT * FROM khachhang WHERE ma_kh=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();

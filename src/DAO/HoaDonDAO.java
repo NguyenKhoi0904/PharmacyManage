@@ -10,12 +10,16 @@ import DTO.HoaDonDTO;
 import database.JDBCUtil;
 
 public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
+    public static HoaDonDAO getInstance() {
+        return new HoaDonDAO();
+    }
+
     @Override
     public ArrayList<HoaDonDTO> selectAll() {
         ArrayList<HoaDonDTO> result = new ArrayList<HoaDonDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM hoadon";
+            String sql = "SELECT * FROM hoadon WHERE trang_thai=1";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -34,7 +38,7 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
     public HoaDonDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM hoadon WHERE ma_hd=?";
+            String sql = "SELECT * FROM hoadon WHERE ma_hd=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();

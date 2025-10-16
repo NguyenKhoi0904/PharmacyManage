@@ -76,10 +76,11 @@ CREATE TABLE lohang (
 
 -- 7. Chi Tiết Phiếu Nhập (bảng trung gian)
 CREATE TABLE chitiet_pn (
-    ma_pn INT PRIMARY KEY,
+    ma_pn INT,
     ma_lh INT,
     don_gia DECIMAL(10,2),
     so_luong INT, 
+    PRIMARY KEY (ma_pn,ma_lh),
     FOREIGN KEY (ma_pn) REFERENCES phieunhap(ma_pn),
     FOREIGN KEY (ma_lh) REFERENCES lohang(ma_lh)
 );
@@ -132,11 +133,14 @@ CREATE TABLE hoadon (
 
 -- 12. Chi Tiết Hoá Đơn
 CREATE TABLE chitiet_hd (
-    ma_hd INT PRIMARY KEY,
+    ma_hd INT,
+    ma_lh INT,
     ma_thuoc INT,
     don_gia DECIMAL(10,2),
     so_luong INT,
+    PRIMARY KEY (ma_hd, ma_lh, ma_thuoc),
     FOREIGN KEY (ma_hd) REFERENCES hoadon(ma_hd),
+    FOREIGN KEY (ma_lh) REFERENCES lohang(ma_lh),
     FOREIGN KEY (ma_thuoc) REFERENCES thuoc(ma_thuoc)
 );
 
@@ -144,9 +148,9 @@ CREATE TABLE chitiet_hd (
 
 -- 1. Tài Khoản (ma_tk: 1, 2, 3)
 INSERT INTO taikhoan (ma_tk, tai_khoan, mat_khau, ten, sdt, vai_tro, trang_thai) VALUES
-(1, 'admin01', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn A', '0901234567', 'admin',1),
-(2, 'nv_quyen', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Thị B', '0907654321', 'nhanvien',1),
-(3, 'kh_vip', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Văn C', '0912345678', 'khachhang',1);
+(1, 'admin01', '$2a$10$C4MBXtcHNdb1X0HAnK/u4eMueASAsbsGCbROFoFLghuf41O4Rd9fq', 'Nguyễn Văn A', '0901234567', 'admin',1),
+(2, 'nv_quyen', '$2a$10$kqoiiCMqfWOEgVzADRyxoetTBZ0cVaZoMd/.pRrX62kxGbCiiPwuu', 'Trần Thị B', '0907654321', 'nhanvien',1),
+(3, 'kh_vip', '$2a$10$9gVuGM0NntPJpdxSK8tPWuNTRVlNH.6H1DlEGMBqLIM1kGo2NnnHe', 'Lê Văn C', '0912345678', 'khachhang',1);
 
 -- 4. Nhà Cung Cấp (ma_ncc: 1, 2)
 INSERT INTO nhacungcap (ma_ncc, ten_ncc, sdt_ncc, dia_chi, email_ncc, trang_thai) VALUES
@@ -170,8 +174,8 @@ INSERT INTO nhanvien (ma_nv, ma_tk, ngay_vao_lam, luong, email, dia_chi, gioi_ti
 
 -- 3. Khách Hàng (ma_kh: 1, 2. Dùng ma_tk: 3)
 INSERT INTO khachhang (ma_kh, ma_tk, ngay_dang_ky, diem_tich_luy, trang_thai) VALUES
-(21, 3, '2024-05-20', 150, 1),  -- Khách VIP (có tài khoản)
-(22, NULL, '2024-10-07', 0, 1); -- Khách vãng lai (không có tài khoản)
+(21, 3, '2024-05-20', 150, 1),
+(22, 3, '2024-05-23', 300, 1);
 
 -- 5. Phiếu Nhập (ma_pn: 1, 2. Dùng ma_nv: 11, 12)
 INSERT INTO phieunhap (ma_pn, ma_nv, thoi_gian_nhap, dia_diem, trang_thai) VALUES
@@ -182,7 +186,8 @@ INSERT INTO phieunhap (ma_pn, ma_nv, thoi_gian_nhap, dia_diem, trang_thai) VALUE
 INSERT INTO lohang (ma_lh, ma_ncc, sl_nhap, sl_ton, ngay_sx, han_sd, gia_nhap, trang_thai) VALUES
 (51, 101, 1000, 500, '2024-01-15', '2026-01-15', 12000.00, 1),
 (52, 102, 500, 450, '2024-08-10', '2025-12-31', 95000.00, 1),
-(53, 101, 800, 800, '2025-05-01', '2027-05-01', 8000.00, 1);
+(53, 101, 800, 800, '2025-05-01', '2027-05-01', 8000.00, 1),
+(54, 102, 400, 490, '2024-04-10', '2028-12-31', 50000.00, 1);
 
 -- 9. Thuốc (ma_thuoc: 1, 2. Dùng ma_dmt: 201, 202)
 INSERT INTO thuoc (ma_thuoc, ma_dmt, ten_thuoc, gia, don_vi_tinh, nha_san_xuat, xuat_xu, trang_thai) VALUES
@@ -200,6 +205,6 @@ INSERT INTO hoadon (ma_hd, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, t
 (72, 22, NULL, 50000.00, '2025-10-08', 'Tiền mặt', 1);
 
 -- 12. Chi Tiết Hoá Đơn (Dùng ma_hd: 71, 72 và ma_thuoc: 61, 62)
-INSERT INTO chitiet_hd (ma_hd, ma_thuoc, don_gia, so_luong) VALUES
-(71, 61, 25000.00, 4),
-(72, 61, 25000.00, 2);
+INSERT INTO chitiet_hd (ma_hd, ma_lh, ma_thuoc, don_gia, so_luong) VALUES
+(71, 51, 61, 25000.00, 4),
+(72, 54, 61, 25000.00, 2);

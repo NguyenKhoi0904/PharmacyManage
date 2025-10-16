@@ -15,7 +15,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
         ArrayList<KhuyenMaiDTO> result = new ArrayList<KhuyenMaiDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khuyenmai";
+            String sql = "SELECT * FROM khuyenmai WHERE trang_thai=1";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -34,7 +34,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
     public KhuyenMaiDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khuyenmai WHERE ma_km=?";
+            String sql = "SELECT * FROM khuyenmai WHERE ma_km=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();

@@ -10,12 +10,16 @@ import DTO.LoHangDTO;
 import database.JDBCUtil;
 
 public class LoHangDAO implements DAOinterface<LoHangDTO> {
+    public static LoHangDAO getInstance() {
+        return new LoHangDAO();
+    }
+
     @Override
     public ArrayList<LoHangDTO> selectAll() {
         ArrayList<LoHangDTO> result = new ArrayList<LoHangDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM lohang";
+            String sql = "SELECT * FROM lohang WHERE trang_thai=1";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -34,7 +38,7 @@ public class LoHangDAO implements DAOinterface<LoHangDTO> {
     public LoHangDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM lohang WHERE ma_lh=?";
+            String sql = "SELECT * FROM lohang WHERE ma_lh=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
@@ -97,6 +101,25 @@ public class LoHangDAO implements DAOinterface<LoHangDTO> {
         return result;
     }
 
+    public int updateSlTon(int ma_lh, int sl_thay_doi) {
+        int result = 0;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "UPDATE lohang SET sl_ton = sl_ton + ? WHERE ma_lh = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            // 1. so_luong_thay_doi: Có thể là dương (thêm vào) hoặc âm (trừ đi)
+            ps.setInt(1, sl_thay_doi);
+            ps.setInt(2, ma_lh);
+
+            result = ps.executeUpdate();
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     @Override
     public int deleteById(String id) {
         int result = 0;
@@ -111,5 +134,35 @@ public class LoHangDAO implements DAOinterface<LoHangDTO> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     * Kiểm tra xem một Lô Hàng có đủ số lượng tồn kho để trừ đi hay không.
+     * Dùng cho HonDonBUS
+     * 
+     * @param ma_lh            Mã Lô Hàng
+     * @param so_luong_can_tru Số lượng cần trừ đi (bán ra)
+     * @return true nếu tồn kho >= số lượng cần trừ, ngược lại là false
+     */
+    public boolean checkSlTon(int ma_lh, int so_luong_can_tru) {
+        boolean isEnough = false;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT sl_ton FROM lohang WHERE ma_lh=? AND trang_thai=1";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ma_lh);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int sl_ton_hien_tai = rs.getInt("sl_ton");
+                if (sl_ton_hien_tai >= so_luong_can_tru) {
+                    isEnough = true;
+                }
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isEnough;
     }
 }

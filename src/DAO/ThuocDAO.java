@@ -15,7 +15,7 @@ public class ThuocDAO implements DAOinterface<ThuocDTO> {
         ArrayList<ThuocDTO> result = new ArrayList<ThuocDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM thuoc";
+            String sql = "SELECT * FROM thuoc WHERE trang_thai=1";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -34,7 +34,7 @@ public class ThuocDAO implements DAOinterface<ThuocDTO> {
     public ThuocDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM thuoc WHERE ma_thuoc=?";
+            String sql = "SELECT * FROM thuoc WHERE ma_thuoc=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();

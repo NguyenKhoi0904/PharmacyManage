@@ -11,12 +11,35 @@ import database.JDBCUtil;
 
 public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
 
+    public static TaiKhoanDAO getInstance() {
+        return new TaiKhoanDAO();
+    }
+
+    // dùng cho kiểm tra tài khoản đăng nhập bằng BCrypt
+    public TaiKhoanDTO selectByTaiKhoan(String taiKhoan) {
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM taikhoan WHERE tai_khoan=? AND trang_thai = 1";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, taiKhoan);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new TaiKhoanDTO(rs.getInt("ma_tk"), rs.getString("tai_khoan"), rs.getString("mat_khau"),
+                        rs.getString("ten"), rs.getString("sdt"), rs.getString("vai_tro"), rs.getInt("trang_thai"));
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public ArrayList<TaiKhoanDTO> selectAll() {
         ArrayList<TaiKhoanDTO> result = new ArrayList<TaiKhoanDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM taikhoan";
+            String sql = "SELECT * FROM taikhoan WHERE trang_thai=1";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -34,7 +57,7 @@ public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
     public TaiKhoanDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM taikhoan WHERE ma_tk=?";
+            String sql = "SELECT * FROM taikhoan WHERE ma_tk=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();

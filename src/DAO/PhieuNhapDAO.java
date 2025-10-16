@@ -10,12 +10,16 @@ import DTO.PhieuNhapDTO;
 import database.JDBCUtil;
 
 public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
+    public static PhieuNhapDAO getInstance() {
+        return new PhieuNhapDAO();
+    }
+
     @Override
     public ArrayList<PhieuNhapDTO> selectAll() {
         ArrayList<PhieuNhapDTO> result = new ArrayList<PhieuNhapDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM phieunhap";
+            String sql = "SELECT * FROM phieunhap WHERE trang_thai=1";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -33,7 +37,7 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
     public PhieuNhapDTO selectById(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM phieunhap WHERE ma_pn=?";
+            String sql = "SELECT * FROM phieunhap WHERE ma_pn=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
