@@ -10,8 +10,16 @@ import DTO.PhieuNhapDTO;
 import database.JDBCUtil;
 
 public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
+
+    // singleton instance
+    private static PhieuNhapDAO instance;
+
+    // singleton init
     public static PhieuNhapDAO getInstance() {
-        return new PhieuNhapDAO();
+        if (instance == null) {
+            instance = new PhieuNhapDAO();
+        }
+        return instance;
     }
 
     @Override
@@ -99,7 +107,7 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
         int result = 0;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "UPDATE phieunhap SET trang_thai=0 WHERE ma_kh=?";
+            String sql = "UPDATE phieunhap SET trang_thai=0 WHERE ma_pn=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             result = ps.executeUpdate();

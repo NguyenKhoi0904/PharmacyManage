@@ -11,8 +11,15 @@ import database.JDBCUtil;
 
 public class ChiTietPnDAO {
 
+    // singleton instance
+    private static ChiTietPnDAO instance;
+
+    // singleton init
     public static ChiTietPnDAO getInstance() {
-        return new ChiTietPnDAO();
+        if (instance == null) {
+            instance = new ChiTietPnDAO();
+        }
+        return instance;
     }
 
     public ArrayList<ChiTietPnDTO> selectAll() {
@@ -34,14 +41,13 @@ public class ChiTietPnDAO {
         return result;
     }
 
-    public ArrayList<ChiTietPnDTO> selectAllByMa(int ma_pn, int ma_lh) {
+    public ArrayList<ChiTietPnDTO> selectAllByMaPn(int ma_pn) {
         ArrayList<ChiTietPnDTO> result = new ArrayList<ChiTietPnDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM chitiet_pn WHERE ma_pn=? AND ma_lh=?";
+            String sql = "SELECT * FROM chitiet_pn WHERE ma_pn=?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, ma_pn);
-            pst.setInt(2, ma_lh);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 // ma_pn (int), ma_lh (int), don_gia (BigDecimal), so_luong (int)
@@ -60,7 +66,7 @@ public class ChiTietPnDAO {
         try {
             Connection conn = JDBCUtil.getConnection();
             // Lấy chi tiết dựa trên ma_pn (Primary Key)
-            String sql = "SELECT * FROM chitiet_pn WHERE ma_pn=?,ma_lh=?";
+            String sql = "SELECT * FROM chitiet_pn WHERE ma_pn=? AND ma_lh=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, ma_pn);
             ps.setInt(2, ma_lh);
@@ -99,14 +105,30 @@ public class ChiTietPnDAO {
         try {
             Connection conn = JDBCUtil.getConnection();
             // SQL sửa lỗi: UPDATE chitiet_pn. Dùng ma_pn để xác định hàng.
-            String sql = "UPDATE chitiet_pn SET ma_lh=?,don_gia=?,so_luong=? WHERE ma_pn=?";
+            String sql = "UPDATE chitiet_pn SET ma_lh=?,don_gia=?,so_luong=? WHERE ma_pn=? AND ma_lh=?";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setInt(1, data.getMaLh()); // Khóa ngoại, phải tồn tại trong lohang
             ps.setBigDecimal(2, data.getDonGia());
             ps.setInt(3, data.getSoLuong());
             ps.setInt(4, data.getMaPn()); // Điều kiện WHERE
+            ps.setInt(5, data.getMaLh());
 
+            result = ps.executeUpdate();
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int deleteById(int ma_pn) {
+        int result = 0;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "DELETE FROM chitiet_pn WHERE ma_pn=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ma_pn);
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {

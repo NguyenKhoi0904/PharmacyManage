@@ -11,8 +11,15 @@ import database.JDBCUtil;
 
 public class NhanVienDAO implements DAOinterface<NhanVienDTO> {
 
+    // singleton instance
+    private static NhanVienDAO instance;
+
+    // singleton init
     public static NhanVienDAO getInstance() {
-        return new NhanVienDAO();
+        if (instance == null) {
+            instance = new NhanVienDAO();
+        }
+        return instance;
     }
 
     @Override

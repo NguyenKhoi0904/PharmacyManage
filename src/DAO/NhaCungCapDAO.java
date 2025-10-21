@@ -10,8 +10,16 @@ import DTO.NhaCungCapDTO;
 import database.JDBCUtil;
 
 public class NhaCungCapDAO implements DAOinterface<NhaCungCapDTO> {
+
+    // singleton instance
+    private static NhaCungCapDAO instance;
+
+    // singleton init
     public static NhaCungCapDAO getInstance() {
-        return new NhaCungCapDAO();
+        if (instance == null) {
+            instance = new NhaCungCapDAO();
+        }
+        return instance;
     }
 
     @Override

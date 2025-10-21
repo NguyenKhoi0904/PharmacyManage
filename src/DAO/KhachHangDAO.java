@@ -11,8 +11,14 @@ import database.JDBCUtil;
 
 public class KhachHangDAO implements DAOinterface<KhachHangDTO> {
 
+    // singleton instance
+    private static KhachHangDAO instance;
+
     public static KhachHangDAO getInstance() {
-        return new KhachHangDAO();
+        if (instance == null) {
+            instance = new KhachHangDAO();
+        }
+        return instance;
     }
 
     @Override

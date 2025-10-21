@@ -10,8 +10,16 @@ import DTO.ChiTietHdDTO;
 import database.JDBCUtil;
 
 public class ChiTietHdDAO {
+
+    // singleton instance
+    private static ChiTietHdDAO instance;
+
+    // singleton init
     public static ChiTietHdDAO getInstance() {
-        return new ChiTietHdDAO();
+        if (instance == null) {
+            instance = new ChiTietHdDAO();
+        }
+        return instance;
     }
 
     public ArrayList<ChiTietHdDTO> selectAll() {
@@ -38,7 +46,7 @@ public class ChiTietHdDAO {
         ArrayList<ChiTietHdDTO> result = new ArrayList<ChiTietHdDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM chitiet_pn WHERE ma_hd=?";
+            String sql = "SELECT * FROM chitiet_hd WHERE ma_hd=?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, maHd);
             ResultSet rs = pst.executeQuery();
@@ -101,14 +109,14 @@ public class ChiTietHdDAO {
         try {
             Connection conn = JDBCUtil.getConnection();
             // Dùng ma_hd để xác định hàng cần update
-            String sql = "UPDATE chitiet_hd SET ma_lh=?,ma_thuoc=?,don_gia=?,so_luong=? WHERE ma_hd=?";
+            String sql = "UPDATE chitiet_hd SET don_gia=?, so_luong=? WHERE ma_hd=? AND ma_lh=? AND ma_thuoc=?";
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            ps.setInt(1, data.getMaLh());
-            ps.setInt(2, data.getMaThuoc());
-            ps.setBigDecimal(3, data.getDonGia());
-            ps.setInt(4, data.getSoLuong());
-            ps.setInt(5, data.getMaHd());
+            ps.setBigDecimal(1, data.getDonGia());
+            ps.setInt(2, data.getSoLuong());
+            ps.setInt(3, data.getMaHd());
+            ps.setInt(4, data.getMaLh());
+            ps.setInt(5, data.getMaThuoc());
 
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
@@ -118,13 +126,30 @@ public class ChiTietHdDAO {
         return result;
     }
 
-    public int deleteById(int maHd) {
+    public int deleteAllById(int maHd) {
         int result = 0;
         try {
             Connection conn = JDBCUtil.getConnection();
             String sql = "DELETE FROM chitiet_hd WHERE ma_hd=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, maHd);
+            result = ps.executeUpdate();
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int deleteById(int maHd, int maLh, int maThuoc) {
+        int result = 0;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "DELETE FROM chitiet_hd WHERE ma_hd=? AND ma_lh=? AND ma_thuoc=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, maHd);
+            ps.setInt(2, maLh);
+            ps.setInt(3, maThuoc);
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {

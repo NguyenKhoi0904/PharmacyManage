@@ -11,15 +11,22 @@ import database.JDBCUtil;
 
 public class TaiKhoanDAO implements DAOinterface<TaiKhoanDTO> {
 
+    // singleton instance
+    private static TaiKhoanDAO instance;
+
+    // singleton init
     public static TaiKhoanDAO getInstance() {
-        return new TaiKhoanDAO();
+        if (instance == null) {
+            instance = new TaiKhoanDAO();
+        }
+        return instance;
     }
 
     // dùng cho kiểm tra tài khoản đăng nhập bằng BCrypt
     public TaiKhoanDTO selectByTaiKhoan(String taiKhoan) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM taikhoan WHERE tai_khoan=? AND trang_thai = 1";
+            String sql = "SELECT * FROM taikhoan WHERE tai_khoan=? AND trang_thai=1";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, taiKhoan);
             ResultSet rs = ps.executeQuery();

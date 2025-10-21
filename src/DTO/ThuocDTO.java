@@ -10,11 +10,12 @@ public class ThuocDTO {
     private String donViTinh;
     private String nhaSanXuat;
     private String xuatXu;
+    private String url_anh;
     private int trangThai;
 
     // Constructor
     public ThuocDTO(int maThuoc, int maDmt, String tenThuoc, BigDecimal gia, String donViTinh, String nhaSanXuat,
-            String xuatXu, int trangThai) {
+            String xuatXu, String url_anh, int trangThai) {
         this.maThuoc = maThuoc;
         this.maDmt = maDmt;
         this.tenThuoc = tenThuoc;
@@ -22,6 +23,7 @@ public class ThuocDTO {
         this.donViTinh = donViTinh;
         this.nhaSanXuat = nhaSanXuat;
         this.xuatXu = xuatXu;
+        this.url_anh = url_anh;
         this.trangThai = trangThai;
     }
 
@@ -52,6 +54,10 @@ public class ThuocDTO {
 
     public String getXuatXu() {
         return this.xuatXu;
+    }
+
+    public String getUrlAnh() {
+        return this.url_anh;
     }
 
     public int getTrangThai() {
@@ -85,6 +91,10 @@ public class ThuocDTO {
 
     public void setXuatXu(String xuatXu) {
         this.xuatXu = xuatXu;
+    }
+
+    public void setUrlAnh(String url_anh) {
+        this.url_anh = url_anh;
     }
 
     public void setTrangThai(int trangThai) {

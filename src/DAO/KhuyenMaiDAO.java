@@ -10,6 +10,18 @@ import DTO.KhuyenMaiDTO;
 import database.JDBCUtil;
 
 public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
+
+    // singleton instance
+    private static KhuyenMaiDAO instance;
+
+    // singleton init
+    public static KhuyenMaiDAO getInstance() {
+        if (instance == null) {
+            instance = new KhuyenMaiDAO();
+        }
+        return instance;
+    }
+
     @Override
     public ArrayList<KhuyenMaiDTO> selectAll() {
         ArrayList<KhuyenMaiDTO> result = new ArrayList<KhuyenMaiDTO>();

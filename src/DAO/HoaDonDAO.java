@@ -10,8 +10,16 @@ import DTO.HoaDonDTO;
 import database.JDBCUtil;
 
 public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
+
+    // singleton instance
+    private static HoaDonDAO instance;
+
+    // singleton init
     public static HoaDonDAO getInstance() {
-        return new HoaDonDAO();
+        if (instance == null) {
+            instance = new HoaDonDAO();
+        }
+        return instance;
     }
 
     @Override
@@ -23,7 +31,7 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
-                result.add(new HoaDonDTO(rs.getInt("ma_hd"), rs.getInt("ma_kh"), rs.getInt("ma_km"),
+                result.add(new HoaDonDTO(rs.getInt("ma_hd"), rs.getInt("ma_nv"), rs.getInt("ma_kh"), rs.getInt("ma_km"),
                         rs.getBigDecimal("tong_tien"), rs.getDate("ngay_xuat"), rs.getString("phuong_thuc_tt"),
                         rs.getInt("trang_thai")));
             }
@@ -43,7 +51,7 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new HoaDonDTO(rs.getInt("ma_hd"), rs.getInt("ma_kh"), rs.getInt("ma_km"),
+                return new HoaDonDTO(rs.getInt("ma_hd"), rs.getInt("ma_nv"), rs.getInt("ma_kh"), rs.getInt("ma_km"),
                         rs.getBigDecimal("tong_tien"), rs.getDate("ngay_xuat"), rs.getString("phuong_thuc_tt"),
                         rs.getInt("trang_thai"));
             }
@@ -59,16 +67,17 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
         int result = 0;
         try {
             // init connection
-            String sql = "INSERT INTO hoadon (ma_hd,ma_kh,ma_km,tong_tien,ngay_xuat,phuong_thuc_tt,trang_thai) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO hoadon (ma_hd,ma_nv,ma_kh,ma_km,tong_tien,ngay_xuat,phuong_thuc_tt,trang_thai) VALUES (?,?,?,?,?,?,?,?)";
             Connection conn = JDBCUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, data.getMaHd());
-            ps.setInt(2, data.getMaKh());
-            ps.setInt(3, data.getMaKm());
-            ps.setBigDecimal(4, data.getTongTien());
-            ps.setDate(5, data.getNgayXuat());
-            ps.setString(6, data.getPhuongThucTt());
-            ps.setInt(9, data.getTrangThai());
+            ps.setInt(2, data.getMaNv());
+            ps.setInt(3, data.getMaKh());
+            ps.setInt(4, data.getMaKm());
+            ps.setBigDecimal(5, data.getTongTien());
+            ps.setDate(6, data.getNgayXuat());
+            ps.setString(7, data.getPhuongThucTt());
+            ps.setInt(8, data.getTrangThai());
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -82,15 +91,16 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
         int result = 0;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "UPDATE hoadon SET ma_kh=?,ma_km=?,tong_tien=?,ngay_xuat=?,phuong_thuc_tt=?,trang_thai=? WHERE ma_hd=?";
+            String sql = "UPDATE hoadon SET ma_nv=?,ma_kh=?,ma_km=?,tong_tien=?,ngay_xuat=?,phuong_thuc_tt=?,trang_thai=? WHERE ma_hd=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, data.getMaKh());
-            ps.setInt(2, data.getMaKm());
-            ps.setBigDecimal(3, data.getTongTien());
-            ps.setDate(4, data.getNgayXuat());
-            ps.setString(5, data.getPhuongThucTt());
-            ps.setInt(6, data.getTrangThai());
-            ps.setInt(7, data.getMaHd());
+            ps.setInt(1, data.getMaNv());
+            ps.setInt(2, data.getMaKh());
+            ps.setInt(3, data.getMaKm());
+            ps.setBigDecimal(4, data.getTongTien());
+            ps.setDate(5, data.getNgayXuat());
+            ps.setString(6, data.getPhuongThucTt());
+            ps.setInt(7, data.getTrangThai());
+            ps.setInt(8, data.getMaHd());
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {

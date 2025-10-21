@@ -6,6 +6,7 @@ import java.sql.Date;
 public class LoHangDTO {
     private int maLh;
     private int maNcc;
+    private int maThuoc;
     private int slNhap;
     private int slTon;
     private Date ngaySx;
@@ -14,10 +15,12 @@ public class LoHangDTO {
     private int trangThai;
 
     // Constructor
-    public LoHangDTO(int maLh, int maNcc, int slNhap, int slTon, Date ngaySx, Date hanSd, BigDecimal giaNhap,
+    public LoHangDTO(int maLh, int maNcc, int maThuoc, int slNhap, int slTon, Date ngaySx, Date hanSd,
+            BigDecimal giaNhap,
             int trangThai) {
         this.maLh = maLh;
         this.maNcc = maNcc;
+        this.maThuoc = maThuoc;
         this.slNhap = slNhap;
         this.slTon = slTon;
         this.ngaySx = ngaySx;
@@ -33,6 +36,10 @@ public class LoHangDTO {
 
     public int getMaNcc() {
         return this.maNcc;
+    }
+
+    public int getMaThuoc() {
+        return this.maThuoc;
     }
 
     public int getSlNhap() {
@@ -66,6 +73,10 @@ public class LoHangDTO {
 
     public void setMaNcc(int maNcc) {
         this.maNcc = maNcc;
+    }
+
+    public void setMaThuoc(int maThuoc) {
+        this.maThuoc = maThuoc;
     }
 
     public void setSlNhap(int slNhap) {

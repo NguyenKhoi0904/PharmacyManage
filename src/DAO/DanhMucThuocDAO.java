@@ -10,6 +10,18 @@ import DTO.DanhMucThuocDTO;
 import database.JDBCUtil;
 
 public class DanhMucThuocDAO implements DAOinterface<DanhMucThuocDTO> {
+
+    // singleton instance
+    private static DanhMucThuocDAO instance;
+
+    // singleton init
+    public static DanhMucThuocDAO getInstance() {
+        if (instance == null) {
+            instance = new DanhMucThuocDAO();
+        }
+        return instance;
+    }
+
     @Override
     public ArrayList<DanhMucThuocDTO> selectAll() {
         ArrayList<DanhMucThuocDTO> result = new ArrayList<DanhMucThuocDTO>();

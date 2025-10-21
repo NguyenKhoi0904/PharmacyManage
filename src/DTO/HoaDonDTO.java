@@ -5,6 +5,7 @@ import java.sql.Date;
 
 public class HoaDonDTO {
     private int maHd;
+    private int maNv;
     private int maKh;
     private Integer maKm; // sử dụng Integer để chấp nhận giá trị = NULL
     private BigDecimal tongTien;
@@ -13,9 +14,11 @@ public class HoaDonDTO {
     private int trangThai;
 
     // Constructor
-    public HoaDonDTO(int maHd, int maKh, Integer maKm, BigDecimal tongTien, Date ngayXuat, String phuongThucTt,
+    public HoaDonDTO(int maHd, int maNv, int maKh, Integer maKm, BigDecimal tongTien, Date ngayXuat,
+            String phuongThucTt,
             int trangThai) {
         this.maHd = maHd;
+        this.maNv = maNv;
         this.maKh = maKh;
         this.maKm = maKm;
         this.tongTien = tongTien;
@@ -26,27 +29,31 @@ public class HoaDonDTO {
 
     // get
     public int getMaHd() {
-        return maHd;
+        return this.maHd;
+    }
+
+    public int getMaNv() {
+        return this.maNv;
     }
 
     public int getMaKh() {
-        return maKh;
+        return this.maKh;
     }
 
     public Integer getMaKm() {
-        return maKm;
+        return this.maKm;
     }
 
     public BigDecimal getTongTien() {
-        return tongTien;
+        return this.tongTien;
     }
 
     public Date getNgayXuat() {
-        return ngayXuat;
+        return this.ngayXuat;
     }
 
     public String getPhuongThucTt() {
-        return phuongThucTt;
+        return this.phuongThucTt;
     }
 
     public int getTrangThai() {
@@ -56,6 +63,10 @@ public class HoaDonDTO {
     // set
     public void setMaHd(int maHd) {
         this.maHd = maHd;
+    }
+
+    public void setMaNv(int maNv) {
+        this.maNv = maNv;
     }
 
     public void setMaKh(int maKh) {

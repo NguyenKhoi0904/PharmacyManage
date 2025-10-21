@@ -1,65 +1,170 @@
 package BUS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
 
-import DAO.ChiTietHdDAO;
 import DAO.HoaDonDAO;
-import DAO.LoHangDAO;
-import DTO.ChiTietHdDTO;
 import DTO.HoaDonDTO;
+import DTO.LoHangDTO;
+import DTO.ChiTietHdDTO;
 
 public class HoaDonBUS {
-    private ArrayList<HoaDonDTO> listHoaDon;
-    private HoaDonDAO hoaDonDAO;
-    private LoHangDAO loHangDAO;
-    private ChiTietHdDAO chiTietHdDAO;
 
-    public HoaDonBUS() {
+    // singleton instance
+    private static HoaDonBUS instance;
+
+    // field
+    private ArrayList<HoaDonDTO> listHoaDon;
+    private final HoaDonDAO hoaDonDAO;
+    private final ChiTietHdBUS chiTietHdBUS;
+    private final NhanVienBUS nhanVienBUS;
+    private final KhachHangBUS khachHangBUS;
+    private final KhuyenMaiBUS khuyenMaiBUS;
+    private final LoHangBUS loHangBUS;
+
+    private HoaDonBUS() {
         this.hoaDonDAO = HoaDonDAO.getInstance();
-        this.loHangDAO = LoHangDAO.getInstance();
-        this.chiTietHdDAO = ChiTietHdDAO.getInstance();
+        this.chiTietHdBUS = ChiTietHdBUS.getInstance();
         this.listHoaDon = this.hoaDonDAO.selectAll();
+        this.nhanVienBUS = NhanVienBUS.getInstance();
+        this.khachHangBUS = KhachHangBUS.getInstance();
+        this.khuyenMaiBUS = KhuyenMaiBUS.getInstance();
+        this.loHangBUS = LoHangBUS.getInstance();
+    }
+
+    // singleton init
+    public static HoaDonBUS getInstance() {
+        if (instance == null) {
+            instance = new HoaDonBUS();
+        }
+        return instance;
     }
 
     // ========== DATABASE HANDLE ==========
-    public boolean addHoaDon(HoaDonDTO hoaDon, ArrayList<ChiTietHdDTO> danhSachChiTiet) {
-        if (danhSachChiTiet == null || danhSachChiTiet.isEmpty()) {
-            System.out.println("Lỗi nghiệp vụ: Hóa đơn phải có ít nhất một chi tiết.");
+
+    public boolean addHoaDon(HoaDonDTO hoaDonDTO, ArrayList<ChiTietHdDTO> danhSachChiTietHd) {
+        // ======== 1. KIỂM TRA DỮ LIỆU ========
+        if (this.checkIfMaHdExist(hoaDonDTO))
+            return false;
+
+        if (!this.nhanVienBUS.getMapByMaNv().containsKey(hoaDonDTO.getMaNv())) {
+            JOptionPane.showMessageDialog(null, "Mã nhân viên không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // 1. NGHIỆP VỤ KIỂM TRA TỒN KHO (Phải kiểm tra trước khi ghi vào CSDL)
-        for (ChiTietHdDTO chiTiet : danhSachChiTiet) {
-            if (!loHangDAO.checkSlTon(chiTiet.getMaLh(), chiTiet.getSoLuong())) {
-                System.out.println("Lỗi tồn kho: Lô hàng " + chiTiet.getMaLh() + " không đủ số lượng.");
+        if (!this.khachHangBUS.getMapByMaKh().containsKey(hoaDonDTO.getMaKh())) {
+            JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (hoaDonDTO.getMaKm() != null && !this.khuyenMaiBUS.getMapByMaKm().containsKey(hoaDonDTO.getMaKm())) {
+            JOptionPane.showMessageDialog(null, "Mã khuyến mãi không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (danhSachChiTietHd == null || danhSachChiTietHd.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Danh sách chi tiết hoá đơn rỗng hoặc null", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // ======== 2. KIỂM TRA TỒN KHO TRƯỚC ========
+        for (ChiTietHdDTO ct : danhSachChiTietHd) {
+            LoHangDTO lh = this.loHangBUS.getLoHangByMaLh(ct.getMaLh());
+            if (lh == null) {
+                JOptionPane.showMessageDialog(null, "Không tìm thấy lô hàng " + ct.getMaLh(), "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            if (lh.getSlTon() < ct.getSoLuong()) {
+                JOptionPane.showMessageDialog(null, "Không đủ tồn kho cho lô hàng " + ct.getMaLh(), "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
 
-        // thêm hóa đơn cha vào CSDL
-        if (this.hoaDonDAO.insert(hoaDon) > 0) {
+        // ======== 3. INSERT HOÁ ĐƠN + CHI TIẾT ========
+        ArrayList<ChiTietHdDTO> daThemChiTiet = new ArrayList<>();
+        boolean hoaDonDaThem = false;
 
-            // 3. Lặp và thêm từng Chi Tiết Hóa Đơn
-            for (ChiTietHdDTO chiTiet : danhSachChiTiet) {
+        try {
+            // thêm hóa đơn
+            if (this.hoaDonDAO.insert(hoaDonDTO) <= 0) {
+                JOptionPane.showMessageDialog(null, "Không thể thêm hóa đơn vào CSDL", "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            hoaDonDaThem = true;
 
-                // 3.1. Thêm Chi Tiết vào bảng chitiet_hd
-                chiTietHdDAO.insert(chiTiet);
+            // thêm từng chi tiết
+            for (ChiTietHdDTO ct : danhSachChiTietHd) {
+                ct.setMaHd(hoaDonDTO.getMaHd());
 
-                // trừ bớt số lượng tồn trong lô hàng
-                this.loHangDAO.updateSlTon(chiTiet.getMaLh(), chiTiet.getSoLuong());
+                // giảm số lượng tồn kho trước khi add
+                this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), -ct.getSoLuong());
+
+                if (!this.chiTietHdBUS.addChiTietHd(ct)) {
+                    JOptionPane.showMessageDialog(null, "Không thể thêm chi tiết hoá đơn", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
+                    throw new Exception("Lỗi thêm chi tiết hóa đơn " + ct.getMaLh());
+                }
+
+                daThemChiTiet.add(ct);
             }
 
-            // 4. Cập nhật cache
-            this.listHoaDon.add(hoaDon);
+            // thêm thành công toàn bộ
+            this.listHoaDon.add(hoaDonDTO);
+            JOptionPane.showMessageDialog(null, "Thêm hoá đơn thành công!", "Thành công",
+                    JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
-        System.out.println("Lỗi CSDL: Không thể thêm Hóa Đơn cha.");
-        return false;
+
+        // ======== 4. ROLLBACK KHI CÓ LỖI ========
+        catch (Exception e) {
+            System.err.println("Rollback vì lỗi: " + e.getMessage());
+
+            // phục hồi tồn kho
+            for (ChiTietHdDTO ct : daThemChiTiet) {
+                this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), ct.getSoLuong());
+                if (!this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(),
+                        ct.getMaThuoc())) {
+                    JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết hoá đơn", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            if (!daThemChiTiet.isEmpty()) {
+                for (ChiTietHdDTO ct : daThemChiTiet) {
+                    this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), ct.getSoLuong());
+                    this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(), ct.getMaThuoc());
+                    // if (!this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(),
+                    // ct.getMaThuoc())) {
+                    // JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết hoá đơn", "Lỗi",
+                    // JOptionPane.ERROR_MESSAGE);
+                    // return false;
+                    // }
+                }
+            }
+
+            // xoá hóa đơn nếu đã thêm
+            if (hoaDonDaThem) {
+                this.hoaDonDAO.deleteById(String.valueOf(hoaDonDTO.getMaHd()));
+            }
+
+            JOptionPane.showMessageDialog(null, "Thêm hoá đơn thất bại! Dữ liệu đã được phục hồi.", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 
     public boolean updateHoaDon(int ma_hd, HoaDonDTO hoaDonDTO) {
+        // kiểm tra nếu mã hoá đơn không tồn tại
+        if (!this.getMapByMaHd().containsKey(ma_hd)) {
+            JOptionPane.showMessageDialog(null, "Mã hoá đơn không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
         if (this.hoaDonDAO.update(hoaDonDTO) > 0) {
-            // cập nhật cache
             for (int i = 0; i < this.listHoaDon.size(); i++) {
                 if (this.listHoaDon.get(i).getMaHd() == ma_hd) {
                     this.listHoaDon.set(i, hoaDonDTO);
@@ -68,60 +173,81 @@ public class HoaDonBUS {
             }
             return true;
         }
-        System.out.println("Lỗi CSDL: Không thể cập nhật hoá đơn.");
+
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật hoá đơn trong CSDL", "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
-    // Hàm nghiệp vụ: Xóa hóa đơn (Soft Delete)
-    public boolean deleteHoaDon(int ma_hd) {
-        // 1. NGHIỆP VỤ: Lấy Chi Tiết HĐ trước khi xóa để hoàn tác tồn kho
-        ArrayList<ChiTietHdDTO> chiTietList = chiTietHdDAO.selectAllByMa(ma_hd);
+    public boolean deleteHoaDon(int ma_hd) throws Exception {
+        // kiểm tra nếu hoá đơn đã xoá
+        if (this.checkIfAlreadyDeleted(ma_hd)) {
+            JOptionPane.showMessageDialog(null, "Hoá đơn đã được xoá trước đó", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // lấy chi tiết hóa đơn trước khi xóa để hoàn tác tồn kho
+        ArrayList<ChiTietHdDTO> chiTietList = this.chiTietHdBUS.getListChiTietHdByMaHd(ma_hd);
+
+        // hoàn tác tồn kho -> huỷ đơn nên + lại phần đã thanh toán
+        if (chiTietList != null) {
+            for (ChiTietHdDTO chiTiet : chiTietList) {
+                try {
+                    // nếu updateSlTonLoHang thất bại -> gây lệch tồn kho
+                    this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), chiTiet.getSoLuong());
+                } catch (Exception e) {
+                    throw new Exception("Không thể cập nhật tồn kho cho lô " + chiTiet.getMaLh());
+                }
+
+            }
+        }
+
+        // xoá chi tiết hoá đơn
+        if (!this.chiTietHdBUS.deleteAllByMaHd(ma_hd)) {
+            JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết hoá đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
         if (this.hoaDonDAO.deleteById(String.valueOf(ma_hd)) > 0) {
 
-            // 2. Hoàn tác TỒN KHO (Nghiệp vụ quan trọng)
-            if (chiTietList != null) {
-                for (ChiTietHdDTO chiTiet : chiTietList) {
-                    // Cộng lại số lượng đã bán vào tồn kho
-                    this.loHangDAO.updateSlTon(chiTiet.getMaLh(), chiTiet.getSoLuong());
-                }
-            }
+            // cập nhật cache
+            this.listHoaDon.removeIf(hd -> hd.getMaHd() == ma_hd);
 
-            // 3. XÓA HARD DELETE Chi Tiết khỏi bảng chitiet_hd
-            this.chiTietHdDAO.deleteById(ma_hd); // Dùng mã HĐ để xóa tất cả chi tiết
+            return true;
+        }
 
-            // 4. Cập nhật cache
-            for (int i = 0; i < this.listHoaDon.size(); i++) {
-                if (this.listHoaDon.get(i).getMaHd() == ma_hd) {
-                    this.listHoaDon.get(i).setTrangThai(0);
-                    break;
-                }
-            }
+        JOptionPane.showMessageDialog(null, "Lỗi CSDL khi xoá hoá đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    // ========== BUSINESS LOGIC ==========
+
+    public boolean checkIfMaHdExist(HoaDonDTO hoaDonDTO) {
+        if (this.getMapByMaHd().containsKey(hoaDonDTO.getMaHd())) {
+            JOptionPane.showMessageDialog(null, "Mã hoá đơn đã tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return true;
         }
         return false;
     }
 
-    // public boolean deleteHoaDon(int ma_hd) {
-    // if (this.hoaDonDAO.deleteById(String.valueOf(ma_hd)) > 0) {
-    // // cập nhật cache: Đặt trạng thái = 0
-    // for (int i = 0; i < this.listHoaDon.size(); i++) {
-    // if (this.listHoaDon.get(i).getMaHd() == ma_hd) {
-    // this.listHoaDon.remove(i);
-    // break;
-    // }
-    // }
+    // dùng trong KhachHangBUS kiểm tra khách hàng có hoá đơn chưa
+    public boolean checkIfMaKhExist(int ma_kh) {
+        for (HoaDonDTO hd : this.listHoaDon) {
+            if (hd.getMaKh() == ma_kh)
+                return true;
+        }
+        return false;
+    }
 
-    // this.hoaDonDAO.deleteById(String.valueOf(ma_hd));
+    private boolean checkIfAlreadyDeleted(int ma_hd) {
+        if (this.getHoaDonByMaHd(ma_hd) == null) {
+            JOptionPane.showMessageDialog(null, "Hóa đơn không tồn tại hoặc đã bị xoá", "Thông báo",
+                    JOptionPane.WARNING_MESSAGE);
+            return true;
+        }
+        return false;
 
-    // return true;
-    // }
-    // System.out.println("lỗi hàm deleteHoaDon: Không tìm thấy hoá đơn hoặc lỗi
-    // CSDL.");
-    // return false;
-    // }
-
-    // ========== BUSINESS LOGIC ==========
+    }
 
     // ========== GET DỮ LIỆU ==========
     public ArrayList<HoaDonDTO> getListHoaDon() {
@@ -130,10 +256,18 @@ public class HoaDonBUS {
 
     public HoaDonDTO getHoaDonByMaHd(int ma_hd) {
         for (HoaDonDTO hd : this.listHoaDon) {
-            if (hd.getMaHd() == ma_hd) {
+            if (hd.getMaHd() == ma_hd)
                 return hd;
-            }
         }
         return null;
     }
+
+    public HashMap<Integer, HoaDonDTO> getMapByMaHd() {
+        HashMap<Integer, HoaDonDTO> map = new HashMap<>();
+        for (HoaDonDTO hd : this.listHoaDon) {
+            map.put(hd.getMaHd(), hd);
+        }
+        return map;
+    }
+
 }
