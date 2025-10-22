@@ -19,12 +19,12 @@ public class NhanVienBUS {
     // field
     private ArrayList<NhanVienDTO> listNhanVien;
     private final NhanVienDAO nhanVienDAO;
-    private final TaiKhoanBUS taiKhoanBUS;
+    private TaiKhoanBUS taiKhoanBUS;
 
     private NhanVienBUS() {
         this.nhanVienDAO = NhanVienDAO.getInstance();
         this.listNhanVien = nhanVienDAO.selectAll();
-        this.taiKhoanBUS = TaiKhoanBUS.getInstance();
+        // this.taiKhoanBUS = TaiKhoanBUS.getInstance();
     }
 
     // singleton init
@@ -211,5 +211,10 @@ public class NhanVienBUS {
             mapMaNv.put(nv.getMaNv(), nv);
         }
         return mapMaNv;
+    }
+
+    // ========== SET BUS ==========
+    public void setTaiKhoanBUS(TaiKhoanBUS taiKhoanBUS) {
+        this.taiKhoanBUS = taiKhoanBUS;
     }
 }

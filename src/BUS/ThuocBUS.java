@@ -22,8 +22,8 @@ public class ThuocBUS {
 
     private ThuocBUS() {
         this.thuocDAO = ThuocDAO.getInstance();
-        this.danhMucThuocBUS = DanhMucThuocBUS.getInstance();
-        this.loHangBUS = LoHangBUS.getInstance();
+        // this.danhMucThuocBUS = DanhMucThuocBUS.getInstance();
+        // this.loHangBUS = LoHangBUS.getInstance();
         this.listThuoc = this.thuocDAO.selectAll();
     }
 
@@ -162,5 +162,14 @@ public class ThuocBUS {
             mapThuoc.put(thuoc.getMaThuoc(), thuoc);
         }
         return mapThuoc;
+    }
+
+    // ========== SET BUS ==========
+    public void setDanhMucThuocBUS(DanhMucThuocBUS danhMucThuocBUS) {
+        this.danhMucThuocBUS = danhMucThuocBUS;
+    }
+
+    public void setLoHangBUS(LoHangBUS loHangBUS) {
+        this.loHangBUS = loHangBUS;
     }
 }

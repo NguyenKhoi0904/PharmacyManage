@@ -17,20 +17,20 @@ public class HoaDonBUS {
     // field
     private ArrayList<HoaDonDTO> listHoaDon;
     private final HoaDonDAO hoaDonDAO;
-    private final ChiTietHdBUS chiTietHdBUS;
-    private final NhanVienBUS nhanVienBUS;
-    private final KhachHangBUS khachHangBUS;
-    private final KhuyenMaiBUS khuyenMaiBUS;
-    private final LoHangBUS loHangBUS;
+    private ChiTietHdBUS chiTietHdBUS;
+    private NhanVienBUS nhanVienBUS;
+    private KhachHangBUS khachHangBUS;
+    private KhuyenMaiBUS khuyenMaiBUS;
+    private LoHangBUS loHangBUS;
 
     private HoaDonBUS() {
         this.hoaDonDAO = HoaDonDAO.getInstance();
-        this.chiTietHdBUS = ChiTietHdBUS.getInstance();
+        // this.chiTietHdBUS = ChiTietHdBUS.getInstance();
         this.listHoaDon = this.hoaDonDAO.selectAll();
-        this.nhanVienBUS = NhanVienBUS.getInstance();
-        this.khachHangBUS = KhachHangBUS.getInstance();
-        this.khuyenMaiBUS = KhuyenMaiBUS.getInstance();
-        this.loHangBUS = LoHangBUS.getInstance();
+        // this.nhanVienBUS = NhanVienBUS.getInstance();
+        // this.khachHangBUS = KhachHangBUS.getInstance();
+        // this.khuyenMaiBUS = KhuyenMaiBUS.getInstance();
+        // this.loHangBUS = LoHangBUS.getInstance();
     }
 
     // singleton init
@@ -270,4 +270,24 @@ public class HoaDonBUS {
         return map;
     }
 
+    // ========== SET BUS ==========
+    public void setChiTietHdBUS(ChiTietHdBUS chiTietHdBUS) {
+        this.chiTietHdBUS = chiTietHdBUS;
+    }
+
+    public void setLoHangBUS(LoHangBUS loHangBUS) {
+        this.loHangBUS = loHangBUS;
+    }
+
+    public void setNhanVienBUS(NhanVienBUS nhanVienBUS) {
+        this.nhanVienBUS = nhanVienBUS;
+    }
+
+    public void setKhachHangBUS(KhachHangBUS khachHangBUS) {
+        this.khachHangBUS = khachHangBUS;
+    }
+
+    public void setKhuyenMaiBUS(KhuyenMaiBUS khuyenMaiBUS) {
+        this.khuyenMaiBUS = khuyenMaiBUS;
+    }
 }

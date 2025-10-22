@@ -16,11 +16,11 @@ public class ChiTietPnBUS {
     // field
     private ArrayList<ChiTietPnDTO> listChiTietPn;
     private final ChiTietPnDAO chiTietPnDAO;
-    private final LoHangBUS loHangBUS;
+    private LoHangBUS loHangBUS;
 
     private ChiTietPnBUS() {
         this.chiTietPnDAO = ChiTietPnDAO.getInstance();
-        this.loHangBUS = LoHangBUS.getInstance();
+        // this.loHangBUS = LoHangBUS.getInstance();
         this.listChiTietPn = this.chiTietPnDAO.selectAll();
     }
 
@@ -191,5 +191,11 @@ public class ChiTietPnBUS {
     // helper - 2 PK
     private String generateKey(int maPn, int maLh) {
         return maPn + "_" + maLh;
+    }
+
+    // ========== SET BUS ==========
+
+    public void setLoHangBUS(LoHangBUS loHangBUS) {
+        this.loHangBUS = loHangBUS;
     }
 }

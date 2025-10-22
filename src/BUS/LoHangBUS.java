@@ -17,12 +17,12 @@ public class LoHangBUS {
     // field
     private ArrayList<LoHangDTO> listLoHang;
     private final LoHangDAO loHangDAO;
-    private final ThuocBUS thuocBUS;
+    private ThuocBUS thuocBUS;
     // private final NhaCungCapBUS nhaCungCapBUS;
 
     private LoHangBUS() {
         this.loHangDAO = LoHangDAO.getInstance();
-        this.thuocBUS = ThuocBUS.getInstance();
+        // this.thuocBUS = ThuocBUS.getInstance();
         // this.nhaCungCapBUS = NhaCungCapBUS.getInstance();
         this.listLoHang = this.loHangDAO.selectAll();
     }
@@ -172,5 +172,10 @@ public class LoHangBUS {
             mapMaLh.put(lh.getMaLh(), lh);
         }
         return mapMaLh;
+    }
+
+    // ========== SET BUS ==========
+    public void setThuocBUS(ThuocBUS thuocBUS) {
+        this.thuocBUS = thuocBUS;
     }
 }

@@ -17,16 +17,16 @@ public class PhieuNhapBUS {
     // field
     private ArrayList<PhieuNhapDTO> listPhieuNhap;
     private final PhieuNhapDAO phieuNhapDAO;
-    private final ChiTietPnBUS chiTietPnBUS;
-    private final LoHangBUS loHangBUS;
-    private final NhanVienBUS nhanVienBUS;
+    private ChiTietPnBUS chiTietPnBUS;
+    private LoHangBUS loHangBUS;
+    private NhanVienBUS nhanVienBUS;
 
     private PhieuNhapBUS() {
         this.phieuNhapDAO = PhieuNhapDAO.getInstance();
-        this.chiTietPnBUS = ChiTietPnBUS.getInstance();
+        // this.chiTietPnBUS = ChiTietPnBUS.getInstance();
         this.listPhieuNhap = this.phieuNhapDAO.selectAll();
-        this.loHangBUS = LoHangBUS.getInstance();
-        this.nhanVienBUS = NhanVienBUS.getInstance();
+        // this.loHangBUS = LoHangBUS.getInstance();
+        // this.nhanVienBUS = NhanVienBUS.getInstance();
     }
 
     // singleton init
@@ -171,5 +171,18 @@ public class PhieuNhapBUS {
             mapMaPn.put(pn.getMaPn(), pn);
         }
         return mapMaPn;
+    }
+
+    // ========== SET BUS ==========
+    public void setChiTietPnBUS(ChiTietPnBUS chiTietPnBUS) {
+        this.chiTietPnBUS = chiTietPnBUS;
+    }
+
+    public void setLoHangBUS(LoHangBUS loHangBUS) {
+        this.loHangBUS = loHangBUS;
+    }
+
+    public void setNhanVienBUS(NhanVienBUS nhanVienBUS) {
+        this.nhanVienBUS = nhanVienBUS;
     }
 }

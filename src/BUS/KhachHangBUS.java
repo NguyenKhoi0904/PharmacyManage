@@ -20,8 +20,8 @@ public class KhachHangBUS {
 
     private KhachHangBUS() {
         this.khachHangDAO = KhachHangDAO.getInstance();
-        this.taiKhoanBUS = TaiKhoanBUS.getInstance();
-        this.hoaDonBUS = HoaDonBUS.getInstance();
+        // this.taiKhoanBUS = TaiKhoanBUS.getInstance();
+        // this.hoaDonBUS = HoaDonBUS.getInstance();
         this.listKhachHang = this.khachHangDAO.selectAll();
     }
 
@@ -171,5 +171,15 @@ public class KhachHangBUS {
             mapMaKh.put(kh.getMaKh(), kh);
         }
         return mapMaKh;
+    }
+
+    // ========== SET BUS ==========
+
+    public void setTaiKhoanBUS(TaiKhoanBUS taiKhoanBUS) {
+        this.taiKhoanBUS = taiKhoanBUS;
+    }
+
+    public void setHoaDonBUS(HoaDonBUS hoaDonBUS) {
+        this.hoaDonBUS = hoaDonBUS;
     }
 }

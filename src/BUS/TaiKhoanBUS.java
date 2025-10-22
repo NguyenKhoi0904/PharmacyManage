@@ -6,6 +6,8 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import DAO.TaiKhoanDAO;
+import DTO.KhachHangDTO;
+import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 import helper.BCrypt;
 
@@ -17,9 +19,13 @@ public class TaiKhoanBUS {
     // field
     private ArrayList<TaiKhoanDTO> listTaiKhoan;
     private final TaiKhoanDAO taiKhoanDAO;
+    private NhanVienBUS nhanVienBUS;
+    private KhachHangBUS khachHangBUS;
 
     private TaiKhoanBUS() {
         this.taiKhoanDAO = TaiKhoanDAO.getInstance();
+        // this.nhanVienBUS = NhanVienBUS.getInstance();
+        // this.khachHangBUS = KhachHangBUS.getInstance();
         this.listTaiKhoan = this.taiKhoanDAO.selectAll();
     }
 
@@ -188,13 +194,22 @@ public class TaiKhoanBUS {
     }
 
     // Hàm kiểm tra đăng nhập (Sử dụng BCrypt Check)
-    public TaiKhoanDTO login(String taiKhoan, String matKhauTho) {
+    // trả về kiểu tài khoản nhân viên hay khách hàng đăng nhập
+    public Object login(String taiKhoan, String matKhauTho) {
         TaiKhoanDTO taiKhoanDB = taiKhoanDAO.selectByTaiKhoan(taiKhoan);
 
         if (taiKhoanDB != null) {
             // dùng BCrypt để so sánh mật khẩu thô với mật khẩu đã băm
             if (checkLogin(matKhauTho, taiKhoanDB.getMatKhau())) {
-                return taiKhoanDB;
+                // Nếu là nhân viên
+                NhanVienDTO nv = this.nhanVienBUS.getNhanVienByMaTk(taiKhoanDB.getMaTk());
+                if (nv != null)
+                    return nv;
+
+                // Nếu là khách hàng
+                KhachHangDTO kh = this.khachHangBUS.getKhachHangByMaTk(taiKhoanDB.getMaTk());
+                if (kh != null)
+                    return kh;
             }
         }
         return null;
@@ -249,5 +264,14 @@ public class TaiKhoanBUS {
             mapTaiKhoan.put(tk.getTaiKhoan(), tk);
         }
         return mapTaiKhoan;
+    }
+
+    // ========== SET BUS ==========
+    public void setNhanVienBUS(NhanVienBUS nhanVienBUS) {
+        this.nhanVienBUS = nhanVienBUS;
+    }
+
+    public void setKhachHangBUS(KhachHangBUS khachHangBUS) {
+        this.khachHangBUS = khachHangBUS;
     }
 }
