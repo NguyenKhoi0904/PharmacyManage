@@ -40,10 +40,6 @@ public class DanhMucThuocDTO {
 
     @Override
     public String toString() {
-        return "DanhMucThuocDTO{" +
-                "maDmt=" + this.maDmt +
-                ", tenDmt='" + this.tenDmt + '\'' +
-                ", trangthai='" + this.trangThai + '\'' +
-                '}';
+        return this.maDmt + " - " + this.tenDmt;
     }
 }

@@ -95,6 +95,7 @@ public class LoginFrame extends JFrame {
 
             if (user == null) {
                 JOptionPane.showMessageDialog(this, "Sai Mật Khẩu Hoặc Tài Khoản", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
             // Phân biệt loại người dùng
@@ -102,6 +103,9 @@ public class LoginFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Chào nhân viên: " + username);
 
                 // chuyển trang nhân viên
+                SwingUtilities.invokeLater(() -> {
+                    new ThuocGUI().setVisible(true);
+                });
 
                 this.dispose();
             } else if (user instanceof KhachHangDTO kh) {

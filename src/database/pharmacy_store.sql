@@ -189,8 +189,8 @@ INSERT INTO phieunhap (ma_pn, ma_nv, thoi_gian_nhap, dia_diem, trang_thai) VALUE
 
 -- 9. Thuốc (ma_thuoc: 61, 62. Đã thêm url_anh)
 INSERT INTO thuoc (ma_thuoc, ma_dmt, ten_thuoc, gia, don_vi_tinh, nha_san_xuat, xuat_xu, url_anh, trang_thai) VALUES
-(61, 201, 'Panadol Cold & Flu', 25000.00, 'Vỉ (10 viên)', 'GSK', 'Anh', 'images/thuoc/panadol_61.png', 1),
-(62, 202, 'Amoxicillin 500mg', 15000.00, 'Hộp (20 viên)', 'DHG Pharma', 'Việt Nam', 'images/thuoc/amoxicillin_62.png', 1);
+(61, 201, 'Panadol Cold & Flu', 25000.00, 'Vỉ (10 viên)', 'GSK', 'Anh', 'image/placeholder_them_thuoc.jpg', 1),
+(62, 202, 'Amoxicillin 500mg', 15000.00, 'Hộp (20 viên)', 'DHG Pharma', 'Việt Nam', 'image/placeholder_them_thuoc.jpg', 1);
 
 -- 6. Lô Hàng (ma_lh: 51-54. Đã thêm ma_thuoc)
 INSERT INTO lohang (ma_lh, ma_ncc, ma_thuoc, sl_nhap, sl_ton, ngay_sx, han_sd, gia_nhap, trang_thai) VALUES

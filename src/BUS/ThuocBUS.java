@@ -132,10 +132,10 @@ public class ThuocBUS {
     }
 
     private boolean checkIfLoHangExist(int ma_thuoc) {
-        if (this.loHangBUS.getListLoHang().stream().anyMatch(lh -> lh.getMaThuoc() == ma_thuoc)) {
-            return false;
-        }
-        return true;
+        // Trả về true nếu CÓ lô hàng chỉ đến thuốc này
+        return this.loHangBUS.getListLoHang()
+                .stream()
+                .anyMatch(lh -> lh.getMaThuoc() == ma_thuoc);
     }
 
     // ========== GET DỮ LIỆU ==========
