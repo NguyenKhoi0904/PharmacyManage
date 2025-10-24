@@ -3,7 +3,11 @@ import javax.swing.text.*;
 
 public class NumberOnlyField extends JTextField {
     public NumberOnlyField() {
-        super();
+        this("0.0");
+    }
+
+    public NumberOnlyField(String defaultValue) {
+        super(defaultValue);
         ((AbstractDocument) this.getDocument()).setDocumentFilter(new DecimalFilter());
     }
 

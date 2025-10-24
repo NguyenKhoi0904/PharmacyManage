@@ -74,14 +74,7 @@ public class ThuocGUI extends JFrame {
         loadData();
 
         // ===== EVENTS =====
-        btnThem.addActionListener(e -> {
-            ThemThuocDialog dialog = new ThemThuocDialog(this);
-            dialog.setVisible(true);
-            if (dialog.isConfirmed()) {
-                BUSManager.thuocBUS.addThuoc(dialog.getThuoc());
-                loadData();
-            }
-        });
+        btnThem.addActionListener(e -> themThuoc());
 
         btnSua.addActionListener(e -> suaThuoc());
         btnXoa.addActionListener(e -> xoaThuoc());
@@ -114,6 +107,15 @@ public class ThuocGUI extends JFrame {
         }
     }
 
+    private void themThuoc() {
+        ThemThuocDialog dialog = new ThemThuocDialog(this);
+        dialog.setVisible(true);
+        if (dialog.isConfirmed()) {
+            BUSManager.thuocBUS.addThuoc(dialog.getThuoc());
+            loadData();
+        }
+    }
+
     private void suaThuoc() {
         int viewRow = tblThuoc.getSelectedRow();
         if (viewRow == -1) {
@@ -130,8 +132,7 @@ public class ThuocGUI extends JFrame {
             return;
         }
 
-        ThemThuocDialog dialog = new ThemThuocDialog(this);
-        // Có thể thêm hàm setThuoc(thuoc) để prefill form ở dialog
+        SuaThuocDialog dialog = new SuaThuocDialog(this, thuoc);
         dialog.setVisible(true);
 
         if (dialog.isConfirmed()) {
