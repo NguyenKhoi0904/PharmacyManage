@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import utils.IconUtils;
 /**
  *
  * @author admin
@@ -57,13 +59,12 @@ public class HoaDonForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        addLabel = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        addButton = new javax.swing.JButton();
         listProductPanel = new javax.swing.JPanel();
         cartPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         cartProductsPanel = new javax.swing.JPanel();
-        deleteLabel = new javax.swing.JLabel();
+        deleteButton = new javax.swing.JButton();
         invoicePanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -87,8 +88,11 @@ public class HoaDonForm extends javax.swing.JFrame {
 
         infoPanel.setName(""); // NOI18N
 
+        productIconLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         productIconLabel.setText("img");
         productIconLabel.setToolTipText("");
+        productIconLabel.setMaximumSize(new java.awt.Dimension(231, 202));
+        productIconLabel.setPreferredSize(new java.awt.Dimension(231, 202));
 
         jLabel2.setBackground(new java.awt.Color(0, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -129,8 +133,8 @@ public class HoaDonForm extends javax.swing.JFrame {
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(productIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addComponent(productIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,9 +163,6 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(infoPanelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(productIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(infoPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,8 +178,11 @@ public class HoaDonForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(productIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -225,35 +229,27 @@ public class HoaDonForm extends javax.swing.JFrame {
         jTextField6.setText("So luong...");
         jTextField6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jPanel3.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(0, 255, 0));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        addLabel.setBackground(new java.awt.Color(255, 255, 51));
-        addLabel.setText("jLabel8");
-        addLabel.setOpaque(true);
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setText("Them");
+        addButton.setText("jButton3");
+        addButton.setMinimumSize(new java.awt.Dimension(23, 23));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addLabel)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(addLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -261,10 +257,11 @@ public class HoaDonForm extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,20 +279,22 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(refreshLabel)
-                .addGap(62, 62, 62)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(refreshLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         actionPanelLayout.setVerticalGroup(
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(actionPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(refreshLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox1)))
+            .addGroup(actionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(refreshLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout listProductPanelLayout = new javax.swing.GroupLayout(listProductPanel);
@@ -315,10 +314,11 @@ public class HoaDonForm extends javax.swing.JFrame {
             productsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(productsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(productsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(listProductPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(actionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 29, Short.MAX_VALUE))
+            .addGroup(productsPanelLayout.createSequentialGroup()
+                .addComponent(listProductPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         productsPanelLayout.setVerticalGroup(
             productsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,7 +326,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listProductPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(listProductPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -345,10 +345,10 @@ public class HoaDonForm extends javax.swing.JFrame {
         );
         cartProductsPanelLayout.setVerticalGroup(
             cartProductsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 209, Short.MAX_VALUE)
         );
 
-        deleteLabel.setText("jLabel8");
+        deleteButton.setText("jButton3");
 
         javax.swing.GroupLayout cartPanelLayout = new javax.swing.GroupLayout(cartPanel);
         cartPanel.setLayout(cartPanelLayout);
@@ -357,21 +357,22 @@ public class HoaDonForm extends javax.swing.JFrame {
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cartPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(cartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cartProductsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cartPanelLayout.createSequentialGroup()
-                        .addGap(0, 589, Short.MAX_VALUE)
-                        .addComponent(deleteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(cartProductsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cartPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11))
         );
         cartPanelLayout.setVerticalGroup(
             cartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cartPanelLayout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cartProductsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cartProductsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(deleteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel4.setBackground(new java.awt.Color(0, 255, 255));
@@ -439,7 +440,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         invoicePanel.setLayout(invoicePanelLayout);
         invoicePanelLayout.setHorizontalGroup(
             invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(invoicePanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -471,13 +471,14 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(genderComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, invoicePanelLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         invoicePanelLayout.setVerticalGroup(
             invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -526,25 +527,25 @@ public class HoaDonForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addComponent(cartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(productsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(invoicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(invoicePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                    .addComponent(cartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(productsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(invoicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -635,145 +636,159 @@ public class HoaDonForm extends javax.swing.JFrame {
 }
     private void setIcons()
     {
-        setIcon(magnifyingGlassLabel, "magnifying-glass.png", true);
-        setIcon(refreshLabel, "refresh.png", true);
-        setIcon(addLabel, "cart.png", true);
-        setIcon(deleteLabel, "trash.png", true);
+        IconUtils.setIcon(productIconLabel, "product-image/hapacol_650_extra_dhg.png", true);
+        IconUtils.setIcon(magnifyingGlassLabel, "magnifying-glass.png", true);
+        IconUtils.setIcon(refreshLabel, "refresh.png", true);
+        IconUtils.setIcon(addButton, "cart.png", true);
+        IconUtils.setIcon(deleteButton, "trash.png", true);
     }
-    
-private void setIcon(JLabel label, String fileName, boolean deleteText) {
-    SwingUtilities.invokeLater(() -> {
-        if (deleteText) {
-            label.setText("");
+    private void setupListProduct() {
+    String[] columnNames = {
+        "STT", "Mã thuốc", "Tên thuốc", "Danh mục",
+        "Xuất xứ", "Đơn vị tính", "Số lượng tồn", "Đơn giá"
+    };
+
+    Object[][] data = {
+        {"1", "745KC1IKX", "Ninh Tâm Vương Hồng Bàng", "Hệ tim mạch & tạo máu", "Nhật Bản", "Hộp", "1051", "180,000"},
+        {"2", "798E63U16", "Đại Tràng Trường Phúc", "Hệ tiêu hóa & gan mật", "Việt Nam", "Hộp", "1018", "105,000"},
+        {"3", "BV07519DS", "Bài Thạch Trường Phúc", "Hệ tiêu hóa & gan mật", "Việt Nam", "Hộp", "1074", "95,000"},
+        {"4", "ESMJMM7", "Bổ Gan Trường Phúc", "Hệ tiêu hóa & gan mật", "Việt Nam", "Hộp", "1034", "95,000"},
+        {"5", "MJ9AB7J1I", "Viên sủi Vitattrum C BRV", "Hệ tiêu hóa & gan mật", "Mỹ", "Hộp", "1075", "24,000"},
+        {"6", "VFZCHLHIE", "Panadol Extra đỏ", "Thuốc giảm đau", "Mỹ", "Hộp", "1030", "250,000"},
+        {"7", "X12IF04BZ", "Hapacol 650 DHG", "Thuốc giảm đau", "Việt Nam", "Hộp", "1021", "250,000"},
+        {"8", "XRBI04BZ", "Siro C.C Life 100mg/5ml Foripharm", "Hệ tiêu hóa & gan mật", "Việt Nam", "Chai", "1032", "30,000"},
+        {"9", "XRZXF04BZ", "Bột pha hỗn dịch uống Smecta vị cam", "Hệ tiêu hóa & gan mật", "Pháp", "Gói", "1033", "4,000"},
+        {"10", "745KC1IKX", "Ninh Tâm Vương Hồng Bàng", "Hệ tim mạch & tạo máu", "Nhật Bản", "Hộp", "1051", "180,000"},
+        {"11", "798E63U16", "Đại Tràng Trường Phúc", "Hệ tiêu hóa & gan mật", "Việt Nam", "Hộp", "1018", "105,000"},
+        {"12", "BV07519DS", "Bài Thạch Trường Phúc", "Hệ tiêu hóa & gan mật", "Việt Nam", "Hộp", "1074", "95,000"},
+    };
+
+    DefaultTableModel model = new DefaultTableModel(data, columnNames);
+    JTable table = new JTable(model);
+    table.setFillsViewportHeight(true);
+    table.setRowHeight(28);
+    table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+    table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+    table.getTableHeader().setBackground(new Color(240, 240, 240));
+    table.getTableHeader().setForeground(Color.BLACK);
+
+    // Tùy chỉnh kích thước cột
+    table.getColumnModel().getColumn(0).setPreferredWidth(50);  // STT
+    table.getColumnModel().getColumn(1).setPreferredWidth(100); // Mã thuốc
+    table.getColumnModel().getColumn(2).setPreferredWidth(200); // Tên thuốc
+    table.getColumnModel().getColumn(3).setPreferredWidth(150); // Danh mục
+    table.getColumnModel().getColumn(4).setPreferredWidth(100); // Xuất xứ
+    table.getColumnModel().getColumn(5).setPreferredWidth(80);  // Đơn vị tính
+    table.getColumnModel().getColumn(6).setPreferredWidth(100); // Số lượng tồn
+    table.getColumnModel().getColumn(7).setPreferredWidth(120); // Đơn giá (tăng kích thước để tránh bị che)
+
+    // Bo góc, làm gọn bảng
+    table.setShowHorizontalLines(true);
+    table.setShowVerticalLines(false);
+    table.setGridColor(new Color(230, 230, 230));
+    table.setIntercellSpacing(new Dimension(0, 1));
+
+    // Căn giữa và căn phải các cột cần thiết
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+    table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+    table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+
+    DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+    rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+    table.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+    table.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+
+    // Tạo hiệu ứng nền xen kẽ
+    table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable tbl, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
+            if (!isSelected) {
+                c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(248, 248, 248));
+            }
+            return c;
         }
-
-        // Đường dẫn tính từ thư mục gốc classpath (bin hoặc out)
-        java.net.URL imgURL = getClass().getResource("/icon/" + fileName);
-        if (imgURL == null) {
-            System.err.println("Không tìm thấy file icon: " + fileName);
-            return;
-        }
-
-        ImageIcon originalIcon = new ImageIcon(imgURL);
-        int width = label.getWidth();
-        int height = label.getHeight();
-
-        if (width <= 0 || height <= 0) {
-            // Nếu label chưa render xong, trì hoãn việc scale
-            label.addComponentListener(new java.awt.event.ComponentAdapter() {
-                @Override
-                public void componentResized(java.awt.event.ComponentEvent e) {
-                    setIcon(label, fileName, deleteText);
-                    label.removeComponentListener(this);
-                }
-            });
-            return;
-        }
-
-        Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        label.setIcon(new ImageIcon(scaledImage));
     });
-}
+
+    // Tạo JScrollPane với thanh cuộn rõ ràng
+    JScrollPane scrollPane = new JScrollPane(table);
+    scrollPane.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(new Color(220, 220, 220)),
+        BorderFactory.createEmptyBorder(5, 5, 5, 5)
+    ));
+    scrollPane.getViewport().setBackground(Color.WHITE);
     
-    private void setupListProduct()
-    {
-        String[] columnNames = {
-            "STT", "Mã thuốc", "Tên thuốc", "Danh mục", 
-            "Xuất xứ", "Đơn vị tính", "Số lượng tồn", "Đơn giá"
+    // Đảm bảo thanh cuộn luôn hiển thị khi cần
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    
+    // Tăng tốc độ cuộn
+    scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+    scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
+
+    // Cải thiện bố cục của panel
+    listProductPanel.setLayout(new BorderLayout());
+    listProductPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Thêm padding
+    listProductPanel.add(scrollPane, BorderLayout.CENTER);
+
+}
+    private void setupCartProducts() {
+        String[] columnNames = {"STT", "Tên thuốc", "Số lượng", "Đơn giá"};
+        Object[][] data = {
+            {"1", "Ninh Tâm Vương Hồng Bàng", "1", "180,000"},
+            {"2", "Đại Tràng Trường Phúc", "2", "105,000"}
         };
 
-        Object[][] data = {
-            {"1", "745KC1IKX", "Ninh Tâm Vương Hồng Bàng", "Hệ tim mạch & tạo máu", "Nhật Bản", "Hộp", "1051", "180,000"},
-            {"2", "798E63U16", "Đại Tràng Trường Phúc", "Hệ tiêu hóa & gan mật", "Việt Nam", "Hộp", "1018", "105,000"},
-            {"3", "BV07519DS", "Bài Thạch Trường Phúc", "Hệ tiêu hóa & gan mật", "Việt Nam", "Hộp", "1074", "95,000"},
-            {"4", "ESMJMM7", "Bổ Gan Trường Phúc", "Hệ tiêu hóa & gan mật", "Việt Nam", "Hộp", "1034", "95,000"},
-            {"5", "MJ9AB7J1I", "Viên sủi Vitattrum C BRV", "Hệ tiêu hóa & gan mật", "Mỹ", "Hộp", "1075", "24,000"},
-            {"6", "VFZCHLHIE", "Panadol Extra đỏ", "Thuốc giảm đau", "Mỹ", "Hộp", "1030", "250,000"},
-            {"7", "X12IF04BZ", "Hapacol 650 DHG", "Thuốc giảm đau", "Việt Nam", "Hộp", "1021", "250,000"},
-            {"8", "XRBI04BZ", "Siro C.C Life 100mg/5ml Foripharm", "Hệ tiêu hóa & gan mật", "Việt Nam", "Chai", "1032", "30,000"},
-            {"9", "XRZXF04BZ", "Bột pha hỗn dịch uống Smecta vị cam", "Hệ tiêu hóa & gan mật", "Pháp", "Gói", "1033", "4,000"},
-        };
-        
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
-        listProductPanel.setLayout(new BorderLayout());
-        listProductPanel.add(scrollPane); 
-        
-        // Chiều cao hàng
+        table.setFillsViewportHeight(true);
         table.setRowHeight(28);
-
-        // Font chữ
         table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-        // Màu header
         table.getTableHeader().setBackground(new Color(240, 240, 240));
         table.getTableHeader().setForeground(Color.BLACK);
+        table.setGridColor(new Color(230, 230, 230));
+        table.setIntercellSpacing(new Dimension(0, 1));
+        table.setShowHorizontalLines(true);
+        table.setShowVerticalLines(false);
 
-        // Căn giữa cột STT
+        // Căn giữa và căn phải
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 
-        // Căn phải cột "Số lượng tồn" và "Đơn giá"
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-        table.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
-        table.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
-
-        // Tự động giãn cột cho đẹp
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        
-    }
-    private void setupCartProducts()
-    {
-        String[] columnNames = {
-            "STT", "Tên thuốc", "Số lượng", "Đơn giá"
-        };
-
-        Object[][] data = {
-            {"1", "Ninh Tâm Vương Hồng Bàng",  "1",  "180,000"},
-            {"2", "Đại Tràng Trường Phúc",  "2",  "105,000"}
-        };
-        
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
-        cartProductsPanel.setLayout(new BorderLayout());
-        cartProductsPanel.add(scrollPane); 
-        
-        // Chiều cao hàng
-        table.setRowHeight(28);
-
-        // Font chữ
-        table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-        // Màu header
-        table.getTableHeader().setBackground(new Color(240, 240, 240));
-        table.getTableHeader().setForeground(Color.BLACK);
-
-        // Căn giữa cột STT
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-
-        // Căn phải cột "Số lượng tồn" và "Đơn giá"
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
         table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
         table.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
 
-        // Tự động giãn cột cho đẹp
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        // Nền xen kẽ
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable tbl, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(248, 248, 248));
+                }
+                return c;
+            }
+        });
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
+        scrollPane.getViewport().setBackground(Color.WHITE);
+
+        cartProductsPanel.setLayout(new BorderLayout());
+        cartProductsPanel.add(scrollPane, BorderLayout.CENTER);
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionPanel;
-    private javax.swing.JLabel addLabel;
+    private javax.swing.JButton addButton;
     private javax.swing.JPanel cartPanel;
     private javax.swing.JPanel cartProductsPanel;
-    private javax.swing.JLabel deleteLabel;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JComboBox<String> genderComboBox;
     private javax.swing.JPanel infoPanel;
     private javax.swing.JPanel invoicePanel;
@@ -793,7 +808,6 @@ private void setIcon(JLabel label, String fileName, boolean deleteText) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
