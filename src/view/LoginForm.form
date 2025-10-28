@@ -170,7 +170,7 @@
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ImageIcon icon = new ImageIcon(getClass().getResource(&quot;/view/image/pharmacy.png&quot;));&#xa;int width = 500;&#xa;int height = 500;&#xa;Image img = icon.getImage();&#xa;Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ImageIcon icon = new ImageIcon(getClass().getResource(&quot;../icon/pharmacy.png&quot;));&#xa;int width = 500;&#xa;int height = 500;&#xa;Image img = icon.getImage();&#xa;Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);"/>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jLabel2.setIcon(new ImageIcon(scaledImg));"/>
       </AuxValues>
     </Component>

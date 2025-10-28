@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-import com.formdev.flatlaf.FlatDarculaLaf;
 import javax.swing.*;
 import com.formdev.flatlaf.*;
 import java.awt.Image;
@@ -21,8 +20,6 @@ public class LoginForm extends javax.swing.JFrame {
     public LoginForm() {
         initComponents();
         jPasswordField1.putClientProperty("JPasswordField.showRevealButton", true);
-//        jPasswordField1.putClientProperty("JPasswordField.revealIcon", new ImageIcon(getClass().getResource("./image/visible.png")));
-//        jPasswordField1.putClientProperty("JPasswordField.hideIcon", new ImageIcon(getClass().getResource("./image/hide.png")));
         setLocationRelativeTo(null);
     }
 
@@ -42,7 +39,7 @@ public class LoginForm extends javax.swing.JFrame {
         jTextField_TaiKhoan = new javax.swing.JTextField();
         jLabel_MatKhau = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
-        ImageIcon icon = new ImageIcon(getClass().getResource("/view/image/pharmacy.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("../icon/pharmacy.png"));
         int width = 500;
         int height = 500;
         Image img = icon.getImage();
@@ -195,7 +192,7 @@ public class LoginForm extends javax.swing.JFrame {
         try{
 //            UIManager.setLookAndFeel(new FlatLightLaf());
 
-            FlatDarkLaf.setup();
+            FlatLightLaf.setup();
             UIManager.put("PasswordField.showRevealButton", true);
 
         }catch (Exception ex){
