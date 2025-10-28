@@ -1,106 +1,235 @@
 package view;
 
+import BUS.NhaCungCapBUS;
+import DTO.NhaCungCapDTO;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class NhaCungCapForm extends JFrame {
 
-    private JTextField txtMaNCC, txtTenNCC, txtDiaChi, txtSoDienThoai;
-    private JButton btnThem, btnSua, btnXoa, btnLamMoi;
-    private JTable tblNCC;
+    private JTextField txtMaNCC, txtTenNCC, txtDiaChi, txtSoDT, txtEmail;
+    private JTable table;
+    private JButton btnThem, btnXoa, btnSua, btnLamMoi, btnTimKiem;
+
+    // Thêm BUS
+    private NhaCungCapBUS nccBUS = NhaCungCapBUS.getInstance();
 
     public NhaCungCapForm() {
-        setTitle("Quản lý Nhà Cung Cấp");
+        setTitle("Quản Lý Nhà Cung Cấp");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout(15, 15));
+        setSize(1350, 800);
+        setLayout(new BorderLayout());
 
-        // ===== TIÊU ĐỀ =====
-        JLabel lblTitle = new JLabel("QUẢN LÝ NHÀ CUNG CẤP", SwingConstants.CENTER);
-        lblTitle.setOpaque(true);
-        lblTitle.setBackground(new Color(0, 102, 204)); // xanh lam đậm
+        // ================= PANEL TIÊU ĐỀ =================
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(new Color(0, 255, 255));
+        JLabel lblTitle = new JLabel("QUẢN LÝ NHÀ CUNG CẤP");
         lblTitle.setForeground(Color.WHITE);
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 28));
-        lblTitle.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        add(lblTitle, BorderLayout.NORTH);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        headerPanel.add(lblTitle);
+        add(headerPanel, BorderLayout.NORTH);
 
-        // ===== PANEL NHẬP LIỆU =====
-        JPanel pnlInput = new JPanel(new GridLayout(4, 2, 15, 15));
-        pnlInput.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+        // ================= PANEL TRUNG TÂM =================
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.setBackground(new Color(245, 245, 245));
 
-        JLabel lblMa = new JLabel("Mã NCC:");
-        JLabel lblTen = new JLabel("Tên NCC:");
+        JPanel inputPanel = new JPanel(new GridBagLayout());
+        inputPanel.setBackground(new Color(245, 245, 245));
+        inputPanel.setBorder(BorderFactory.createTitledBorder("Thông tin nhà cung cấp"));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        Font lblFont = new Font("Segoe UI", Font.PLAIN, 18);
+        Font txtFont = new Font("Segoe UI", Font.PLAIN, 16);
+
+        JLabel lblMaNCC = new JLabel("Mã NCC:");
+        lblMaNCC.setFont(lblFont);
+        gbc.gridx = 0; gbc.gridy = 0;
+        inputPanel.add(lblMaNCC, gbc);
+
+        txtMaNCC = new JTextField(15);
+        txtMaNCC.setFont(txtFont);
+        gbc.gridx = 1; gbc.gridy = 0;
+        inputPanel.add(txtMaNCC, gbc);
+
+        JLabel lblTenNCC = new JLabel("Tên NCC:");
+        lblTenNCC.setFont(lblFont);
+        gbc.gridx = 2; gbc.gridy = 0;
+        inputPanel.add(lblTenNCC, gbc);
+
+        txtTenNCC = new JTextField(15);
+        txtTenNCC.setFont(txtFont);
+        gbc.gridx = 3; gbc.gridy = 0;
+        inputPanel.add(txtTenNCC, gbc);
+
+        JLabel lblSoDT = new JLabel("Số điện thoại:");
+        lblSoDT.setFont(lblFont);
+        gbc.gridx = 0; gbc.gridy = 1;
+        inputPanel.add(lblSoDT, gbc);
+
+        txtSoDT = new JTextField(15);
+        txtSoDT.setFont(txtFont);
+        gbc.gridx = 1; gbc.gridy = 1;
+        inputPanel.add(txtSoDT, gbc);
+
+        JLabel lblEmail = new JLabel("Email:");
+        lblEmail.setFont(lblFont);
+        gbc.gridx = 2; gbc.gridy = 1;
+        inputPanel.add(lblEmail, gbc);
+
+        txtEmail = new JTextField(15);
+        txtEmail.setFont(txtFont);
+        gbc.gridx = 3; gbc.gridy = 1;
+        inputPanel.add(txtEmail, gbc);
+
         JLabel lblDiaChi = new JLabel("Địa chỉ:");
-        JLabel lblSDT = new JLabel("Số điện thoại:");
+        lblDiaChi.setFont(lblFont);
+        gbc.gridx = 0; gbc.gridy = 2;
+        inputPanel.add(lblDiaChi, gbc);
 
-        Font fontLabel = new Font("Segoe UI", Font.PLAIN, 18);
-        lblMa.setFont(fontLabel);
-        lblTen.setFont(fontLabel);
-        lblDiaChi.setFont(fontLabel);
-        lblSDT.setFont(fontLabel);
+        txtDiaChi = new JTextField(35);
+        txtDiaChi.setFont(txtFont);
+        gbc.gridx = 1; gbc.gridy = 2;
+        gbc.gridwidth = 3;
+        inputPanel.add(txtDiaChi, gbc);
+        gbc.gridwidth = 1;
 
-        txtMaNCC = new JTextField();
-        txtTenNCC = new JTextField();
-        txtDiaChi = new JTextField();
-        txtSoDienThoai = new JTextField();
+       	JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        buttonPanel.setBackground(new Color(245, 245, 245));
 
-        Font fontField = new Font("Segoe UI", Font.PLAIN, 18);
-        txtMaNCC.setFont(fontField);
-        txtTenNCC.setFont(fontField);
-        txtDiaChi.setFont(fontField);
-        txtSoDienThoai.setFont(fontField);
+        btnThem = createStyledButton("Thêm");
+        btnXoa = createStyledButton("Xóa");
+        btnSua = createStyledButton("Sửa");
+        btnLamMoi = createStyledButton("Làm Mới");
+        btnTimKiem = createStyledButton("Tìm Kiếm");
 
-        pnlInput.add(lblMa); pnlInput.add(txtMaNCC);
-        pnlInput.add(lblTen); pnlInput.add(txtTenNCC);
-        pnlInput.add(lblDiaChi); pnlInput.add(txtDiaChi);
-        pnlInput.add(lblSDT); pnlInput.add(txtSoDienThoai);
+        buttonPanel.add(btnThem);
+        buttonPanel.add(btnXoa);
+        buttonPanel.add(btnSua);
+        buttonPanel.add(btnLamMoi);
+        buttonPanel.add(btnTimKiem);
 
-        add(pnlInput, BorderLayout.CENTER);
+        JPanel topCenterPanel = new JPanel(new BorderLayout());
+        topCenterPanel.add(inputPanel, BorderLayout.CENTER);
+        topCenterPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // ===== NÚT CHỨC NĂNG =====
-        JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
-        btnThem = new JButton("Thêm");
-        btnSua = new JButton("Sửa");
-        btnXoa = new JButton("Xóa");
-        btnLamMoi = new JButton("Làm mới");
+        centerPanel.add(topCenterPanel, BorderLayout.NORTH);
+        add(centerPanel, BorderLayout.CENTER);
 
-        JButton[] buttons = {btnThem, btnSua, btnXoa, btnLamMoi};
-        for (JButton btn : buttons) {
-            btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
-            btn.setBackground(new Color(30, 144, 255));
-            btn.setForeground(Color.WHITE);
-            btn.setFocusPainted(false);
-            btn.setPreferredSize(new Dimension(130, 45));
-        }
+        // ================= BẢNG DỮ LIỆU =================
+        String[] columnNames = {"Mã NCC", "Tên NCC", "Số điện thoại", "Email", "Địa chỉ", "Trạng thái"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        table = new JTable(model);
+        table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        table.setRowHeight(28);
 
-        pnlButtons.add(btnThem);
-        pnlButtons.add(btnSua);
-        pnlButtons.add(btnXoa);
-        pnlButtons.add(btnLamMoi);
-        add(pnlButtons, BorderLayout.SOUTH);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Danh sách nhà cung cấp"));
 
-        // ===== BẢNG HIỂN THỊ =====
-        String[] columnNames = {"Mã NCC", "Tên NCC", "Địa chỉ", "Số điện thoại"};
-        Object[][] data = {
-            {"NCC001", "Công ty Dược Phẩm ABC", "TP. HCM", "0909123456"},
-            {"NCC002", "Nhà Cung Cấp Thuốc Bình Minh", "Hà Nội", "0988123456"}
-        };
-        tblNCC = new JTable(data, columnNames);
-        tblNCC.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        tblNCC.setRowHeight(28);
-        JScrollPane scrollPane = new JScrollPane(tblNCC);
-        scrollPane.setBorder(BorderFactory.createTitledBorder("Danh sách Nhà Cung Cấp"));
-        add(scrollPane, BorderLayout.EAST);
+        add(scrollPane, BorderLayout.SOUTH);
 
-        // ===== CÀI KÍCH THƯỚC KHUNG =====
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) (screenSize.width * 0.65);
-        int height = (int) (screenSize.height * 0.65);
-        setSize(width, height);
-        setLocationRelativeTo(null);
+        // ================= SỰ KIỆN NÚT =================
+        addEventHandlers();
+
         setVisible(true);
+        loadTableNCC();
+    }
+
+    private JButton createStyledButton(String text) {
+        JButton btn = new JButton(text);
+        btn.setBackground(new Color(0, 255, 255));
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btn.setPreferredSize(new Dimension(140, 45));
+        btn.setFocusPainted(false);
+        return btn;
+    }
+
+    private void addEventHandlers() {
+
+        btnThem.addActionListener(e -> {
+            try {
+                int ma = Integer.parseInt(txtMaNCC.getText());
+                NhaCungCapDTO ncc = new NhaCungCapDTO(ma, txtTenNCC.getText(), txtSoDT.getText(),
+                        txtDiaChi.getText(), txtEmail.getText(), 1);
+
+                if (nccBUS.addNhaCungCap(ncc)) {
+                    JOptionPane.showMessageDialog(this, "Thêm thành công!");
+                    loadTableNCC();
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ!");
+            }
+        });
+
+        btnSua.addActionListener(e -> {
+            try {
+                int ma = Integer.parseInt(txtMaNCC.getText());
+                NhaCungCapDTO ncc = new NhaCungCapDTO(ma, txtTenNCC.getText(), txtSoDT.getText(),
+                        txtDiaChi.getText(), txtEmail.getText(), 1);
+
+                if (nccBUS.updateNhaCungCap(ncc)) {
+                    JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+                    loadTableNCC();
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ!");
+            }
+        });
+
+        btnXoa.addActionListener(e -> {
+            try {
+                int ma = Integer.parseInt(txtMaNCC.getText());
+                if (nccBUS.deleteNhaCungCap(ma)) {
+                    JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                    loadTableNCC();
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Chọn mã nhà cung cấp hợp lệ!");
+            }
+        });
+
+        btnLamMoi.addActionListener(e -> {
+            txtMaNCC.setText("");
+            txtTenNCC.setText("");
+            txtSoDT.setText("");
+            txtEmail.setText("");
+            txtDiaChi.setText("");
+        });
+
+        // Click bảng -> đổ textfield
+        table.getSelectionModel().addListSelectionListener(e -> {
+            int row = table.getSelectedRow();
+            if (row >= 0) {
+                txtMaNCC.setText(table.getValueAt(row, 0).toString());
+                txtTenNCC.setText(table.getValueAt(row, 1).toString());
+                txtSoDT.setText(table.getValueAt(row, 2).toString());
+                txtEmail.setText(table.getValueAt(row, 3).toString());
+                txtDiaChi.setText(table.getValueAt(row, 4).toString());
+            }
+        });
+    }
+
+    private void loadTableNCC() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (NhaCungCapDTO ncc : nccBUS.getListNhaCungCap()) {
+            model.addRow(new Object[]{
+                    ncc.getMaNcc(),
+                    ncc.getTenNcc(),
+                    ncc.getSdtNcc(),
+                    ncc.getEmailNcc(),
+                    ncc.getDiaChi(),
+                    ncc.getTrangThai()
+            });
+        }
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(NhaCungCapForm::new);
+        SwingUtilities.invokeLater(() -> new NhaCungCapForm());
     }
 }
