@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Statement;
 
 import DTO.HoaDonDTO;
 import database.JDBCUtil;
@@ -64,27 +65,43 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
 
     @Override
     public int insert(HoaDonDTO data) {
-        int result = 0;
+        int generatedId = -1; // ID của hóa đơn vừa thêm
+
         try {
-            // init connection
-            String sql = "INSERT INTO hoadon (ma_hd,ma_nv,ma_kh,ma_km,tong_tien,ngay_xuat,phuong_thuc_tt,trang_thai) VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO hoadon (ma_nv, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, trang_thai) VALUES (?, ?, ?, ?, ?, ?, ?)";
             Connection conn = JDBCUtil.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, data.getMaHd());
-            ps.setInt(2, data.getMaNv());
-            ps.setInt(3, data.getMaKh());
-            ps.setInt(4, data.getMaKm());
-            ps.setBigDecimal(5, data.getTongTien());
-            ps.setDate(6, data.getNgayXuat());
-            ps.setString(7, data.getPhuongThucTt());
-            ps.setInt(8, data.getTrangThai());
-            result = ps.executeUpdate();
+
+            // Thêm RETURN_GENERATED_KEYS để JDBC biết bạn muốn lấy ID tự tăng
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setInt(1, data.getMaNv());
+            ps.setInt(2, data.getMaKh());
+            ps.setInt(3, data.getMaKm());
+            ps.setBigDecimal(4, data.getTongTien());
+            ps.setDate(5, data.getNgayXuat());
+            ps.setString(6, data.getPhuongThucTt());
+            ps.setInt(7, data.getTrangThai());
+
+            int rowsAffected = ps.executeUpdate(); // result cũ
+
+            if (rowsAffected > 0) {
+                // Lấy ID tự tăng vừa sinh
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        generatedId = rs.getInt(1);
+                        data.setMaHd(generatedId); // Gán lại vào DTO 
+                    }
+                }
+            }
+
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+
+        return generatedId; // Trả về mã hóa đơn vừa thêm
     }
+
 
     @Override
     public int update(HoaDonDTO data) {
