@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import utils.IconUtils;
 
 /**
  *
@@ -34,43 +35,9 @@ public class NhanVienForm extends javax.swing.JFrame {
     }
     private void setIcons()
     {
-        setIcon(magnifyingGlassLabel, "magnifying-glass.png", true);
-        setIcon(refreshLabel, "refresh.png", true);
+        IconUtils.setIcon(magnifyingGlassLabel, "magnifying-glass.png", true);
+        IconUtils.setIcon(refreshLabel, "refresh.png", true);
     }  
-    
-    private void setIcon(JLabel label, String fileName, boolean deleteText) {
-        SwingUtilities.invokeLater(() -> {
-            if (deleteText) {
-                label.setText("");
-            }
-
-            // Đường dẫn tính từ thư mục gốc classpath (bin hoặc out)
-            java.net.URL imgURL = getClass().getResource("/icon/" + fileName);
-            if (imgURL == null) {
-                System.err.println("Không tìm thấy file icon: " + fileName);
-                return;
-            }
-
-            ImageIcon originalIcon = new ImageIcon(imgURL);
-            int width = label.getWidth();
-            int height = label.getHeight();
-
-            if (width <= 0 || height <= 0) {
-                // Nếu label chưa render xong, trì hoãn việc scale
-                label.addComponentListener(new java.awt.event.ComponentAdapter() {
-                    @Override
-                    public void componentResized(java.awt.event.ComponentEvent e) {
-                        setIcon(label, fileName, deleteText);
-                        label.removeComponentListener(this);
-                    }
-                });
-                return;
-            }
-
-            Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            label.setIcon(new ImageIcon(scaledImage));
-        });
-    }
 
     private void setupListNV()
     {
@@ -142,7 +109,7 @@ public class NhanVienForm extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(769, 510));
+        setSize(new java.awt.Dimension(1350, 800));
 
         jLabel2.setBackground(new java.awt.Color(0, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -166,13 +133,11 @@ public class NhanVienForm extends javax.swing.JFrame {
         NVPanel.setLayout(NVPanelLayout);
         NVPanelLayout.setHorizontalGroup(
             NVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1851, Short.MAX_VALUE)
             .addGroup(NVPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(listNVPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NVPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         NVPanelLayout.setVerticalGroup(
             NVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,9 +209,10 @@ public class NhanVienForm extends javax.swing.JFrame {
         actionPanel.setLayout(actionPanelLayout);
         actionPanelLayout.setHorizontalGroup(
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(actionPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(991, 991, 991))
         );
         actionPanelLayout.setVerticalGroup(
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,7 +250,7 @@ public class NhanVienForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(magnifyingGlassLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addComponent(jTextField4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(refreshLabel)
                 .addGap(37, 37, 37))
@@ -306,11 +272,16 @@ public class NhanVienForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NVPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(NVPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
