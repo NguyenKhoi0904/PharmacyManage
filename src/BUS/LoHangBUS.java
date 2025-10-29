@@ -165,7 +165,16 @@ public class LoHangBUS {
         }
         return 0;
     }
-
+    
+    // sử dụng trong CTHD
+    public int getMaLhByMaThuoc(int ma_thuoc) {
+        for (LoHangDTO lh : this.listLoHang) {
+            if (lh.getMaThuoc() == ma_thuoc) {
+                return lh.getMaLh();
+            }
+        }
+        return 0;
+    }
     public HashMap<Integer, LoHangDTO> getMapByMaLh() {
         HashMap<Integer, LoHangDTO> mapMaLh = new HashMap<Integer, LoHangDTO>();
         for (LoHangDTO lh : this.listLoHang) {

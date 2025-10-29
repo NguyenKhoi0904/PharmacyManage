@@ -123,7 +123,7 @@ CREATE TABLE khuyenmai (
 
 -- 11. Hoá Đơn
 CREATE TABLE hoadon (
-    ma_hd INT PRIMARY KEY,
+    ma_hd INT AUTO_INCREMENT PRIMARY KEY,
     ma_nv INT,
     ma_kh INT,
     ma_km INT NULL,
@@ -204,12 +204,12 @@ INSERT INTO chitiet_pn (ma_pn, ma_lh, don_gia, so_luong) VALUES
 (41, 52, 95000.00, 100),
 (42, 53, 8000.00, 300);
 
--- 11. Hoá Đơn (ma_hd: 71, 72. Đã thêm ma_nv)
-INSERT INTO hoadon (ma_hd, ma_nv, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, trang_thai) VALUES
-(71, 12, 21, 301, 120000.00, '2025-10-08', 'Chuyển khoản', 1), -- NV 12 bán hàng
-(72, 12, 22, NULL, 50000.00, '2025-10-08', 'Tiền mặt', 1); -- NV 12 bán hàng
+-- 11. Hoá Đơn 
+INSERT INTO hoadon ( ma_nv, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, trang_thai) VALUES
+( 12, 21, 301, 120000.00, '2025-10-08', 'Chuyển khoản', 1), -- NV 12 bán hàng
+( 12, 22, NULL, 50000.00, '2025-10-08', 'Tiền mặt', 1); -- NV 12 bán hàng
 
 -- 12. Chi Tiết Hoá Đơn (Dùng ma_hd: 71, 72 và ma_lh/ma_thuoc tương ứng)
 INSERT INTO chitiet_hd (ma_hd, ma_lh, ma_thuoc, don_gia, so_luong) VALUES
-(71, 51, 61, 25000.00, 4), -- Bán 4 viên Thuốc 61 từ Lô 51
-(72, 54, 61, 25000.00, 2); -- Bán 2 viên Thuốc 61 từ Lô 54
+(1, 51, 61, 25000.00, 4), -- Bán 4 viên Thuốc 61 từ Lô 51
+(2, 54, 61, 25000.00, 2); -- Bán 2 viên Thuốc 61 từ Lô 54

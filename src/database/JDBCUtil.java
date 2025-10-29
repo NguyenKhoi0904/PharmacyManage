@@ -19,7 +19,7 @@ public class JDBCUtil {
 
             String url = "jdbc:mySQL://localhost:3306/pharmacy_store";
             String username = "root";
-            String password = "";
+            String password = "123456";
 
             // kết nối database
             conn = DriverManager.getConnection(url, username, password);

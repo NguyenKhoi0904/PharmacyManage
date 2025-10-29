@@ -17,6 +17,10 @@ public class ChiTietHdDTO {
         this.donGia = donGia;
         this.soLuong = soLuong;
     }
+    
+    public ChiTietHdDTO(){
+        
+    }
 
     // get
     public int getMaHd() {

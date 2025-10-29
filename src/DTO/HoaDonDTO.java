@@ -26,6 +26,18 @@ public class HoaDonDTO {
         this.phuongThucTt = phuongThucTt;
         this.trangThai = trangThai;
     }
+    
+    public HoaDonDTO(int maNv, int maKh, Integer maKm, BigDecimal tongTien, Date ngayXuat,
+            String phuongThucTt,
+            int trangThai) {    
+        this.maNv = maNv;
+        this.maKh = maKh;
+        this.maKm = maKm;
+        this.tongTien = tongTien;
+        this.ngayXuat = ngayXuat;
+        this.phuongThucTt = phuongThucTt;
+        this.trangThai = trangThai;
+    }
 
     // get
     public int getMaHd() {

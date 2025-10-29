@@ -156,6 +156,92 @@ public class HoaDonBUS {
             return false;
         }
     }
+    
+    public boolean addHD(HoaDonDTO hoaDonDTO) {
+        // ======== 1. KIỂM TRA DỮ LIỆU ========
+        if (this.checkIfMaHdExist(hoaDonDTO)) {
+            JOptionPane.showMessageDialog(null, "Mã hóa đơn đã tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!this.nhanVienBUS.getMapByMaNv().containsKey(hoaDonDTO.getMaNv())) {
+            JOptionPane.showMessageDialog(null, "Mã nhân viên không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!this.khachHangBUS.getMapByMaKh().containsKey(hoaDonDTO.getMaKh())) {
+            JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (hoaDonDTO.getMaKm() != null && !this.khuyenMaiBUS.getMapByMaKm().containsKey(hoaDonDTO.getMaKm())) {
+            JOptionPane.showMessageDialog(null, "Mã khuyến mãi không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // ======== 2. THÊM HÓA ĐƠN ========
+        if (this.hoaDonDAO.insert(hoaDonDTO) > 0) {
+            this.listHoaDon.add(hoaDonDTO);
+            JOptionPane.showMessageDialog(null, "Thêm hóa đơn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Không thể thêm hóa đơn vào CSDL", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    public boolean addCTHD(int maHd, ArrayList<ChiTietHdDTO> danhSachChiTietHd) {
+        if (danhSachChiTietHd == null || danhSachChiTietHd.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Danh sách chi tiết hoá đơn rỗng hoặc null", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        ArrayList<ChiTietHdDTO> daThemChiTiet = new ArrayList<>();
+
+        try {
+            // ======== 1. KIỂM TRA TỒN KHO ========
+            for (ChiTietHdDTO ct : danhSachChiTietHd) {
+                LoHangDTO lh = this.loHangBUS.getLoHangByMaLh(ct.getMaLh());
+                if (lh == null) {
+                    JOptionPane.showMessageDialog(null, "Không tìm thấy lô hàng " + ct.getMaLh(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+                if (lh.getSlTon() < ct.getSoLuong()) {
+                    JOptionPane.showMessageDialog(null, "Không đủ tồn kho cho lô hàng " + ct.getMaLh(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+            }
+
+            // ======== 2. THÊM CHI TIẾT HOÁ ĐƠN ========
+            for (ChiTietHdDTO ct : danhSachChiTietHd) {
+                ct.setMaHd(maHd);
+
+                // giảm tồn kho trước khi add
+                this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), -ct.getSoLuong());
+
+                if (!this.chiTietHdBUS.addChiTietHd(ct)) {
+                    throw new Exception("Không thể thêm chi tiết hoá đơn " + ct.getMaLh());
+                }
+
+                daThemChiTiet.add(ct);
+            }
+
+            JOptionPane.showMessageDialog(null, "Thêm chi tiết hoá đơn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }
+
+        // ======== 3. ROLLBACK KHI CÓ LỖI ========
+        catch (Exception e) {
+            System.err.println("Rollback vì lỗi: " + e.getMessage());
+
+            for (ChiTietHdDTO ct : daThemChiTiet) {
+                this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), ct.getSoLuong());
+                this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(), ct.getMaThuoc());
+            }
+
+            JOptionPane.showMessageDialog(null, "Thêm chi tiết hoá đơn thất bại! Dữ liệu đã được phục hồi.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
 
     public boolean updateHoaDon(int ma_hd, HoaDonDTO hoaDonDTO) {
         // kiểm tra nếu mã hoá đơn không tồn tại
