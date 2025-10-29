@@ -1005,9 +1005,11 @@ public class HoaDonForm extends javax.swing.JFrame {
                     if (!hoaDonBUS.addCTHD(hd.getMaHd(), listCTHD)) {
                         // Nếu thêm chi tiết thất bại => xóa hóa đơn đã thêm
                         hoaDonBUS.deleteHoaDon(hd.getMaHd());
+                    }
                 }
             }
-                
+            else {
+                JOptionPane.showMessageDialog(null, "Số tiền khách đưa không hợp lệ!");
             }
         }
         catch (NumberFormatException e) {
