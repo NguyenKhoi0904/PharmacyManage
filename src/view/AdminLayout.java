@@ -4,7 +4,9 @@
  */
 package view;
 
+import com.formdev.flatlaf.*;
 import java.awt.CardLayout;
+import java.awt.Color;
 
 /**
  *
@@ -19,7 +21,12 @@ public class AdminLayout extends javax.swing.JFrame {
      */
     public AdminLayout() {
         initComponents();
-        
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);       
+        NhanVienPanel nhanVienPanel = new NhanVienPanel();
+//        nhanVienPanel.setPreferredSize(jPanel3.getSize());
+        jPanel3.add(nhanVienPanel, "NhanVienPanel");
+        jPanel3.revalidate();  // Cập nhật layout
+        jPanel3.repaint();  
     }
 
     /**
@@ -31,100 +38,196 @@ public class AdminLayout extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        jToggleButton_HoaDon = new javax.swing.JToggleButton();
+        jToggleButton_PhieuNhap = new javax.swing.JToggleButton();
+        jToggleButton_KhachHang = new javax.swing.JToggleButton();
+        jToggleButton_Thuoc = new javax.swing.JToggleButton();
+        jToggleButton_DanhMucThuoc = new javax.swing.JToggleButton();
+        jToggleButton_NhanVien = new javax.swing.JToggleButton();
+        jToggleButton_KhuyenMai = new javax.swing.JToggleButton();
+        jToggleButton_ThongKe = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        jButton10 = new javax.swing.JButton();
+        jButton_DangXuat = new javax.swing.JButton();
+
+        buttonGroup1.add(jToggleButton_HoaDon);
+        buttonGroup1.add(jToggleButton_PhieuNhap);
+        buttonGroup1.add(jToggleButton_KhachHang);
+        buttonGroup1.add(jToggleButton_Thuoc);
+        buttonGroup1.add(jToggleButton_DanhMucThuoc);
+        buttonGroup1.add(jToggleButton_NhanVien);
+        buttonGroup1.add(jToggleButton_KhuyenMai);
+        buttonGroup1.add(jToggleButton_ThongKe);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
+        setBackground(new Color(250, 250, 250));
         setSize(new java.awt.Dimension(1920, 1080));
 
+        jPanel2.setBackground(new Color(250, 250, 250));
         jPanel2.setLayout(new java.awt.GridLayout(0, 1, 10, 20));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        jButton1.setText("Hóa đơn");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButton_HoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_HoaDon.setText("Hóa Đơn");
+        jToggleButton_HoaDon.setPreferredSize(new java.awt.Dimension(80, 25));
+        jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jPanel2.add(jToggleButton_HoaDon);
+
+        jToggleButton_PhieuNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_PhieuNhap.setText("Phiếu Nhập");
+        jToggleButton_PhieuNhap.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jPanel2.add(jToggleButton_PhieuNhap);
+
+        jToggleButton_KhachHang.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_KhachHang.setText("Khách Hàng");
+        jToggleButton_KhachHang.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jPanel2.add(jToggleButton_KhachHang);
+
+        jToggleButton_Thuoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_Thuoc.setText("Thuốc");
+        jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jPanel2.add(jToggleButton_Thuoc);
+
+        jToggleButton_DanhMucThuoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_DanhMucThuoc.setText("Danh Mục Thuốc");
+        jToggleButton_DanhMucThuoc.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jPanel2.add(jToggleButton_DanhMucThuoc);
+
+        jToggleButton_NhanVien.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_NhanVien.setText("Nhân Viên");
+        jToggleButton_NhanVien.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jPanel2.add(jToggleButton_NhanVien);
+
+        jToggleButton_KhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_KhuyenMai.setText("Khuyến Mãi");
+        jToggleButton_KhuyenMai.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jToggleButton_KhuyenMai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jToggleButton_KhuyenMaiActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1);
+        jPanel2.add(jToggleButton_KhuyenMai);
 
-        jButton2.setText("Phiếu nhập");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButton_ThongKe.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_ThongKe.setText("Thống Kê");
+        jToggleButton_ThongKe.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jToggleButton_ThongKe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jToggleButton_ThongKeActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2);
+        jPanel2.add(jToggleButton_ThongKe);
 
-        jButton3.setText("Khách Hàng");
-        jPanel2.add(jButton3);
-
-        jButton4.setText("Đăng Xuất");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton4);
-
-        jButton5.setText("Thuốc");
-        jPanel2.add(jButton5);
-
-        jButton6.setText("Danh Mục Thuốc");
-        jPanel2.add(jButton6);
-
-        jButton7.setText("Nhân Viên");
-        jPanel2.add(jButton7);
-
-        jButton8.setText("Khuyến Mãi");
-        jPanel2.add(jButton8);
-
-        jButton9.setText("Thống Kê");
-        jPanel2.add(jButton9);
-
+        jPanel3.setBackground(new java.awt.Color(250, 250, 250));
         jPanel3.setLayout(new java.awt.CardLayout());
 
+        jSeparator2.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setBackground(new java.awt.Color(250, 250, 250));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Admin");
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton10.setText("Đăng xuất");
-        jButton10.setPreferredSize(new java.awt.Dimension(80, 23));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButton_DangXuat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_DangXuat.setText("Đăng xuất");
+        jButton_DangXuat.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;");
+        jButton_DangXuat.setPreferredSize(new java.awt.Dimension(80, 23));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jButton_DangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -142,48 +245,41 @@ public class AdminLayout extends javax.swing.JFrame {
                         .addComponent(jSeparator3))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1353, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(376, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 401, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jToggleButton_KhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_KhuyenMaiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jToggleButton_KhuyenMaiActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jToggleButton_ThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_ThongKeActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jToggleButton_ThongKeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,33 +290,31 @@ public class AdminLayout extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
         //</editor-fold>
 
+        try {
+            // Thiết lập FlatLaf (bạn có thể dùng FlatDarkLaf, FlatIntelliJLaf,...)
+            javax.swing.UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new AdminLayout().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton_DangXuat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -228,5 +322,13 @@ public class AdminLayout extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JToggleButton jToggleButton_DanhMucThuoc;
+    private javax.swing.JToggleButton jToggleButton_HoaDon;
+    private javax.swing.JToggleButton jToggleButton_KhachHang;
+    private javax.swing.JToggleButton jToggleButton_KhuyenMai;
+    private javax.swing.JToggleButton jToggleButton_NhanVien;
+    private javax.swing.JToggleButton jToggleButton_PhieuNhap;
+    private javax.swing.JToggleButton jToggleButton_ThongKe;
+    private javax.swing.JToggleButton jToggleButton_Thuoc;
     // End of variables declaration//GEN-END:variables
 }
