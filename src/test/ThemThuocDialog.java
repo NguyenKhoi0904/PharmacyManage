@@ -1,3 +1,5 @@
+package test;
+
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class ThemThuocDialog extends JDialog {
     private NumberOnlyField txtGia;
     private JComboBox<DanhMucThuocDTO> comboDanhMuc;
     private JLabel imageLabel;
-    private String imagePath = "image/placeholder_them_thuoc.jpg";
+    private String imagePath = "src/icon/placeholder_them_thuoc.jpg";
     private boolean confirmed = false;
 
     public ThemThuocDialog(JFrame parent) {

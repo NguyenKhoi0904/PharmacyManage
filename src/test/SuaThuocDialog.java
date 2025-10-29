@@ -1,3 +1,4 @@
+package test;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -21,7 +22,7 @@ public class SuaThuocDialog extends JDialog {
     private boolean confirmed = false;
 
     public SuaThuocDialog(Frame parent, ThuocDTO thuocDTO) {
-        super(parent,"Sửa thông tin thuốc", true);
+        super(parent, "Sửa thông tin thuốc", true);
         setSize(1280, 720);
         setResizable(false);
         setLocationRelativeTo(parent);
