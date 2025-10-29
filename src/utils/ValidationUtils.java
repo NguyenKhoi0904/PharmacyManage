@@ -16,11 +16,22 @@ public class ValidationUtils {
         return phone.matches("^(0|\\+84)(\\d{9})$");
     }
 
-    // Kiểm tra số tiền khách đưa (phải là số dương, có thể có phần thập phân)
+    // Kiểm tra số tiền khách đưa (phải là số thực > 0)
     public static boolean isValidFloat(String amount) {
         if (amount == null || amount.trim().isEmpty()) return false;
         try {
             float value = Float.parseFloat(amount);
+            return value > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    // Kiểm tra số tiền khách đưa (phải là số nguyên > 0)
+    public static boolean isValidInt(String amount) {
+        if (amount == null || amount.trim().isEmpty()) return false;
+        try {
+            int value = Integer.parseInt(amount);
             return value > 0;
         } catch (NumberFormatException e) {
             return false;
