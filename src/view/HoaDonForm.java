@@ -9,6 +9,7 @@ import static BUS.BUSManager.hoaDonBUS;
 import DTO.ChiTietHdDTO;
 import DTO.DanhMucThuocDTO;
 import DTO.HoaDonDTO;
+import DTO.KhuyenMaiDTO;
 import DTO.ThuocDTO;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -18,8 +19,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import utils.BigDecimalUtils;
 import utils.IconUtils;
 import utils.ValidationUtils;
 /**
@@ -31,6 +35,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private ThuocDTO selectedThuoc;
     private ArrayList<ChiTietHdDTO> listCTHD = new ArrayList<ChiTietHdDTO>();
     private ChiTietHdDTO selectedCTHD;
+    private ArrayList<KhuyenMaiDTO> listKM;
     
     private JTable thuocTable;
     private DefaultTableModel thuocTableModel;
@@ -44,6 +49,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         
         // DEBUG ONLY !!!
         BUSManager.initAllBUS();
+        listKM = BUSManager.khuyenMaiBUS.getListKhuyenMai();
         
         setupMainLayout();
         
@@ -51,6 +57,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         setupListProduct();
         setupCartProducts();
         
+        addEventForInvoicePanel();
     }
     private void setupMainLayout() {
         Container cp = getContentPane();
@@ -289,15 +296,74 @@ public class HoaDonForm extends javax.swing.JFrame {
     private BigDecimal getCartSum() {
         BigDecimal sum = BigDecimal.ZERO; // Khởi tạo giá trị 0 dạng BigDecimal
 
-        for (ChiTietHdDTO cthd : listCTHD) {
-            BigDecimal soLuong = BigDecimal.valueOf(cthd.getSoLuong()); // ép kiểu từ int → BigDecimal
-            BigDecimal thanhTien = cthd.getDonGia().multiply(soLuong); // đơn giá * số lượng
-            sum = sum.add(thanhTien); // cộng dồn
+        if (!listCTHD.isEmpty()){
+            for (ChiTietHdDTO cthd : listCTHD) {
+                BigDecimal soLuong = BigDecimal.valueOf(cthd.getSoLuong()); // ép kiểu từ int → BigDecimal
+                BigDecimal thanhTien = cthd.getDonGia().multiply(soLuong); // đơn giá * số lượng
+                sum = sum.add(thanhTien); // cộng dồn
+            }
         }
-
+        
         return sum;
     }
+    /**
+    * Lấy giá trị giảm (%) từ mã khuyến mãi
+    * @return Giá trị giảm từ 0 đến 1 (vd: 10% -> 0.1). Trả về BigDecimal.ZERO nếu mã không hợp lệ.
+    */
+   private BigDecimal getPhanTramGiamFromMaKM() {
+       if (ValidationUtils.isValidInt(tfMaKM.getText())) {
+           int maKM = Integer.parseInt(tfMaKM.getText());
+           if (BUSManager.khuyenMaiBUS.checkIfMaKmExist(maKM)) {
+               KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
+               return km.getGiaTriKm().divide(BigDecimal.valueOf(100));
+           }
+       }
+       return BigDecimal.ZERO;
+   }
 
+    private void addEventForInvoicePanel(){
+        // Ma KM
+        tfMaKM.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) { refreshTongTien(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { refreshTongTien(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { refreshTongTien(); }
+        });
+
+        // Tien Khach Dua
+        tfTienKhachDua.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) { refreshTienThua(BigDecimalUtils.toBigDecimal(tfTongTien.getText())); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { refreshTienThua(BigDecimalUtils.toBigDecimal(tfTongTien.getText())); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { refreshTienThua(BigDecimalUtils.toBigDecimal(tfTongTien.getText())); }
+        });
+
+    }
+
+    private void refreshTongTien() {
+        // Lấy tổng tiền hiện tại của giỏ hàng
+        BigDecimal tongTienHienTai = getCartSum();
+
+        // Lấy mã KM và tính giảm giá nếu có
+        BigDecimal phanTramGiam = getPhanTramGiamFromMaKM();
+        BigDecimal tongTienMoi = tongTienHienTai.subtract(tongTienHienTai.multiply(phanTramGiam));
+    
+        tfTongTien.setText(tongTienMoi.toString());
+
+        // Đồng thời refresh luôn tiền thừa
+        refreshTienThua(tongTienMoi);
+    }
+
+    private void refreshTienThua(BigDecimal tongTien) {
+        BigDecimal tienKhachDua = BigDecimalUtils.toBigDecimal(tfTienKhachDua.getText(), BigDecimal.ZERO);
+        BigDecimal tienThuaMoi = tienKhachDua.subtract(tongTien);
+        tfTienThua.setText(tienThuaMoi.toString());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -684,11 +750,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel13.setText("Tien khach dua:");
 
         tfTienKhachDua.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tfTienKhachDua.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tfTienKhachDuaFocusLost(evt);
-            }
-        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel14.setText("Tien thua:");
@@ -850,6 +911,9 @@ public class HoaDonForm extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
+        System.out.println(getCartSum().toString());
+        // CHUA XU LY KHI CHON NHIEU ROW !!!!!!!
+        if (selectedThuoc == null) return;
         try {
             int value = Integer.parseInt(jTextField6.getText());
             if (value <= 0) {
@@ -882,11 +946,12 @@ public class HoaDonForm extends javax.swing.JFrame {
                 // Load Cart
                 loadCartData();
                 
-                // UI invoice
-                tfTongTien.setText(getCartSum().toString());
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Chỉ được nhập số nguyên");
+        } finally {
+            // UI invoice
+            refreshTongTien();
         }
 
     }//GEN-LAST:event_addButtonActionPerformed
@@ -899,6 +964,7 @@ public class HoaDonForm extends javax.swing.JFrame {
             listCTHD.remove(selectedCTHD);
             selectedCTHD = new ChiTietHdDTO();
             loadCartData();
+            refreshTongTien();
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -950,27 +1016,6 @@ public class HoaDonForm extends javax.swing.JFrame {
             Logger.getLogger(HoaDonForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnInActionPerformed
-
-    private void tfTienKhachDuaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfTienKhachDuaFocusLost
-        // TODO add your handling code here:
-        String input = tfTienKhachDua.getText().trim();
-
-        if (!ValidationUtils.isValidFloat(input)) {
-            JOptionPane.showMessageDialog(null, "Số tiền khách đưa không hợp lệ!");
-            tfTienKhachDua.requestFocus(); // đưa con trỏ lại TextField
-        } else {
-            System.out.println("Người dùng nhập hợp lệ: " + input);
-            try {
-                float tienKhachDua = Float.parseFloat(tfTienKhachDua.getText());
-                float tongTien = Float.parseFloat(tfTongTien.getText());
-                
-                tfTienThua.setText("" + (tienKhachDua - tongTien));
-            }
-            catch(NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Chỉ được nhập số nguyên");
-            }
-        }
-    }//GEN-LAST:event_tfTienKhachDuaFocusLost
 
     /**
      * @param args the command line arguments

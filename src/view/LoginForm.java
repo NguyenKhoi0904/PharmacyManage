@@ -77,7 +77,7 @@ public class LoginForm extends javax.swing.JFrame {
         jTextField_TaiKhoan = new javax.swing.JTextField();
         jLabel_MatKhau = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
-        ImageIcon icon = new ImageIcon(getClass().getResource("../icon/pharmacy.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/image/pharmacy.png"));
         int width = 500;
         int height = 500;
         Image img = icon.getImage();
