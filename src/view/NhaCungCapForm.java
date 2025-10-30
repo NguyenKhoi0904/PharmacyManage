@@ -135,7 +135,7 @@ public class NhaCungCapForm extends JFrame {
         // ================= SỰ KIỆN NÚT =================
         addEventHandlers();
 
-        setVisible(true);
+//        setVisible(true);
         loadTableNCC();
     }
 

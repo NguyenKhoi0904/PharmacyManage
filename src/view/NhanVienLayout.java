@@ -6,6 +6,10 @@ package view;
 
 import java.util.*;
 import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.extras.*;
+import java.awt.*;
+import javax.swing.*;
+import utils.Convert_JFrame_To_JPanel;
 
 /**
  *
@@ -21,6 +25,20 @@ public class NhanVienLayout extends javax.swing.JFrame {
     public NhanVienLayout() {
         initComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        
+        NhaCungCapForm NhaCungCap = new NhaCungCapForm();
+        // Thiếu form phiếu nhập
+        // Thiếu form khách hàng
+//        ThuocForm1 Thuoc = new ThuocForm1();
+        
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(NhaCungCap), "NhaCungCap");
+        //Thiếu Panel phiếu nhập
+        // Thiếu form khách hàng
+//        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(Thuoc), "Thuoc");
+        
+        jPanel3.revalidate();
+        jPanel3.repaint();
+        
     }
 
     /**
@@ -42,11 +60,10 @@ public class NhanVienLayout extends javax.swing.JFrame {
         jToggleButton_Thuoc = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
+        jButton_DangXuat = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
 
         buttonGroup1.add(jToggleButton_HoaDon);
         buttonGroup1.add(jToggleButton_PhieuNhap);
@@ -54,6 +71,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
         buttonGroup1.add(jToggleButton_Thuoc);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setSize(new java.awt.Dimension(1920, 1080));
 
         jLabel1.setBackground(new java.awt.Color(250, 250, 250));
@@ -79,9 +97,10 @@ public class NhanVienLayout extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(0, 1, 20, 20));
 
-        jToggleButton_HoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_HoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_HoaDon.setText("Hóa Đơn");
         jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -92,9 +111,14 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_HoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_HoaDonActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_HoaDon);
 
-        jToggleButton_PhieuNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_PhieuNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_PhieuNhap.setText("Phiếu Nhập");
         jToggleButton_PhieuNhap.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -107,7 +131,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "selectedBackground: #4EF5D1;");
         jPanel2.add(jToggleButton_PhieuNhap);
 
-        jToggleButton_KhachHang.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_KhachHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_KhachHang.setText("Khách Hàng");
         jToggleButton_KhachHang.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -120,7 +144,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "selectedBackground: #4EF5D1;");
         jPanel2.add(jToggleButton_KhachHang);
 
-        jToggleButton_Thuoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_Thuoc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_Thuoc.setText("Thuốc");
         jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -131,23 +155,30 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_Thuoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_ThuocActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_Thuoc);
 
         jPanel3.setPreferredSize(new java.awt.Dimension(1350, 800));
+        jPanel3.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1350, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setText("Đăng Xuất");
+        jButton_DangXuat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_DangXuat.setText("Đăng Xuất");
+        jButton_DangXuat.setIcon(new FlatSVGIcon("image/logout.svg", 20, 20));
+        jButton_DangXuat.setHorizontalAlignment(SwingConstants.LEFT);
+        jButton_DangXuat.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jButton_DangXuat.setIconTextGap(5);
+        jButton_DangXuat.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -155,14 +186,14 @@ public class NhanVienLayout extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -185,41 +216,46 @@ public class NhanVienLayout extends javax.swing.JFrame {
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(299, Short.MAX_VALUE))
+                .addContainerGap(355, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(305, 305, 305)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator3)
                         .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(26, 26, 26)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(305, 305, 305)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(174, 174, 174)
-                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap(252, Short.MAX_VALUE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jToggleButton_HoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_HoaDonActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "NhaCungCap");
+    }//GEN-LAST:event_jToggleButton_HoaDonActionPerformed
+
+    private void jToggleButton_ThuocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_ThuocActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "Thuoc");
+    }//GEN-LAST:event_jToggleButton_ThuocActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,7 +289,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton_DangXuat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -262,7 +298,6 @@ public class NhanVienLayout extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JToggleButton jToggleButton_HoaDon;
     private javax.swing.JToggleButton jToggleButton_KhachHang;
     private javax.swing.JToggleButton jToggleButton_PhieuNhap;
