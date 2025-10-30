@@ -152,6 +152,9 @@ CREATE TABLE chitiet_hd (
 -- ========== THÊM DATA MẪU ==========
 
 -- 1. Tài Khoản (ma_tk: 1, 2, 3)
+-- admin : admin01 - admin
+-- nhanvien : nv_quyen - 123
+-- khachhang : 
 INSERT INTO taikhoan (ma_tk, tai_khoan, mat_khau, ten, sdt, vai_tro, trang_thai) VALUES
 (1, 'admin01', '$2a$10$C4MBXtcHNdb1X0HAnK/u4eMueASAsbsGCbROFoFLghuf41O4Rd9fq', 'Nguyễn Văn A', '0901234567', 'admin',1),
 (2, 'nv_quyen', '$2a$10$kqoiiCMqfWOEgVzADRyxoetTBZ0cVaZoMd/.pRrX62kxGbCiiPwuu', 'Trần Thị B', '0907654321', 'nhanvien',1),
