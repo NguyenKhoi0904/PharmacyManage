@@ -129,17 +129,18 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
     @Override
     public int deleteById(String id) {
         int result = 0;
-        try {
-            Connection conn = JDBCUtil.getConnection();
-            String sql = "UPDATE hoadon SET trang_thai=0 WHERE ma_hd=?";
-            PreparedStatement ps = conn.prepareStatement(sql);
+        String sql = "DELETE FROM hoadon WHERE ma_hd = ?"; // xóa bản ghi thật
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, id);
             result = ps.executeUpdate();
-            JDBCUtil.closeConnection(conn);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return result;
     }
+
 
 }

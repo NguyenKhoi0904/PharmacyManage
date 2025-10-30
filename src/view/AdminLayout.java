@@ -5,8 +5,12 @@
 package view;
 
 import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.CardLayout;
 import java.awt.Color;
+import javax.swing.*;
+import utils.Convert_JFrame_To_JPanel;
+
 
 /**
  *
@@ -21,10 +25,61 @@ public class AdminLayout extends javax.swing.JFrame {
      */
     public AdminLayout() {
         initComponents();
-        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);       
-        NhanVienPanel nhanVienPanel = new NhanVienPanel();
-//        nhanVienPanel.setPreferredSize(jPanel3.getSize());
-        jPanel3.add(nhanVienPanel, "NhanVienPanel");
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);   
+        
+        //
+        JFrame jFrame_HoaDon = new HoaDonForm();
+//        JFrame jFrame_LoHang = new LoHangForm();
+        // Thiếu Form phiếu nhập
+        // Thiếu Form khách hàng
+//        JFrame jFrame_Thuoc = new ThuocForm1();
+//        JFrame jFrame_DanhMucThuoc = new DanhMucThuocForm1();
+        JFrame jFrame_NhaCungCap = new NhaCungCapForm();
+        JFrame jFrame_NhanVien = new NhanVienForm();
+        JFrame jFrame_KhuyenMai = new KhuyenMaiForm();
+        // Thiếu Form thống kê
+        
+        
+        /* 
+        JPanel jPanel_HoaDon = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_HoaDon);
+        JPanel jPanel_LoHang = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_LoHang);
+        // Thiếu Panel phiếu nhập
+        // Thiếu Panel khách hàng
+        JPanel jPanel_Thuoc = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_Thuoc);
+        JPanel jPanel_DanhMucThuoc = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_DanhMucThuoc);
+        JPanel jPanel_NhaCungCap = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_NhaCungCap);
+        JPanel jPanel_NhanVien = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_NhanVien);
+        JPanel jPanel_KhuyenMai = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_KhuyenMai);
+        // Thiếu Panel thống kê
+        */
+        
+        // /*
+        
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");        
+//        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
+        // Thiếu Panel phiếu nhập
+        // Thiếu Panel khách hàng 
+//        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_Thuoc), "Thuoc");
+//        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_DanhMucThuoc), "DanhMucThuoc");S
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhaCungCap), "NhaCungCap");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhanVien), "NhanVien");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_KhuyenMai), "KhuyenMai");
+        
+        // */
+        
+        /*
+        jPanel3.add(jPanel_HoaDon, "HoaDon");
+        jPanel3.add(jPanel_LoHang, "LoHang");
+        // Thiếu Panel phiếu nhập
+        // Thiếu Panel khách hàng 
+        jPanel3.add(jPanel_Thuoc, "Thuoc");
+        jPanel3.add(jPanel_DanhMucThuoc, "DanhMucThuoc");
+        jPanel3.add(jPanel_NhaCungCap, "NhaCungCap");
+        jPanel3.add(jPanel_NhanVien, "NhanVien");
+        jPanel3.add(jPanel_KhuyenMai, "KhuyenMai");
+        // Thiếu Panel thống kê
+        */
+        
         jPanel3.revalidate();  // Cập nhật layout
         jPanel3.repaint();  
     }
@@ -42,6 +97,8 @@ public class AdminLayout extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jToggleButton_HoaDon = new javax.swing.JToggleButton();
         jToggleButton_PhieuNhap = new javax.swing.JToggleButton();
+        jToggleButton_LoHang = new javax.swing.JToggleButton();
+        jToggleButton_NhaCungCap = new javax.swing.JToggleButton();
         jToggleButton_KhachHang = new javax.swing.JToggleButton();
         jToggleButton_Thuoc = new javax.swing.JToggleButton();
         jToggleButton_DanhMucThuoc = new javax.swing.JToggleButton();
@@ -57,6 +114,8 @@ public class AdminLayout extends javax.swing.JFrame {
         jButton_DangXuat = new javax.swing.JButton();
 
         buttonGroup1.add(jToggleButton_HoaDon);
+        buttonGroup1.add(jToggleButton_LoHang);
+        buttonGroup1.add(jToggleButton_NhaCungCap);
         buttonGroup1.add(jToggleButton_PhieuNhap);
         buttonGroup1.add(jToggleButton_KhachHang);
         buttonGroup1.add(jToggleButton_Thuoc);
@@ -69,11 +128,11 @@ public class AdminLayout extends javax.swing.JFrame {
         setBackground(new Color(250, 250, 250));
         setSize(new java.awt.Dimension(1920, 1080));
 
-        jPanel2.setBackground(new Color(250, 250, 250));
+        jPanel2.setBackground(new Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(0, 1, 10, 20));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        jToggleButton_HoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_HoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_HoaDon.setText("Hóa Đơn");
         jToggleButton_HoaDon.setPreferredSize(new java.awt.Dimension(80, 25));
         jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, ""
@@ -85,9 +144,19 @@ public class AdminLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        FlatSVGIcon icon = new FlatSVGIcon("image/bill.svg", 20, 20);
+        jToggleButton_HoaDon.setIcon(icon);
+        jToggleButton_HoaDon.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_HoaDon.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_HoaDon.setIconTextGap(5);
+        jToggleButton_HoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_HoaDonActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_HoaDon);
 
-        jToggleButton_PhieuNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_PhieuNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_PhieuNhap.setText("Phiếu Nhập");
         jToggleButton_PhieuNhap.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -98,10 +167,62 @@ public class AdminLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_PhieuNhap.setIcon(new FlatSVGIcon("image/category.svg", 20, 20));
+        jToggleButton_PhieuNhap.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_PhieuNhap.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_PhieuNhap.setIconTextGap(5);
         jPanel2.add(jToggleButton_PhieuNhap);
 
-        jToggleButton_KhachHang.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_LoHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton_LoHang.setText("Lô Hàng");
+        jToggleButton_LoHang.setIcon(new FlatSVGIcon("image/trucks.svg", 20, 20));
+        jToggleButton_LoHang.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_LoHang.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_LoHang.setIconTextGap(5);
+        jToggleButton_LoHang.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jToggleButton_LoHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_LoHangActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jToggleButton_LoHang);
+
+        jToggleButton_NhaCungCap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton_NhaCungCap.setText("Nhà Cung Cấp");
+        jToggleButton_NhaCungCap.setIcon(new FlatSVGIcon("image/factory.svg", 20, 20));
+        jToggleButton_NhaCungCap.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_NhaCungCap.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_NhaCungCap.setIconTextGap(5);
+        jToggleButton_NhaCungCap.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jToggleButton_NhaCungCap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_NhaCungCapActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jToggleButton_NhaCungCap);
+
+        jToggleButton_KhachHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_KhachHang.setText("Khách Hàng");
+        jToggleButton_KhachHang.setIcon(new FlatSVGIcon("image/customer.svg", 20, 20));
+        jToggleButton_KhachHang.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_KhachHang.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_KhachHang.setIconTextGap(5);
         jToggleButton_KhachHang.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -111,10 +232,19 @@ public class AdminLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_KhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_KhachHangActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_KhachHang);
 
-        jToggleButton_Thuoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_Thuoc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_Thuoc.setText("Thuốc");
+        jToggleButton_Thuoc.setIcon(new FlatSVGIcon("image/medicine.svg", 20, 20));
+        jToggleButton_Thuoc.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_Thuoc.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_Thuoc.setIconTextGap(5);
         jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -124,10 +254,19 @@ public class AdminLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_Thuoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_ThuocActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_Thuoc);
 
-        jToggleButton_DanhMucThuoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_DanhMucThuoc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_DanhMucThuoc.setText("Danh Mục Thuốc");
+        jToggleButton_DanhMucThuoc.setIcon(new FlatSVGIcon("image/medicine_52.svg", 20, 20));
+        jToggleButton_DanhMucThuoc.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_DanhMucThuoc.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_DanhMucThuoc.setIconTextGap(5);
         jToggleButton_DanhMucThuoc.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -137,10 +276,19 @@ public class AdminLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_DanhMucThuoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_DanhMucThuocActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_DanhMucThuoc);
 
-        jToggleButton_NhanVien.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_NhanVien.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_NhanVien.setText("Nhân Viên");
+        jToggleButton_NhanVien.setIcon(new FlatSVGIcon("image/employee.svg", 20, 20));
+        jToggleButton_NhanVien.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_NhanVien.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_NhanVien.setIconTextGap(5);
         jToggleButton_NhanVien.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -150,10 +298,19 @@ public class AdminLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_NhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_NhanVienActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_NhanVien);
 
-        jToggleButton_KhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_KhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_KhuyenMai.setText("Khuyến Mãi");
+        jToggleButton_KhuyenMai.setIcon(new FlatSVGIcon("image/promotion.svg", 20, 20));
+        jToggleButton_KhuyenMai.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_KhuyenMai.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_KhuyenMai.setIconTextGap(5);
         jToggleButton_KhuyenMai.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -170,8 +327,12 @@ public class AdminLayout extends javax.swing.JFrame {
         });
         jPanel2.add(jToggleButton_KhuyenMai);
 
-        jToggleButton_ThongKe.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton_ThongKe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_ThongKe.setText("Thống Kê");
+        jToggleButton_ThongKe.setIcon(new FlatSVGIcon("image/statistics.svg", 20, 20));
+        jToggleButton_ThongKe.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_ThongKe.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_ThongKe.setIconTextGap(5);
         jToggleButton_ThongKe.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -199,12 +360,17 @@ public class AdminLayout extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Admin");
+        jLabel1.setIcon(new FlatSVGIcon("image/admin.svg", 20, 20));
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton_DangXuat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_DangXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton_DangXuat.setText("Đăng xuất");
+        jButton_DangXuat.setIcon(new FlatSVGIcon("image/logout.svg", 20, 20));
+        jButton_DangXuat.setHorizontalAlignment(SwingConstants.LEFT);
+        jButton_DangXuat.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jButton_DangXuat.setIconTextGap(5);
         jButton_DangXuat.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -219,9 +385,7 @@ public class AdminLayout extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton_DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jButton_DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,49 +401,95 @@ public class AdminLayout extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                        .addComponent(jSeparator1)
-                        .addComponent(jSeparator3))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1)
+                    .addComponent(jSeparator3)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(376, Short.MAX_VALUE))
+                .addContainerGap(382, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 401, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(21, 21, 21)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 154, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton_KhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_KhuyenMaiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_KhuyenMaiActionPerformed
-
     private void jToggleButton_ThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_ThongKeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton_ThongKeActionPerformed
+
+    private void jToggleButton_KhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_KhuyenMaiActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "KhuyenMai");
+    }//GEN-LAST:event_jToggleButton_KhuyenMaiActionPerformed
+
+    private void jToggleButton_NhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_NhanVienActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "NhanVien");
+    }//GEN-LAST:event_jToggleButton_NhanVienActionPerformed
+
+    private void jToggleButton_DanhMucThuocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_DanhMucThuocActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "DanhMucThuoc");
+    }//GEN-LAST:event_jToggleButton_DanhMucThuocActionPerformed
+
+    private void jToggleButton_ThuocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_ThuocActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "Thuoc");
+    }//GEN-LAST:event_jToggleButton_ThuocActionPerformed
+
+    private void jToggleButton_KhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_KhachHangActionPerformed
+        // TODO add your handling code here:
+        //        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        //        card_layout.show(jPanel3, "NhaCungCap");
+    }//GEN-LAST:event_jToggleButton_KhachHangActionPerformed
+
+    private void jToggleButton_NhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_NhaCungCapActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "NhaCungCap");
+    }//GEN-LAST:event_jToggleButton_NhaCungCapActionPerformed
+
+    private void jToggleButton_LoHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_LoHangActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "LoHang");
+    }//GEN-LAST:event_jToggleButton_LoHangActionPerformed
+
+    private void jToggleButton_HoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_HoaDonActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "HoaDon");
+    }//GEN-LAST:event_jToggleButton_HoaDonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,6 +536,8 @@ public class AdminLayout extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton_HoaDon;
     private javax.swing.JToggleButton jToggleButton_KhachHang;
     private javax.swing.JToggleButton jToggleButton_KhuyenMai;
+    private javax.swing.JToggleButton jToggleButton_LoHang;
+    private javax.swing.JToggleButton jToggleButton_NhaCungCap;
     private javax.swing.JToggleButton jToggleButton_NhanVien;
     private javax.swing.JToggleButton jToggleButton_PhieuNhap;
     private javax.swing.JToggleButton jToggleButton_ThongKe;

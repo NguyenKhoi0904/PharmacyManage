@@ -293,6 +293,35 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
+        if (selectedHD == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Xác nhận với người dùng trước khi xoá
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Bạn có chắc muốn xoá hóa đơn này không?",
+            "Xác nhận xoá",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return; // người dùng chọn NO -> thoát
+        }
+
+        try {
+            boolean deleted = BUSManager.hoaDonBUS.deleteHoaDon(selectedHD.getMaHd());
+            if (deleted) {
+                JOptionPane.showMessageDialog(this, "Xoá hóa đơn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+                // refresh UI
+                loadHoaDonData(); 
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi xoá hóa đơn: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed

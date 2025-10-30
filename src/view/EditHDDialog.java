@@ -73,6 +73,7 @@ public class EditHDDialog extends javax.swing.JDialog {
         tfMaKH.setText(String.valueOf(hoaDon.getMaKh()));
         tfMaKM.setText(hoaDon.getMaKm() != null ? String.valueOf(hoaDon.getMaKm()) : "");
         tfTongTien.setText(String.format("%,.0f", hoaDon.getTongTien()));
+        tfTongTienMoi.setText(String.format("%,.0f", hoaDon.getTongTien()));
         tfNgayXuat.setText(new SimpleDateFormat("dd/MM/yyyy").format(hoaDon.getNgayXuat()));
 
         cbPayment.setSelectedItem(hoaDon.getPhuongThucTt());
@@ -127,7 +128,9 @@ public class EditHDDialog extends javax.swing.JDialog {
             if (tongTienMoi.compareTo(java.math.BigDecimal.ZERO) < 0) tongTienMoi = java.math.BigDecimal.ZERO;
 
             // Hiển thị: format có phân nhóm
-            tfTongTien.setText(BigDecimalUtils.formatAmount(tongTienMoi));
+            // ⚠️ Dời việc setText sang thread kế tiếp để không vi phạm lock
+            String formatted = BigDecimalUtils.formatAmount(tongTienMoi);
+            javax.swing.SwingUtilities.invokeLater(() -> tfTongTienMoi.setText(formatted));
         } finally {
             isUpdatingTongTien = false;
         }
@@ -162,6 +165,8 @@ public class EditHDDialog extends javax.swing.JDialog {
         tfMaHD = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         tfNgayXuat = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        tfTongTienMoi = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1350, 800));
@@ -236,6 +241,12 @@ public class EditHDDialog extends javax.swing.JDialog {
         tfNgayXuat.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tfNgayXuat.setEnabled(false);
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setText("Tổng tiền mới:");
+
+        tfTongTienMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tfTongTienMoi.setEnabled(false);
+
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
         pnlInfo.setLayout(pnlInfoLayout);
         pnlInfoLayout.setHorizontalGroup(
@@ -268,10 +279,13 @@ public class EditHDDialog extends javax.swing.JDialog {
                                     .addComponent(cbTrangThai, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(cbPayment, 0, 150, Short.MAX_VALUE)
                                     .addComponent(tfMaHD)
-                                    .addComponent(tfNgayXuat))))
+                                    .addComponent(tfNgayXuat)
+                                    .addComponent(tfTongTienMoi))))
                         .addGap(37, 37, 37))
                     .addGroup(pnlInfoLayout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlInfoLayout.setVerticalGroup(
@@ -309,11 +323,15 @@ public class EditHDDialog extends javax.swing.JDialog {
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfNgayXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfTongTienMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnLuu)
                     .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -331,8 +349,7 @@ public class EditHDDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -379,7 +396,7 @@ public class EditHDDialog extends javax.swing.JDialog {
             hoaDon.setMaNv(maNV);
             hoaDon.setMaKh(maKH);
             hoaDon.setMaKm(maKM);
-            hoaDon.setTongTien(new java.math.BigDecimal(tfTongTien.getText().replace(",", "")));
+            hoaDon.setTongTien(new java.math.BigDecimal(tfTongTienMoi.getText().replace(".", "")));
 
             Date parsedDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(tfNgayXuat.getText());
             hoaDon.setNgayXuat(new java.sql.Date(parsedDate.getTime()));
@@ -450,6 +467,7 @@ public class EditHDDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblMaKH;
     private javax.swing.JLabel lblMaKM;
     private javax.swing.JLabel lblMaNV;
@@ -461,5 +479,6 @@ public class EditHDDialog extends javax.swing.JDialog {
     private javax.swing.JTextField tfMaNV;
     private javax.swing.JTextField tfNgayXuat;
     private javax.swing.JTextField tfTongTien;
+    private javax.swing.JTextField tfTongTienMoi;
     // End of variables declaration//GEN-END:variables
 }

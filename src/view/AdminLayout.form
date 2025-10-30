@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="buttonGroup1.add(jToggleButton_HoaDon);&#xa;buttonGroup1.add(jToggleButton_PhieuNhap);&#xa;buttonGroup1.add(jToggleButton_KhachHang);&#xa;buttonGroup1.add(jToggleButton_Thuoc);&#xa;buttonGroup1.add(jToggleButton_DanhMucThuoc);&#xa;buttonGroup1.add(jToggleButton_NhanVien);&#xa;buttonGroup1.add(jToggleButton_KhuyenMai);&#xa;buttonGroup1.add(jToggleButton_ThongKe);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="buttonGroup1.add(jToggleButton_HoaDon);&#xa;buttonGroup1.add(jToggleButton_LoHang);&#xa;buttonGroup1.add(jToggleButton_NhaCungCap);&#xa;buttonGroup1.add(jToggleButton_PhieuNhap);&#xa;buttonGroup1.add(jToggleButton_KhachHang);&#xa;buttonGroup1.add(jToggleButton_Thuoc);&#xa;buttonGroup1.add(jToggleButton_DanhMucThuoc);&#xa;buttonGroup1.add(jToggleButton_NhanVien);&#xa;buttonGroup1.add(jToggleButton_KhuyenMai);&#xa;buttonGroup1.add(jToggleButton_ThongKe);"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -38,20 +38,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel1" max="32767" attributes="0"/>
-                      <Component id="jPanel2" alignment="0" pref="172" max="32767" attributes="0"/>
-                      <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jSeparator3" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jLabel1" max="32767" attributes="0"/>
+                  <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jSeparator3" max="32767" attributes="0"/>
+                  <Component id="jPanel1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="8" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel3" min="-2" pref="1340" max="-2" attributes="0"/>
-              <EmptySpace pref="376" max="32767" attributes="0"/>
+              <EmptySpace pref="382" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,18 +58,22 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel3" max="32767" attributes="0"/>
-                  <Component id="jSeparator2" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" pref="60" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator1" min="-2" pref="5" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" pref="511" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jPanel2" min="-2" pref="668" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
-                      <EmptySpace pref="401" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jSeparator2" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jPanel3" min="-2" pref="903" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="154" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -83,7 +85,7 @@
     <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new Color(250, 250, 250)" type="code"/>
+          <Connection code="new Color(255, 255, 255)" type="code"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -100,76 +102,119 @@
         <Component class="javax.swing.JToggleButton" name="jToggleButton_HoaDon">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="H&#xf3;a &#x110;&#x1a1;n"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[80, 25]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_HoaDonActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);&#xa;FlatSVGIcon icon = new FlatSVGIcon(&quot;image/bill.svg&quot;, 20, 20);&#xa;jToggleButton_HoaDon.setIcon(icon);&#xa;jToggleButton_HoaDon.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_HoaDon.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_HoaDon.setIconTextGap(5);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_PhieuNhap">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Phi&#x1ebf;u Nh&#x1ead;p"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_PhieuNhap.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_PhieuNhap.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);&#xa;jToggleButton_PhieuNhap.setIcon(new FlatSVGIcon(&quot;image/category.svg&quot;, 20, 20));&#xa;jToggleButton_PhieuNhap.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_PhieuNhap.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_PhieuNhap.setIconTextGap(5);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="jToggleButton_LoHang">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="L&#xf4; H&#xe0;ng"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_LoHangActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_LoHang.setIcon(new FlatSVGIcon(&quot;image/trucks.svg&quot;, 20, 20));&#xa;jToggleButton_LoHang.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_LoHang.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_LoHang.setIconTextGap(5);&#xa;jToggleButton_LoHang.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="jToggleButton_NhaCungCap">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Nh&#xe0; Cung C&#x1ea5;p"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_NhaCungCapActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_NhaCungCap.setIcon(new FlatSVGIcon(&quot;image/factory.svg&quot;, 20, 20));&#xa;jToggleButton_NhaCungCap.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_NhaCungCap.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_NhaCungCap.setIconTextGap(5);&#xa;jToggleButton_NhaCungCap.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_KhachHang">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Kh&#xe1;ch H&#xe0;ng"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_KhachHangActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_KhachHang.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_KhachHang.setIcon(new FlatSVGIcon(&quot;image/customer.svg&quot;, 20, 20));&#xa;jToggleButton_KhachHang.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_KhachHang.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_KhachHang.setIconTextGap(5);&#xa;jToggleButton_KhachHang.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_Thuoc">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Thu&#x1ed1;c"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_ThuocActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_Thuoc.setIcon(new FlatSVGIcon(&quot;image/medicine.svg&quot;, 20, 20));&#xa;jToggleButton_Thuoc.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_Thuoc.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_Thuoc.setIconTextGap(5);&#xa;jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_DanhMucThuoc">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Danh M&#x1ee5;c Thu&#x1ed1;c"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_DanhMucThuocActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_DanhMucThuoc.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_DanhMucThuoc.setIcon(new FlatSVGIcon(&quot;image/medicine_52.svg&quot;, 20, 20));&#xa;jToggleButton_DanhMucThuoc.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_DanhMucThuoc.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_DanhMucThuoc.setIconTextGap(5);&#xa;jToggleButton_DanhMucThuoc.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_NhanVien">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nh&#xe2;n Vi&#xea;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_NhanVienActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_NhanVien.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_NhanVien.setIcon(new FlatSVGIcon(&quot;image/employee.svg&quot;, 20, 20));&#xa;jToggleButton_NhanVien.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_NhanVien.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_NhanVien.setIconTextGap(5);&#xa;jToggleButton_NhanVien.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_KhuyenMai">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Khuy&#x1ebf;n M&#xe3;i"/>
           </Properties>
@@ -177,13 +222,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_KhuyenMaiActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_KhuyenMai.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_KhuyenMai.setIcon(new FlatSVGIcon(&quot;image/promotion.svg&quot;, 20, 20));&#xa;jToggleButton_KhuyenMai.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_KhuyenMai.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_KhuyenMai.setIconTextGap(5);&#xa;jToggleButton_KhuyenMai.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_ThongKe">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng K&#xea;"/>
           </Properties>
@@ -191,7 +236,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_ThongKeActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_ThongKe.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_ThongKe.setIcon(new FlatSVGIcon(&quot;image/statistics.svg&quot;, 20, 20));&#xa;jToggleButton_ThongKe.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_ThongKe.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_ThongKe.setIconTextGap(5);&#xa;jToggleButton_ThongKe.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -227,7 +272,7 @@
           <Font name="Segoe UI" size="14" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Admin"/>
+        <Property name="text" type="java.lang.String" value="Admin" postCode="jLabel1.setIcon(new FlatSVGIcon(&quot;image/admin.svg&quot;, 20, 20));"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
             <BevelBorder/>
@@ -247,10 +292,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="jButton_DangXuat" min="-2" pref="172" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
+              <Component id="jButton_DangXuat" min="-2" pref="172" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -267,9 +309,9 @@
         <Component class="javax.swing.JButton" name="jButton_DangXuat">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng xu&#x1ea5;t" postCode="jButton_DangXuat.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;);"/>
+            <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng xu&#x1ea5;t" postCode="jButton_DangXuat.setIcon(new FlatSVGIcon(&quot;image/logout.svg&quot;, 20, 20));&#xa;jButton_DangXuat.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jButton_DangXuat.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jButton_DangXuat.setIconTextGap(5);&#xa;jButton_DangXuat.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;);"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[80, 23]"/>
             </Property>

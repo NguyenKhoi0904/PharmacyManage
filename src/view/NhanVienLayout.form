@@ -10,6 +10,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+    </Property>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1920, 1080]"/>
     </Property>
@@ -46,46 +49,36 @@
               <Component id="jSeparator3" min="-2" pref="13" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSeparator4" min="-2" pref="50" max="-2" attributes="0"/>
-              <EmptySpace pref="299" max="32767" attributes="0"/>
+              <EmptySpace pref="355" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                          <Component id="jPanel2" min="-2" pref="300" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="305" max="-2" attributes="0"/>
-                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
-                          <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="jPanel2" min="-2" pref="300" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="305" max="-2" attributes="0"/>
+                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSeparator3" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
+                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                      <Component id="jSeparator3" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="252" max="32767" attributes="0"/>
+              <EmptySpace pref="242" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -134,6 +127,11 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" value="1"/>
@@ -145,10 +143,13 @@
         <Component class="javax.swing.JToggleButton" name="jToggleButton_HoaDon">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="H&#xf3;a &#x110;&#x1a1;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_HoaDonActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
@@ -156,7 +157,7 @@
         <Component class="javax.swing.JToggleButton" name="jToggleButton_PhieuNhap">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Phi&#x1ebf;u Nh&#x1ead;p"/>
           </Properties>
@@ -167,7 +168,7 @@
         <Component class="javax.swing.JToggleButton" name="jToggleButton_KhachHang">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Kh&#xe1;ch H&#xe0;ng"/>
           </Properties>
@@ -178,10 +179,13 @@
         <Component class="javax.swing.JToggleButton" name="jToggleButton_Thuoc">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Thu&#x1ed1;c"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_ThuocActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
@@ -195,18 +199,7 @@
         </Property>
       </Properties>
 
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="1350" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="800" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel4">
 
@@ -215,7 +208,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jButton4" min="-2" pref="172" max="-2" attributes="0"/>
+                  <Component id="jButton_DangXuat" min="-2" pref="172" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -224,20 +217,23 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="jButton_DangXuat" min="-2" pref="57" max="-2" attributes="0"/>
                   <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="jButton_DangXuat">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng Xu&#x1ea5;t"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_DangXuat.setIcon(new FlatSVGIcon(&quot;image/logout.svg&quot;, 20, 20));&#xa;jButton_DangXuat.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jButton_DangXuat.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jButton_DangXuat.setIconTextGap(5);&#xa;jButton_DangXuat.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -252,8 +248,6 @@
         </Property>
         <Property name="orientation" type="int" value="1"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JSeparator" name="jSeparator4">
     </Component>
   </SubComponents>
 </Form>
