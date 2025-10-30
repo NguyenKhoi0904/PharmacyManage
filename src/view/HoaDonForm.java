@@ -311,7 +311,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     * @return Giá trị giảm từ 0 đến 1 (vd: 10% -> 0.1). Trả về BigDecimal.ZERO nếu mã không hợp lệ.
     */
    private BigDecimal getPhanTramGiamFromMaKM() {
-       if (ValidationUtils.isValidInt(tfMaKM.getText())) {
+       if (ValidationUtils.isValidIntBiggerThanZero(tfMaKM.getText())) {
            int maKM = Integer.parseInt(tfMaKM.getText());
            if (BUSManager.khuyenMaiBUS.checkIfMaKmExist(maKM)) {
                KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
@@ -538,7 +538,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         magnifyingGlassLabel.setText("jLabel8");
 
         jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField4.setText("jTextField4");
         jTextField4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -565,7 +564,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         refreshLabel.setText("jLabel8");
 
         jTextField6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField6.setText("So luong...");
+        jTextField6.setText("Số lượng");
         jTextField6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jPanel3.setBackground(new java.awt.Color(0, 255, 0));
@@ -731,38 +730,38 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel4.setOpaque(true);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel10.setText("SDT:");
+        jLabel10.setText("Số điện thoại:");
 
         tfSDT.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel11.setText("Ten KH:");
+        jLabel11.setText("Tên KH");
 
         tfTenKH.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel12.setText("Tong tien:");
+        jLabel12.setText("Tổng tiền:");
 
         tfTongTien.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tfTongTien.setEnabled(false);
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel13.setText("Tien khach dua:");
+        jLabel13.setText("Tiền khách đưa:");
 
         tfTienKhachDua.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel14.setText("Tien thua:");
+        jLabel14.setText("Tiền thừa:");
 
         tfTienThua.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tfTienThua.setEnabled(false);
 
-        genderComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nu" }));
+        genderComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
 
         btnIn.setBackground(new java.awt.Color(51, 255, 0));
         btnIn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnIn.setForeground(new java.awt.Color(255, 255, 255));
-        btnIn.setText("IN HOA DON");
+        btnIn.setText("IN HÓA ĐƠN");
         btnIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInActionPerformed(evt);
@@ -772,10 +771,10 @@ public class HoaDonForm extends javax.swing.JFrame {
         btnHuy.setBackground(new java.awt.Color(255, 0, 0));
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnHuy.setForeground(new java.awt.Color(255, 255, 255));
-        btnHuy.setText("HUY BO");
+        btnHuy.setText("HỦY BỎ");
 
         tfMaKM.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tfMaKM.setText("Ma KM");
+        tfMaKM.setText("Mã KM");
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel15.setText("Phương thức thanh toán:");
@@ -984,7 +983,7 @@ public class HoaDonForm extends javax.swing.JFrame {
             return;
         }
 
-        if (!ValidationUtils.isValidFloat(money)) {
+        if (!ValidationUtils.isValidFloatBiggerThanZero(money)) {
             JOptionPane.showMessageDialog(this, "Số tiền khách đưa phải là số dương!");
             return;
         }
@@ -1005,9 +1004,11 @@ public class HoaDonForm extends javax.swing.JFrame {
                     if (!hoaDonBUS.addCTHD(hd.getMaHd(), listCTHD)) {
                         // Nếu thêm chi tiết thất bại => xóa hóa đơn đã thêm
                         hoaDonBUS.deleteHoaDon(hd.getMaHd());
+                    }
                 }
             }
-                
+            else {
+                JOptionPane.showMessageDialog(null, "Số tiền khách đưa không hợp lệ!");
             }
         }
         catch (NumberFormatException e) {
