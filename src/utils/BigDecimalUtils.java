@@ -46,7 +46,8 @@ public class BigDecimalUtils {
     }
 
     // formatter cho hiển thị tiền (nhóm hàng nghìn, không có chữ thập phân)
-    public static final java.text.NumberFormat currencyFormatter = java.text.NumberFormat.getNumberInstance(new java.util.Locale("vi", "VN"));
+    public static final java.text.NumberFormat currencyFormatter 
+            = java.text.NumberFormat.getNumberInstance(new java.util.Locale("vi", "VN"));
     {
         currencyFormatter.setGroupingUsed(true);
         currencyFormatter.setMaximumFractionDigits(0);
