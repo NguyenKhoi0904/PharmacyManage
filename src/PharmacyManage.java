@@ -6,6 +6,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 import BUS.BUSManager;
 import test.LoginFrame;
+import view.AdminLayout;
 import view.LoginForm;
 
 public class PharmacyManage {
@@ -30,6 +31,7 @@ public class PharmacyManage {
 
             // main app init
             new LoginForm().setVisible(true);
+            // new AdminLayout().setVisible(true);
         });
     }
 }

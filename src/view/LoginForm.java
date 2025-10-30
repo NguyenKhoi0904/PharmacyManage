@@ -212,15 +212,17 @@ public class LoginForm extends javax.swing.JFrame {
 
         // Phân biệt loại người dùng
         if (user instanceof NhanVienDTO nv) {
-            JOptionPane.showMessageDialog(this, "Chào nhân viên: " + username);
 
-            if (nv.getViTri().equals("admin")) {
+            // phân biệt giới hạn quyền
+            if (BUSManager.taiKhoanBUS.getTaiKhoanByMaTk(nv.getMaTk()).getVaiTro().equals("admin")) {
                 // chuyển trang admin
+                JOptionPane.showMessageDialog(this, "Chào admin: " + username);
                 SwingUtilities.invokeLater(() -> {
                     new AdminLayout().setVisible(true);
                 });
             } else {
                 // chuyển trang nhân viên
+                JOptionPane.showMessageDialog(this, "Chào nhân viên: " + username);
                 SwingUtilities.invokeLater(() -> {
                     new NhanVienLayout().setVisible(true);
                 });
@@ -234,7 +236,7 @@ public class LoginForm extends javax.swing.JFrame {
 
             // chuyển trang khách hàng
             SwingUtilities.invokeLater(() -> {
-
+                new KhachHangForm().setVisible(true);
             });
 
             // this.setVisible(false);
