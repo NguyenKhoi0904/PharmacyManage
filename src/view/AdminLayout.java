@@ -53,9 +53,9 @@ public class AdminLayout extends javax.swing.JFrame {
         // Thiếu Panel thống kê
         */
         
-        // /*
+        // /* Lấy container trong JFrame
         
-        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");        
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
         // Thiếu Panel phiếu nhập
         // Thiếu Panel khách hàng 
@@ -64,6 +64,16 @@ public class AdminLayout extends javax.swing.JFrame {
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhaCungCap), "NhaCungCap");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhanVien), "NhanVien");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_KhuyenMai), "KhuyenMai");
+        // */
+        
+        // /* Dispose giải phóng bộ nhớ
+        jFrame_HoaDon.dispose();
+        jFrame_LoHang.dispose();
+        jFrame_Thuoc.dispose();
+        jFrame_DanhMucThuoc.dispose();
+        jFrame_NhaCungCap.dispose();
+        jFrame_NhanVien.dispose();
+        jFrame_KhuyenMai.dispose();
         
         // */
         

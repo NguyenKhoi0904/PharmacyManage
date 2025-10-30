@@ -5,7 +5,7 @@
 package view;
 
 import javax.swing.*;
-// import com.formdev.flatlaf.*;
+ import com.formdev.flatlaf.*;
 
 import BUS.BUSManager;
 import DTO.KhachHangDTO;
@@ -250,7 +250,7 @@ public class LoginForm extends javax.swing.JFrame {
      * @param args the command line arguments
      */
 
-    // public static void main(String args[]) {
+//     public static void main(String args[]) {
 
     /* Set the Nimbus look and feel */
     // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
@@ -277,16 +277,16 @@ public class LoginForm extends javax.swing.JFrame {
      * </editor-fold>
      */
 
-    // try {
-    // UIManager.setLookAndFeel(new FlatLightLaf());
-    // FlatLightLaf.setup();
-    // UIManager.put("PasswordField.showRevealButton", true);
-    // } catch (Exception ex) {
-    // ex.printStackTrace();
-    // }
+//     try {
+//     UIManager.setLookAndFeel(new FlatLightLaf());
+//     FlatLightLaf.setup();
+//     UIManager.put("PasswordField.showRevealButton", true);
+//     } catch (Exception ex) {
+//     ex.printStackTrace();
+//     }
     // /* Create and display the form */
-    // java.awt.EventQueue.invokeLater(() -> new LoginForm().setVisible(true));
-    // }
+//    java.awt.EventQueue.invokeLater(() -> new LoginForm().setVisible(true));
+//}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_DangNhap;

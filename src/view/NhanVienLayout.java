@@ -26,15 +26,21 @@ public class NhanVienLayout extends javax.swing.JFrame {
         initComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         
-        NhaCungCapForm NhaCungCap = new NhaCungCapForm();
+        HoaDonForm HoaDon = new HoaDonForm();
         // Thiếu form phiếu nhập
         // Thiếu form khách hàng
-//        ThuocForm1 Thuoc = new ThuocForm1();
+        ThuocForm1 Thuoc = new ThuocForm1();
         
-        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(NhaCungCap), "NhaCungCap");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "HoaDon");
         //Thiếu Panel phiếu nhập
         // Thiếu form khách hàng
-//        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(Thuoc), "Thuoc");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(Thuoc), "Thuoc");
+        
+        // /*
+        HoaDon.dispose();
+        Thuoc.dispose();
+        
+        // */
         
         jPanel3.revalidate();
         jPanel3.repaint();
@@ -270,7 +276,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
     private void jToggleButton_HoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_HoaDonActionPerformed
         // TODO add your handling code here:
         CardLayout card_layout = (CardLayout) jPanel3.getLayout();
-        card_layout.show(jPanel3, "NhaCungCap");
+        card_layout.show(jPanel3, "HoaDon");
     }//GEN-LAST:event_jToggleButton_HoaDonActionPerformed
 
     private void jToggleButton_ThuocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_ThuocActionPerformed
