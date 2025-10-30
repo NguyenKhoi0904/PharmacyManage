@@ -28,7 +28,7 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
         ArrayList<HoaDonDTO> result = new ArrayList<HoaDonDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM hoadon WHERE trang_thai=1";
+            String sql = "SELECT * FROM hoadon";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
