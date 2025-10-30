@@ -29,11 +29,11 @@ public class AdminLayout extends javax.swing.JFrame {
         
         //
         JFrame jFrame_HoaDon = new HoaDonForm();
-//        JFrame jFrame_LoHang = new LoHangForm();
+        JFrame jFrame_LoHang = new LoHangForm();
         // Thiếu Form phiếu nhập
         // Thiếu Form khách hàng
-//        JFrame jFrame_Thuoc = new ThuocForm1();
-//        JFrame jFrame_DanhMucThuoc = new DanhMucThuocForm1();
+        JFrame jFrame_Thuoc = new ThuocForm1();
+        JFrame jFrame_DanhMucThuoc = new DanhMucThuocForm1();
         JFrame jFrame_NhaCungCap = new NhaCungCapForm();
         JFrame jFrame_NhanVien = new NhanVienForm();
         JFrame jFrame_KhuyenMai = new KhuyenMaiForm();
@@ -56,11 +56,11 @@ public class AdminLayout extends javax.swing.JFrame {
         // /*
         
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");        
-//        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
         // Thiếu Panel phiếu nhập
         // Thiếu Panel khách hàng 
-//        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_Thuoc), "Thuoc");
-//        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_DanhMucThuoc), "DanhMucThuoc");S
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_Thuoc), "Thuoc");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_DanhMucThuoc), "DanhMucThuoc");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhaCungCap), "NhaCungCap");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhanVien), "NhanVien");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_KhuyenMai), "KhuyenMai");
@@ -380,6 +380,11 @@ public class AdminLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;");
         jButton_DangXuat.setPreferredSize(new java.awt.Dimension(80, 23));
+        jButton_DangXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_DangXuatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -418,20 +423,20 @@ public class AdminLayout extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 154, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -490,6 +495,12 @@ public class AdminLayout extends javax.swing.JFrame {
         CardLayout card_layout = (CardLayout) jPanel3.getLayout();
         card_layout.show(jPanel3, "HoaDon");
     }//GEN-LAST:event_jToggleButton_HoaDonActionPerformed
+
+    private void jButton_DangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DangXuatActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        new LoginForm().setVisible(true);
+    }//GEN-LAST:event_jButton_DangXuatActionPerformed
 
     /**
      * @param args the command line arguments
