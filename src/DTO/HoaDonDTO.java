@@ -38,6 +38,10 @@ public class HoaDonDTO {
         this.phuongThucTt = phuongThucTt;
         this.trangThai = trangThai;
     }
+    
+    public HoaDonDTO(){
+        
+    }
 
     // get
     public int getMaHd() {
