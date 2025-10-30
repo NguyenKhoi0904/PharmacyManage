@@ -69,7 +69,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
         btnThem.setBackground(new java.awt.Color(80, 80, 80));
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
-        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\plus.png")); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +80,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
         btnSua.setBackground(new java.awt.Color(80, 80, 80));
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSua.setForeground(new java.awt.Color(255, 255, 255));
-        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/wrench.png"))); // NOI18N
+        btnSua.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\wrench.png")); // NOI18N
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,7 +91,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
         btnXoa.setBackground(new java.awt.Color(80, 80, 80));
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/remove.png"))); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\remove.png")); // NOI18N
         btnXoa.setText("Xóa");
 
         btnInfo.setBackground(new java.awt.Color(80, 80, 80));
@@ -117,7 +117,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
         jComboBox4.setBackground(new java.awt.Color(80, 80, 80));
 
         btnTimkiem.setBackground(new java.awt.Color(204, 204, 204));
-        btnTimkiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
+        btnTimkiem.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\search.png")); // NOI18N
         btnTimkiem.setBorderPainted(false);
         btnTimkiem.setFocusPainted(false);
         btnTimkiem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);

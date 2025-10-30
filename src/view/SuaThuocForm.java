@@ -62,13 +62,13 @@ public class SuaThuocForm extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 153, 153));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/save.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\save.png")); // NOI18N
         jButton3.setText("Lưu");
 
         jButton4.setBackground(new java.awt.Color(153, 153, 153));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(0, 0, 0));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/remove.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\remove.png")); // NOI18N
         jButton4.setText("Hủy");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
