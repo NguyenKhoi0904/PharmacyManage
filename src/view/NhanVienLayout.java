@@ -79,6 +79,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nhân Viên");
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel1.setIcon(new FlatSVGIcon("image/employee.svg", 20, 20));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -102,6 +103,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
 
         jToggleButton_HoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_HoaDon.setText("Hóa Đơn");
+        jToggleButton_HoaDon.setIcon(new FlatSVGIcon("image/bill.svg", 20, 20));
         jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -111,6 +113,9 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_HoaDon.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_HoaDon.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_HoaDon.setIconTextGap(5);
         jToggleButton_HoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton_HoaDonActionPerformed(evt);
@@ -120,6 +125,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
 
         jToggleButton_PhieuNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_PhieuNhap.setText("Phiếu Nhập");
+        jToggleButton_PhieuNhap.setIcon(new FlatSVGIcon("image/category.svg", 20, 20));
         jToggleButton_PhieuNhap.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -129,10 +135,14 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_PhieuNhap.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_PhieuNhap.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_PhieuNhap.setIconTextGap(5);
         jPanel2.add(jToggleButton_PhieuNhap);
 
         jToggleButton_KhachHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_KhachHang.setText("Khách Hàng");
+        jToggleButton_KhachHang.setIcon(new FlatSVGIcon("image/customer.svg", 20, 20));
         jToggleButton_KhachHang.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -142,10 +152,14 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_KhachHang.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_KhachHang.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_KhachHang.setIconTextGap(5);
         jPanel2.add(jToggleButton_KhachHang);
 
         jToggleButton_Thuoc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_Thuoc.setText("Thuốc");
+        jToggleButton_Thuoc.setIcon(new FlatSVGIcon("image/medicine.svg", 20, 20));
         jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
@@ -155,6 +169,9 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "arc: 8;"
             + "hoverBackground: #A8FFED;"
             + "selectedBackground: #4EF5D1;");
+        jToggleButton_Thuoc.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_Thuoc.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_Thuoc.setIconTextGap(5);
         jToggleButton_Thuoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton_ThuocActionPerformed(evt);
@@ -165,7 +182,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(1350, 800));
         jPanel3.setLayout(new java.awt.CardLayout());
 
-        jButton_DangXuat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_DangXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton_DangXuat.setText("Đăng Xuất");
         jButton_DangXuat.setIcon(new FlatSVGIcon("image/logout.svg", 20, 20));
         jButton_DangXuat.setHorizontalAlignment(SwingConstants.LEFT);
@@ -179,6 +196,11 @@ public class NhanVienLayout extends javax.swing.JFrame {
             + "shadowWidth: 0;"
             + "arc: 8;"
             + "hoverBackground: #A8FFED;");
+        jButton_DangXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_DangXuatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -256,6 +278,13 @@ public class NhanVienLayout extends javax.swing.JFrame {
         CardLayout card_layout = (CardLayout) jPanel3.getLayout();
         card_layout.show(jPanel3, "Thuoc");
     }//GEN-LAST:event_jToggleButton_ThuocActionPerformed
+
+    private void jButton_DangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DangXuatActionPerformed
+        // TODO add your handling code here:
+        // Lưu data xuống database
+        dispose();
+        new LoginForm().setVisible(true);
+    }//GEN-LAST:event_jButton_DangXuatActionPerformed
 
     /**
      * @param args the command line arguments

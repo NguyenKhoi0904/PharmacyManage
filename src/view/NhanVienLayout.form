@@ -123,6 +123,9 @@
               </Border>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jLabel1.setIcon(new FlatSVGIcon(&quot;image/employee.svg&quot;, 20, 20));"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -151,7 +154,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_HoaDonActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_HoaDon.setIcon(new FlatSVGIcon(&quot;image/bill.svg&quot;, 20, 20));&#xa;jToggleButton_HoaDon.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);&#xa;jToggleButton_HoaDon.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_HoaDon.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_HoaDon.setIconTextGap(5);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_PhieuNhap">
@@ -162,7 +165,7 @@
             <Property name="text" type="java.lang.String" value="Phi&#x1ebf;u Nh&#x1ead;p"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_PhieuNhap.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_PhieuNhap.setIcon(new FlatSVGIcon(&quot;image/category.svg&quot;, 20, 20));&#xa;jToggleButton_PhieuNhap.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);&#xa;jToggleButton_PhieuNhap.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_PhieuNhap.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_PhieuNhap.setIconTextGap(5);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_KhachHang">
@@ -173,7 +176,7 @@
             <Property name="text" type="java.lang.String" value="Kh&#xe1;ch H&#xe0;ng"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_KhachHang.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_KhachHang.setIcon(new FlatSVGIcon(&quot;image/customer.svg&quot;, 20, 20));&#xa;jToggleButton_KhachHang.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);&#xa;jToggleButton_KhachHang.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_KhachHang.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_KhachHang.setIconTextGap(5);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton_Thuoc">
@@ -187,7 +190,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_ThuocActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_Thuoc.setIcon(new FlatSVGIcon(&quot;image/medicine.svg&quot;, 20, 20));&#xa;jToggleButton_Thuoc.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);&#xa;jToggleButton_Thuoc.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_Thuoc.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_Thuoc.setIconTextGap(5);"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -227,10 +230,13 @@
         <Component class="javax.swing.JButton" name="jButton_DangXuat">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
+              <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng Xu&#x1ea5;t"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_DangXuatActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_DangXuat.setIcon(new FlatSVGIcon(&quot;image/logout.svg&quot;, 20, 20));&#xa;jButton_DangXuat.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jButton_DangXuat.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jButton_DangXuat.setIconTextGap(5);&#xa;jButton_DangXuat.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;);"/>
           </AuxValues>
