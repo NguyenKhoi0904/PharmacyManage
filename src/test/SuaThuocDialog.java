@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -166,10 +168,36 @@ public class SuaThuocDialog extends JDialog {
         }
     }
 
+    // private void updateImagePreview(String path) {
+    // // ImageIcon icon = new ImageIcon(path);
+    // ImageIcon icon = new ImageIcon(getClass().getResource(path));
+    // Image scaled = icon.getImage().getScaledInstance(250, 250,
+    // Image.SCALE_SMOOTH);
+    // imageLabel.setIcon(new ImageIcon(scaled));
+    // }
+
     private void updateImagePreview(String path) {
-        ImageIcon icon = new ImageIcon(path);
-        Image scaled = icon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
-        imageLabel.setIcon(new ImageIcon(scaled));
+        try {
+            ImageIcon icon;
+            if (path.startsWith("/image/placeholder")) {
+                // Ảnh mặc định trong src/resources
+                icon = new ImageIcon(getClass().getResource(path));
+            } else {
+                // Ảnh do người dùng chọn (file thật trên ổ đĩa)
+                File imgFile = new File(path);
+                if (!imgFile.exists()) {
+                    // nếu người dùng lưu theo kiểu /image/product-image/... thì thêm "src"
+                    imgFile = new File("src" + path);
+                }
+                icon = new ImageIcon(imgFile.getAbsolutePath());
+            }
+
+            Image scaled = icon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+            imageLabel.setIcon(new ImageIcon(scaled));
+        } catch (Exception e) {
+            System.err.println("Không thể load ảnh: " + path);
+            e.printStackTrace();
+        }
     }
 
     private boolean validateInput() {

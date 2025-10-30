@@ -217,6 +217,7 @@ public class LoginForm extends javax.swing.JFrame {
             // chuyển trang nhân viên
             SwingUtilities.invokeLater(() -> {
                 new ThuocGUI().setVisible(true);
+                // new NhanVienLayout().setVisible(true);
             });
 
             // this.setVisible(false);

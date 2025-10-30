@@ -16,7 +16,7 @@ public class PharmacyManage {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
 
-            FlatDarkLaf.setup();
+            FlatLightLaf.setup();
             UIManager.put("PasswordField.showRevealButton", true);
 
         } catch (Exception ex) {

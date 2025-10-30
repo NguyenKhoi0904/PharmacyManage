@@ -91,10 +91,30 @@ public class ThuocGUI extends JFrame {
 
         for (ThuocDTO t : list) {
             ImageIcon icon = null;
+
             if (t.getUrlAnh() != null && !t.getUrlAnh().isEmpty()) {
-                Image img = new ImageIcon(t.getUrlAnh()).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-                icon = new ImageIcon(img);
+                try {
+                    Image image;
+                    // Nếu là đường dẫn tuyệt đối (vd: C:/Users/... hoặc /home/...)
+                    if (new java.io.File(t.getUrlAnh()).exists()) {
+                        image = new ImageIcon(t.getUrlAnh()).getImage();
+                    }
+                    // Nếu là đường dẫn trong resource (vd: /image/placeholder.jpg)
+                    else if (getClass().getResource(t.getUrlAnh()) != null) {
+                        image = new ImageIcon(getClass().getResource(t.getUrlAnh())).getImage();
+                    }
+                    // Nếu không hợp lệ, bỏ qua
+                    else {
+                        image = new ImageIcon(getClass().getResource("/image/placeholder_them_thuoc.jpg")).getImage();
+                    }
+
+                    Image scaled = image.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(scaled);
+                } catch (Exception e) {
+                    System.err.println("⚠️ Lỗi load ảnh: " + t.getUrlAnh() + " → " + e.getMessage());
+                }
             }
+
             Object[] row = {
                     t.getMaThuoc(),
                     t.getTenThuoc(),
@@ -108,6 +128,33 @@ public class ThuocGUI extends JFrame {
             model.addRow(row);
         }
     }
+
+    // private void loadData() {
+    // model.setRowCount(0);
+    // List<ThuocDTO> list = BUSManager.thuocBUS.getListThuoc();
+    // if (list == null)
+    // return;
+
+    // for (ThuocDTO t : list) {
+    // ImageIcon icon = null;
+    // if (t.getUrlAnh() != null && !t.getUrlAnh().isEmpty()) {
+    // Image img = new ImageIcon(t.getUrlAnh()).getImage().getScaledInstance(70, 70,
+    // Image.SCALE_SMOOTH);
+    // icon = new ImageIcon(img);
+    // }
+    // Object[] row = {
+    // t.getMaThuoc(),
+    // t.getTenThuoc(),
+    // t.getGia(),
+    // t.getDonViTinh(),
+    // t.getMaDmt(),
+    // t.getNhaSanXuat(),
+    // t.getXuatXu(),
+    // icon
+    // };
+    // model.addRow(row);
+    // }
+    // }
 
     private void themThuoc() {
         ThemThuocDialog dialog = new ThemThuocDialog(this);

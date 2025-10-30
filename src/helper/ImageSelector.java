@@ -10,7 +10,7 @@ public class ImageSelector {
 
     /**
      * Mở hộp thoại chọn file ảnh, copy ảnh vào thư mục "image" trong project,
-     * và trả về đường dẫn tương đối (ví dụ: "image/tenanh.png")
+     * và trả về đường dẫn tương đối (ví dụ: "/image/tenanh.png")
      */
     public static String chooseAndCopyImage(Component parent) {
         JFileChooser fileChooser = new JFileChooser();
@@ -28,7 +28,7 @@ public class ImageSelector {
 
             try {
                 // Tạo thư mục image nếu chưa tồn tại
-                File imageDir = new File("image");
+                File imageDir = new File("src/image/product-image/");
                 if (!imageDir.exists()) {
                     imageDir.mkdir();
                 }
@@ -41,7 +41,7 @@ public class ImageSelector {
                 Files.copy(selectedFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
 
                 // Trả về đường dẫn tương đối (để lưu DB hoặc load lại)
-                return "image/" + fileName;
+                return "/image/product-image/" + fileName;
 
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(parent,
