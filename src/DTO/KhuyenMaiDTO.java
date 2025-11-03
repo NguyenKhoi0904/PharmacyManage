@@ -11,12 +11,11 @@ public class KhuyenMaiDTO {
     private String dieuKienKm;
     private Date ngayBatDau;
     private Date ngayKetThuc;
-    private boolean hieuLuc;
     private int trangThai;
 
     // Constructor
     public KhuyenMaiDTO(int maKm, String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
-            Date ngayKetThuc, boolean hieuLuc, int trangThai) {
+            Date ngayKetThuc, int trangThai) {
         this.maKm = maKm;
         this.tenKm = tenKm;
         this.loaiKm = loaiKm;
@@ -24,10 +23,23 @@ public class KhuyenMaiDTO {
         this.dieuKienKm = dieuKienKm;
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
-        this.hieuLuc = hieuLuc;
         this.trangThai = trangThai;
     }
-
+    
+    public KhuyenMaiDTO(String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
+            Date ngayKetThuc, int trangThai) {
+        this.tenKm = tenKm;
+        this.loaiKm = loaiKm;
+        this.giaTriKm = giaTriKm;
+        this.dieuKienKm = dieuKienKm;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.trangThai = trangThai;
+    }
+    public KhuyenMaiDTO() {
+        
+    }
+    
     // get
     public int getMaKm() {
         return this.maKm;
@@ -55,10 +67,6 @@ public class KhuyenMaiDTO {
 
     public Date getNgayKetThuc() {
         return this.ngayKetThuc;
-    }
-
-    public boolean isHieuLuc() {
-        return this.hieuLuc;
     }
 
     public int getTrangThai() {
@@ -94,10 +102,6 @@ public class KhuyenMaiDTO {
         this.ngayKetThuc = ngayKetThuc;
     }
 
-    public void setHieuLuc(boolean hieuLuc) {
-        this.hieuLuc = hieuLuc;
-    }
-
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
@@ -108,7 +112,6 @@ public class KhuyenMaiDTO {
                 "maKm=" + maKm +
                 ", tenKm='" + tenKm + '\'' +
                 ", giaTriKm=" + giaTriKm + '\'' +
-                ", hieuLuc=" + hieuLuc + '\'' +
                 ", trangthai=" + this.trangThai + '\'' +
                 '}';
     }

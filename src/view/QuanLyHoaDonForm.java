@@ -326,6 +326,14 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
         // TODO add your handling code here:
+        if (selectedHD == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Tạo và hiển thị dialog chỉnh sửa
+        DetailHDDialog dialog = new DetailHDDialog((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), selectedHD);
+        dialog.setVisible(true);
     }//GEN-LAST:event_infoButtonActionPerformed
 
     private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed

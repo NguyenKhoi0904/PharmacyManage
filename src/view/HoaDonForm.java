@@ -310,16 +310,6 @@ public class HoaDonForm extends javax.swing.JFrame {
     * Lấy giá trị giảm (%) từ mã khuyến mãi
     * @return Giá trị giảm từ 0 đến 1 (vd: 10% -> 0.1). Trả về BigDecimal.ZERO nếu mã không hợp lệ.
     */
-   private BigDecimal getPhanTramGiamFromMaKM() {
-       if (ValidationUtils.isValidIntBiggerThanZero(tfMaKM.getText())) {
-           int maKM = Integer.parseInt(tfMaKM.getText());
-           if (BUSManager.khuyenMaiBUS.checkIfMaKmExist(maKM)) {
-               KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
-               return km.getGiaTriKm().divide(BigDecimal.valueOf(100));
-           }
-       }
-       return BigDecimal.ZERO;
-   }
 
     private void addEventForInvoicePanel(){
         // Ma KM
@@ -349,7 +339,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         BigDecimal tongTienHienTai = getCartSum();
 
         // Lấy mã KM và tính giảm giá nếu có
-        BigDecimal phanTramGiam = getPhanTramGiamFromMaKM();
+        BigDecimal phanTramGiam = BUSManager.khuyenMaiBUS.getPhanTramGiamFromMaKM(tfMaKM.getText());
         BigDecimal tongTienMoi = tongTienHienTai.subtract(tongTienHienTai.multiply(phanTramGiam));
     
         tfTongTien.setText(tongTienMoi.toString());
@@ -1001,8 +991,10 @@ public class HoaDonForm extends javax.swing.JFrame {
             if (tienKhachDua >= tongTien) {
                 JOptionPane.showMessageDialog(null, "Tiến hành in hóa đơn");
                 BigDecimal bd = new BigDecimal(Float.toString(tongTien));
+                int maKM = ValidationUtils.validateMaKM(tfMaKM.getText()) != null ?
+                            ValidationUtils.validateMaKM(tfMaKM.getText()) : 302;
                 // Xử lý HD 
-                HoaDonDTO hd = new HoaDonDTO(11, 21, 301, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
+                HoaDonDTO hd = new HoaDonDTO(11, 21, maKM, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
                         (String) paymentComboBox.getSelectedItem(), 0);
                 if (hoaDonBUS.addHD(hd)) {
                     if (!hoaDonBUS.addCTHD(hd.getMaHd(), listCTHD)) {

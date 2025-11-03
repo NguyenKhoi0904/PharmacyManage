@@ -110,14 +110,13 @@ CREATE TABLE chitiet_pn (
 
 -- 10. Khuyến Mãi
 CREATE TABLE khuyenmai (
-    ma_km INT PRIMARY KEY,
+    ma_km INT AUTO_INCREMENT PRIMARY KEY,
     ten_km VARCHAR(100),
     loai_km VARCHAR(50),
     gia_tri_km DECIMAL(10,2),
     dieu_kien_km VARCHAR(100),
     ngay_bat_dau DATE,
     ngay_ket_thuc DATE,
-    hieu_luc BOOLEAN,
     trang_thai INT(2) NOT NULL
 );
 
@@ -171,9 +170,9 @@ INSERT INTO danhmucthuoc (ma_dmt, ten_dmt, trang_thai) VALUES
 (202, 'Kháng sinh & Kháng viêm',1);
 
 -- 10. Khuyến Mãi (ma_km: 301, 302)
-INSERT INTO khuyenmai (ma_km, ten_km, loai_km, gia_tri_km, dieu_kien_km, ngay_bat_dau, ngay_ket_thuc, hieu_luc, trang_thai) VALUES
-(301, 'Giảm 10% cho khách VIP', 'Phần trăm', 10.00, 'Khách hàng có 100 điểm tích lũy', '2025-10-01', '2025-12-31', TRUE, 1),
-(302, 'Mua 3 tặng 1', 'Sản phẩm', 0.00, 'Mua 3 viên Panadol', '2025-11-01', '2025-11-30', TRUE, 1);
+INSERT INTO khuyenmai (ten_km, loai_km, gia_tri_km, dieu_kien_km, ngay_bat_dau, ngay_ket_thuc, trang_thai) VALUES
+('Giảm 10% cho khách VIP', 'Phần trăm', 10.00, 'Khách hàng có 100 điểm tích lũy', '2025-10-01', '2025-12-31', 1),
+('Mã mặc định', 'Phần trăm', 0.00, 'KHÔNG', '2025-11-01', '3025-11-30', 1);
 
 -- 2. Nhân Viên (ma_nv: 11, 12. Dùng ma_tk: 1, 2)
 INSERT INTO nhanvien (ma_nv, ma_tk, ngay_vao_lam, luong, email, dia_chi, gioi_tinh, ngay_sinh, vi_tri, trang_thai) VALUES
@@ -209,8 +208,8 @@ INSERT INTO chitiet_pn (ma_pn, ma_lh, don_gia, so_luong) VALUES
 
 -- 11. Hoá Đơn 
 INSERT INTO hoadon ( ma_nv, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, trang_thai) VALUES
-( 12, 21, 301, 120000.00, '2025-10-08', 'Chuyển khoản', 1), -- NV 12 bán hàng
-( 12, 22, NULL, 50000.00, '2025-10-08', 'Tiền mặt', 1); -- NV 12 bán hàng
+( 12, 21, 1, 120000.00, '2025-10-08', 'Chuyển khoản', 1), -- NV 12 bán hàng
+( 12, 22, 2, 50000.00, '2025-10-08', 'Tiền mặt', 1); -- NV 12 bán hàng
 
 -- 12. Chi Tiết Hoá Đơn (Dùng ma_hd: 71, 72 và ma_lh/ma_thuoc tương ứng)
 INSERT INTO chitiet_hd (ma_hd, ma_lh, ma_thuoc, don_gia, so_luong) VALUES

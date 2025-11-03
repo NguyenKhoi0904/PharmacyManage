@@ -38,14 +38,14 @@ public class EditHDDialog extends javax.swing.JDialog {
         super(parent, "Chỉnh sửa hóa đơn", true); // true = modal dialog
         initComponents();
         this.hoaDon = hoaDon;
-        loadBaseTongTien();
         loadHoaDonData(); // table
+        loadBaseTongTien();
         setLocationRelativeTo(parent);
         addEvent();
     }
     
     private void loadBaseTongTien(){
-        BigDecimal phanTramGiam = BigDecimalUtils.getPhanTramGiamFromMaKM(tfMaKM.getText());
+        BigDecimal phanTramGiam = BUSManager.khuyenMaiBUS.getPhanTramGiamFromMaKM(tfMaKM.getText());
         if (phanTramGiam.compareTo(BigDecimal.ZERO) == 1)
             // Nghĩa là ban đầu hóa đơn có mã giảm có giá trị km > 0
         {
@@ -73,7 +73,7 @@ public class EditHDDialog extends javax.swing.JDialog {
         tfMaKH.setText(String.valueOf(hoaDon.getMaKh()));
         tfMaKM.setText(hoaDon.getMaKm() != null ? String.valueOf(hoaDon.getMaKm()) : "");
         tfTongTien.setText(String.format("%,.0f", hoaDon.getTongTien()));
-        tfTongTienMoi.setText(String.format("%,.0f", hoaDon.getTongTien()));
+        tfTongTienMoi.setText(String.format("%.0f", hoaDon.getTongTien()));
         tfNgayXuat.setText(new SimpleDateFormat("dd/MM/yyyy").format(hoaDon.getNgayXuat()));
 
         cbPayment.setSelectedItem(hoaDon.getPhuongThucTt());
@@ -116,7 +116,7 @@ public class EditHDDialog extends javax.swing.JDialog {
             isUpdatingTongTien = true;
 
             // Lấy phần trăm giảm
-            java.math.BigDecimal phanTramGiam = BigDecimalUtils.getPhanTramGiamFromMaKM(tfMaKM.getText()); // 0.10 nghĩa 10%
+            java.math.BigDecimal phanTramGiam = BUSManager.khuyenMaiBUS.getPhanTramGiamFromMaKM(tfMaKM.getText()); // 0.10 nghĩa 10%
             if (phanTramGiam == null) phanTramGiam = java.math.BigDecimal.ZERO;
 
             // Tính tiền giảm = baseTongTien * phanTramGiam

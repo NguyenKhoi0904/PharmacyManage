@@ -61,15 +61,5 @@ public class BigDecimalUtils {
         return currencyFormatter.format(display);
     }
 
-    public static java.math.BigDecimal getPhanTramGiamFromMaKM(String txtMaKM) {
-       if (ValidationUtils.isValidIntBiggerThanZero(txtMaKM)) {
-           int maKM = Integer.parseInt(txtMaKM);
-           if (BUSManager.khuyenMaiBUS.checkIfMaKmExist(maKM)) {
-               KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
-               return km.getGiaTriKm().divide(java.math.BigDecimal.valueOf(100));
-           }
-       }
-       return java.math.BigDecimal.ZERO;
-   }
     
 }
