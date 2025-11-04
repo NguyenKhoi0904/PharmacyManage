@@ -4,17 +4,28 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
 public class SuaThuocForm extends javax.swing.JFrame {
+    private int selectedRow;
 
     /**
      * Creates new form SuaThuocForm
      */
-    public SuaThuocForm() {
+    public SuaThuocForm(String maThuoc, String tenThuoc, double gia, String danhMuc, String donViTinh, String nhaSanXuat, String xuatXu, int rowIndex) {
         initComponents();
+        selectedRow = rowIndex;
+        txtMaThuoc.setText(maThuoc);
+        txtTenThuoc.setText(tenThuoc);
+        txtGia.setText(String.valueOf(gia));
+        txtDanhMuc.setText(danhMuc);
+        txtDonViTinh.setText(donViTinh);
+        txtNhaSanXuat.setText(nhaSanXuat);
+        txtXuatXu.setText(xuatXu);
     }
 
     /**
@@ -28,21 +39,21 @@ public class SuaThuocForm extends javax.swing.JFrame {
 
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jTextField8 = new javax.swing.JTextField();
+        bntLuu = new javax.swing.JButton();
+        btnHuy = new javax.swing.JButton();
+        txtMaThuoc = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        txtTenThuoc = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        txtGia = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        txtDanhMuc = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        txtDonViTinh = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        txtXuatXu = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        txtNhaSanXuat = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
         jLabel19 = new javax.swing.JLabel();
@@ -59,74 +70,79 @@ public class SuaThuocForm extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Mã Thuốc:");
 
-        jButton3.setBackground(new java.awt.Color(153, 153, 153));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\save.png")); // NOI18N
-        jButton3.setText("Lưu");
-
-        jButton4.setBackground(new java.awt.Color(153, 153, 153));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
-        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\remove.png")); // NOI18N
-        jButton4.setText("Hủy");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bntLuu.setBackground(new java.awt.Color(153, 153, 153));
+        bntLuu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bntLuu.setForeground(new java.awt.Color(0, 0, 0));
+        bntLuu.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\save.png")); // NOI18N
+        bntLuu.setText("Lưu");
+        bntLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                bntLuuActionPerformed(evt);
             }
         });
 
-        jTextField8.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(0, 0, 0));
+        btnHuy.setBackground(new java.awt.Color(153, 153, 153));
+        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHuy.setForeground(new java.awt.Color(0, 0, 0));
+        btnHuy.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\remove.png")); // NOI18N
+        btnHuy.setText("Hủy");
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
+
+        txtMaThuoc.setBackground(new java.awt.Color(255, 255, 255));
+        txtMaThuoc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtMaThuoc.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Tên Thuốc:");
 
-        jTextField9.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField9.setForeground(new java.awt.Color(0, 0, 0));
+        txtTenThuoc.setBackground(new java.awt.Color(255, 255, 255));
+        txtTenThuoc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtTenThuoc.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Giá:");
 
-        jTextField10.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField10.setForeground(new java.awt.Color(0, 0, 0));
+        txtGia.setBackground(new java.awt.Color(255, 255, 255));
+        txtGia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtGia.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Danh Mục:");
 
-        jTextField11.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField11.setForeground(new java.awt.Color(0, 0, 0));
+        txtDanhMuc.setBackground(new java.awt.Color(255, 255, 255));
+        txtDanhMuc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtDanhMuc.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Đơn Vị Tính:");
 
-        jTextField12.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField12.setForeground(new java.awt.Color(0, 0, 0));
+        txtDonViTinh.setBackground(new java.awt.Color(255, 255, 255));
+        txtDonViTinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtDonViTinh.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel16.setText("Danh Mục");
+        jLabel16.setText("Xuất Xứ");
 
-        jTextField13.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField13.setForeground(new java.awt.Color(0, 0, 0));
+        txtXuatXu.setBackground(new java.awt.Color(255, 255, 255));
+        txtXuatXu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtXuatXu.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Nhà Sản Xuất");
 
-        jTextField14.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField14.setForeground(new java.awt.Color(0, 0, 0));
+        txtNhaSanXuat.setBackground(new java.awt.Color(255, 255, 255));
+        txtNhaSanXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtNhaSanXuat.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
@@ -159,12 +175,12 @@ public class SuaThuocForm extends javax.swing.JFrame {
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField8)
-                            .addComponent(jTextField9)
-                            .addComponent(jTextField10)
-                            .addComponent(jTextField11)
-                            .addComponent(jTextField12)
-                            .addComponent(jTextField13))
+                            .addComponent(txtMaThuoc)
+                            .addComponent(txtTenThuoc)
+                            .addComponent(txtGia)
+                            .addComponent(txtDanhMuc)
+                            .addComponent(txtDonViTinh)
+                            .addComponent(txtXuatXu))
                         .addGap(37, 37, 37))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,12 +195,12 @@ public class SuaThuocForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                                .addComponent(jButton3)
+                                .addComponent(bntLuu)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
-                                .addComponent(jTextField14))))))
+                                .addComponent(txtNhaSanXuat))))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,31 +208,31 @@ public class SuaThuocForm extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTenThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                    .addComponent(txtGia, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                    .addComponent(txtDonViTinh, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                    .addComponent(txtXuatXu, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                    .addComponent(txtNhaSanXuat, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -236,8 +252,8 @@ public class SuaThuocForm extends javax.swing.JFrame {
                                 .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(bntLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
 
         jPanel2.setBackground(new java.awt.Color(153, 255, 255));
@@ -281,10 +297,39 @@ public class SuaThuocForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        new ThuocForm1().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnHuyActionPerformed
 
+    private void bntLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntLuuActionPerformed
+    String maThuoc = txtMaThuoc.getText().trim();
+    String tenThuoc = txtTenThuoc.getText().trim();
+    String gia = txtGia.getText().trim();
+    String danhMuc = txtDanhMuc.getText().trim();
+    String donViTinh = txtDonViTinh.getText().trim();
+    String nhaSanXuat = txtNhaSanXuat.getText().trim();
+    String xuatXu = txtXuatXu.getText().trim();
+
+    if (maThuoc.isEmpty() || tenThuoc.isEmpty() || gia.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+        return;
+    }//GEN-LAST:event_bntLuuActionPerformed
+    // Cập nhật lại dữ liệu trong bảng của ThuocForm1
+    ThuocForm1.model.setValueAt(maThuoc, selectedRow, 0);
+    ThuocForm1.model.setValueAt(tenThuoc, selectedRow, 1);
+    ThuocForm1.model.setValueAt(gia, selectedRow, 2);
+    ThuocForm1.model.setValueAt(danhMuc, selectedRow, 3);
+    ThuocForm1.model.setValueAt(donViTinh, selectedRow, 4);
+    ThuocForm1.model.setValueAt(nhaSanXuat, selectedRow, 5);
+    ThuocForm1.model.setValueAt(xuatXu, selectedRow, 6);
+
+    JOptionPane.showMessageDialog(this, "Cập nhật thông tin thuốc thành công!");
+
+    // Quay lại form ThuocForm1
+    new ThuocForm1().setVisible(true);
+    this.dispose();
+    }
     /**
      * @param args the command line arguments
      */
@@ -315,14 +360,14 @@ public class SuaThuocForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SuaThuocForm().setVisible(true);
+               
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton bntLuu;
+    private javax.swing.JButton btnHuy;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
@@ -337,12 +382,12 @@ public class SuaThuocForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField txtDanhMuc;
+    private javax.swing.JTextField txtDonViTinh;
+    private javax.swing.JTextField txtGia;
+    private javax.swing.JTextField txtMaThuoc;
+    private javax.swing.JTextField txtNhaSanXuat;
+    private javax.swing.JTextField txtTenThuoc;
+    private javax.swing.JTextField txtXuatXu;
     // End of variables declaration//GEN-END:variables
 }

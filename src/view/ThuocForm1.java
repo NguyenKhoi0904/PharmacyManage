@@ -5,6 +5,11 @@
 package view;
 
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import view.SuaThuocForm;
+import view.ThongTinThuocForm;
 
 
 
@@ -19,6 +24,10 @@ public class ThuocForm1 extends javax.swing.JFrame {
      */public static javax.swing.table.DefaultTableModel model;
     public ThuocForm1() {
         initComponents();
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/plus.png")));
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/wrench.png")));
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png")));
+        btnTimkiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png")));
         
         model = (javax.swing.table.DefaultTableModel) tblThuoc.getModel();
         setLocationRelativeTo(null);
@@ -46,16 +55,6 @@ public class ThuocForm1 extends javax.swing.JFrame {
         jComboBox4 = new javax.swing.JComboBox<>();
         btnTimkiem = new javax.swing.JButton();
         jTextField4 = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        cbDanhmuc = new javax.swing.JComboBox<>();
-        cbXuatxu = new javax.swing.JComboBox<>();
-        cbDonvitinh = new javax.swing.JComboBox<>();
-        txtHantu = new javax.swing.JTextField();
-        txtHanden = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -63,7 +62,6 @@ public class ThuocForm1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
-        setPreferredSize(new java.awt.Dimension(1300, 750));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -94,11 +92,21 @@ public class ThuocForm1 extends javax.swing.JFrame {
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\remove.png")); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnInfo.setBackground(new java.awt.Color(80, 80, 80));
         btnInfo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnInfo.setForeground(new java.awt.Color(255, 255, 255));
         btnInfo.setText("Info");
+        btnInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInfoActionPerformed(evt);
+            }
+        });
 
         btnImport.setBackground(new java.awt.Color(80, 80, 80));
         btnImport.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -117,7 +125,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
 
         jComboBox4.setBackground(new java.awt.Color(80, 80, 80));
 
-        btnTimkiem.setBackground(new java.awt.Color(204, 204, 204));
+        btnTimkiem.setBackground(new java.awt.Color(80, 80, 80));
         btnTimkiem.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Downloads\\PharmacyManage\\src\\image\\search.png")); // NOI18N
         btnTimkiem.setBorderPainted(false);
         btnTimkiem.setFocusPainted(false);
@@ -128,8 +136,9 @@ public class ThuocForm1 extends javax.swing.JFrame {
             }
         });
 
-        jTextField4.setBackground(new java.awt.Color(204, 204, 204));
+        jTextField4.setBackground(new java.awt.Color(80, 80, 80));
         jTextField4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextField4.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -187,86 +196,6 @@ public class ThuocForm1 extends javax.swing.JFrame {
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Danh mục");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Xuất xứ");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Đơn vị tính");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Hạn sử dụng");
-
-        cbDanhmuc.setBackground(new java.awt.Color(255, 255, 255));
-
-        cbXuatxu.setBackground(new java.awt.Color(255, 255, 255));
-
-        cbDonvitinh.setBackground(new java.awt.Color(255, 255, 255));
-
-        txtHantu.setBackground(new java.awt.Color(255, 255, 255));
-
-        txtHanden.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cbDonvitinh, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbXuatxu, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbDanhmuc, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(txtHantu, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtHanden, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(101, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbDanhmuc, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cbXuatxu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbDonvitinh, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtHantu, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHanden, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jPanel5.setBackground(new java.awt.Color(153, 255, 255));
         jPanel5.setToolTipText("");
         jPanel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -282,10 +211,10 @@ public class ThuocForm1 extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(546, 546, 546)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(385, 385, 385))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,12 +268,9 @@ public class ThuocForm1 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1))
             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,29 +279,107 @@ public class ThuocForm1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        ThemThuocForm form = new ThemThuocForm();
-        form.setVisible(true);
+        int selectedRow = tblThuoc.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một thuốc cần sửa!");
+        return;
     }//GEN-LAST:event_btnThemActionPerformed
+// Lấy dữ liệu từ hàng được chọn
+    String maThuoc = tblThuoc.getValueAt(selectedRow, 0).toString();
+    String tenThuoc = tblThuoc.getValueAt(selectedRow, 1).toString();
+    double gia = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
+    String danhMuc = tblThuoc.getValueAt(selectedRow, 3).toString();
+    String donViTinh = tblThuoc.getValueAt(selectedRow, 4).toString();
+    String nhaSanXuat = tblThuoc.getValueAt(selectedRow, 5).toString();
+    String xuatXu = tblThuoc.getValueAt(selectedRow, 6).toString();
 
+    // Mở form Sửa và truyền dữ liệu sang
+    SuaThuocForm formSua = new SuaThuocForm(maThuoc, tenThuoc, gia, danhMuc, donViTinh, nhaSanXuat, xuatXu, selectedRow);
+formSua.setVisible(true);
+this.dispose(); // nếu bạn muốn tắt form hiện tại
+    this.dispose();
+    }// đóng form hiện tại
     private void btnTimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimkiemActionPerformed
-        // TODO add your handling code here:
+        String keyword = jTextField4.getText().trim().toLowerCase();
+    DefaultTableModel model = (DefaultTableModel) tblThuoc.getModel();
+
+    // Nếu người dùng không nhập gì thì hiển thị lại toàn bộ
+    if (keyword.isEmpty()) {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        tblThuoc.setRowSorter(sorter);
+        sorter.setRowFilter(null);
+        return;
+    }
+
+    // Sử dụng TableRowSorter để lọc
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+    tblThuoc.setRowSorter(sorter);
+
+    // Tìm theo cột Mã thuốc (0), Tên thuốc (1), Danh mục (3)
+    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword, 0, 1, 3));
     }//GEN-LAST:event_btnTimkiemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-         int row = tblThuoc.getSelectedRow();
-         if(row == -1)
-             JOptionPane.showMessageDialog(this, "cập nhật thuốc thành công");// TODO add your handling code here:
+         int selectedRow = tblThuoc.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một thuốc cần sửa!");
+        return;
+    }
+
+    String maThuoc = tblThuoc.getValueAt(selectedRow, 0).toString();
+    String tenThuoc = tblThuoc.getValueAt(selectedRow, 1).toString();
+    double gia = Double.parseDouble(tblThuoc.getValueAt(selectedRow, 2).toString());
+    String danhMuc = tblThuoc.getValueAt(selectedRow, 3).toString();
+    String donViTinh = tblThuoc.getValueAt(selectedRow, 4).toString();
+    String nhaSanXuat = tblThuoc.getValueAt(selectedRow, 5).toString();
+    String xuatXu = tblThuoc.getValueAt(selectedRow, 6).toString();
+
+    new SuaThuocForm(maThuoc, tenThuoc, gia, danhMuc, donViTinh, nhaSanXuat, xuatXu, selectedRow).setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_btnSuaActionPerformed
 
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // Lấy hàng đang được chọn trong bảng
+    int selectedRow = tblThuoc.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, 
+            "Vui lòng chọn thuốc cần xóa!", 
+            "Thông báo", 
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }//GEN-LAST:event_btnXoaActionPerformed
+}
+    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
+        int selectedRow = tblThuoc.getSelectedRow();
+
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn thuốc cần xem thông tin!");
+        return;
+    }
+
+    // Lấy thông tin thuốc từ hàng được chọn
+    String maThuoc = tblThuoc.getValueAt(selectedRow, 0).toString();
+    String tenThuoc = tblThuoc.getValueAt(selectedRow, 1).toString();
+    double gia = Double.parseDouble(tblThuoc.getValueAt(selectedRow, 2).toString());
+    String danhMuc = tblThuoc.getValueAt(selectedRow, 3).toString();
+    String donViTinh = tblThuoc.getValueAt(selectedRow, 4).toString();
+    String nhaSanXuat = tblThuoc.getValueAt(selectedRow, 5).toString();
+    String xuatXu = tblThuoc.getValueAt(selectedRow, 6).toString();
+
+    // Mở form thông tin thuốc
+    ThongTinThuocForm infoForm = new ThongTinThuocForm(maThuoc, tenThuoc, gia, danhMuc, donViTinh, nhaSanXuat, xuatXu);
+    infoForm.setVisible(true);
+    }//GEN-LAST:event_btnInfoActionPerformed
+    
+    }
     /**
      * @param args the command line arguments
      */
@@ -413,7 +417,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ThuocForm1().setVisible(true);
+                
             }
         });
     }
@@ -427,22 +431,12 @@ public class ThuocForm1 extends javax.swing.JFrame {
     private javax.swing.JButton btnThuoctinh;
     private javax.swing.JButton btnTimkiem;
     private javax.swing.JButton btnXoa;
-    private javax.swing.JComboBox<String> cbDanhmuc;
-    private javax.swing.JComboBox<String> cbDonvitinh;
-    private javax.swing.JComboBox<String> cbXuatxu;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTable tblThuoc;
-    private javax.swing.JTextField txtHanden;
-    private javax.swing.JTextField txtHantu;
     // End of variables declaration//GEN-END:variables
 }
