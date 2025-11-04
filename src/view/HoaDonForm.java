@@ -332,20 +332,39 @@ public class HoaDonForm extends javax.swing.JFrame {
             public void changedUpdate(DocumentEvent e) { refreshTienThua(BigDecimalUtils.toBigDecimal(tfTongTien.getText())); }
         });
 
-    }
+    } 
 
     private void refreshTongTien() {
         // Lấy tổng tiền hiện tại của giỏ hàng
         BigDecimal tongTienHienTai = getCartSum();
+        BigDecimal tongTienMoi = tongTienHienTai;
+        BigDecimal phanTramGiam = BigDecimal.ZERO;
+        try {
+            
+            
+            // Ma KM trong UI la so thi parse
+            if (ValidationUtils.isValidIntBiggerThanZero(tfMaKM.getText())) {
+                int maKM = Integer.parseInt(tfMaKM.getText());
+                KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
+                
+                if (km != null & BUSManager.khuyenMaiBUS.isKMValid(km))
+                {
+                    // Lấy mã KM và tính giảm giá nếu có
+                    phanTramGiam = BUSManager.khuyenMaiBUS.getPhanTramGiamFromMaKM(tfMaKM.getText());
+                    tongTienMoi = tongTienHienTai.subtract(tongTienHienTai.multiply(phanTramGiam));
+                }
+            }
+            
 
-        // Lấy mã KM và tính giảm giá nếu có
-        BigDecimal phanTramGiam = BUSManager.khuyenMaiBUS.getPhanTramGiamFromMaKM(tfMaKM.getText());
-        BigDecimal tongTienMoi = tongTienHienTai.subtract(tongTienHienTai.multiply(phanTramGiam));
-    
-        tfTongTien.setText(tongTienMoi.toString());
+            tfTongTien.setText(tongTienMoi.toString());
 
-        // Đồng thời refresh luôn tiền thừa
-        refreshTienThua(tongTienMoi);
+            // Đồng thời refresh luôn tiền thừa
+            refreshTienThua(tongTienMoi);
+
+        } catch (NumberFormatException e) {
+            
+        }
+        
     }
 
     private void refreshTienThua(BigDecimal tongTien) {
@@ -904,7 +923,6 @@ public class HoaDonForm extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        System.out.println(getCartSum().toString());
         // CHUA XU LY KHI CHON NHIEU ROW !!!!!!!
         if (selectedThuoc == null) return;
         try {
@@ -986,13 +1004,25 @@ public class HoaDonForm extends javax.swing.JFrame {
             float tienKhachDua = Float.parseFloat(money);
             float tongTien = Float.parseFloat(tfTongTien.getText());
             
-            // CHƯA HANDLE MÃ KM !!!!!!!!!!!
+            // MÃ KM DEFAULT = 2!!!!!!!!!!!
 //            (Mã NV, KH CẦN được lấy lại đúng!!!)
             if (tienKhachDua >= tongTien) {
                 JOptionPane.showMessageDialog(null, "Tiến hành in hóa đơn");
                 BigDecimal bd = new BigDecimal(Float.toString(tongTien));
-                int maKM = ValidationUtils.validateMaKM(tfMaKM.getText()) != null ?
-                            ValidationUtils.validateMaKM(tfMaKM.getText()) : 302;
+                KhuyenMaiDTO km = new KhuyenMaiDTO();
+                int maKM = 2;
+                
+                if (ValidationUtils.isValidIntBiggerThanZero(tfMaKM.getText())) {
+                    maKM = Integer.parseInt(tfMaKM.getText());
+                    km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
+                    // Set ma km ve 2 neu ma hien tai het han
+                    maKM = BUSManager.khuyenMaiBUS.isKMValid(km) ? km.getMaKm() : 2;
+                }
+                else {
+                    // Nhap bua` se tra ve 2
+                    maKM = 2;
+                }
+                
                 // Xử lý HD 
                 HoaDonDTO hd = new HoaDonDTO(11, 21, maKM, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
                         (String) paymentComboBox.getSelectedItem(), 0);
