@@ -212,7 +212,7 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // nếu dữ liệu sai thì dừng lại
-        }
+        
 
         // Nếu qua được bước kiểm tra => xử lý lưu
 

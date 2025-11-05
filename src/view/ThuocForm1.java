@@ -379,7 +379,7 @@ this.dispose(); // nếu bạn muốn tắt form hiện tại
     infoForm.setVisible(true);
     }//GEN-LAST:event_btnInfoActionPerformed
     
-    }
+    
     /**
      * @param args the command line arguments
      */
