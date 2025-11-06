@@ -10,7 +10,6 @@ import javax.swing.*;
 import BUS.BUSManager;
 import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
-import test.ThuocGUI;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;

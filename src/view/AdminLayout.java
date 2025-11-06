@@ -29,7 +29,7 @@ public class AdminLayout extends javax.swing.JFrame {
         
         //
         JFrame jFrame_HoaDon = new HoaDonForm();
-        JFrame jFrame_LoHang = new LoHangForm();
+        // JFrame jFrame_LoHang = new LoHangForm();
         // Thiếu Form phiếu nhập
         // Thiếu Form khách hàng
         JFrame jFrame_Thuoc = new ThuocForm1();
@@ -56,7 +56,7 @@ public class AdminLayout extends javax.swing.JFrame {
         // /* Lấy container trong JFrame
         
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");
-        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
+        // jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
         // Thiếu Panel phiếu nhập
         // Thiếu Panel khách hàng 
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_Thuoc), "Thuoc");
@@ -68,7 +68,7 @@ public class AdminLayout extends javax.swing.JFrame {
         
         // /* Dispose giải phóng bộ nhớ
         jFrame_HoaDon.dispose();
-        jFrame_LoHang.dispose();
+        // jFrame_LoHang.dispose();
         jFrame_Thuoc.dispose();
         jFrame_DanhMucThuoc.dispose();
         jFrame_NhaCungCap.dispose();
