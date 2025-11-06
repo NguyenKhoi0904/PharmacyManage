@@ -27,7 +27,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
         ArrayList<KhuyenMaiDTO> result = new ArrayList<KhuyenMaiDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khuyenmai WHERE trang_thai=1";
+            String sql = "SELECT * FROM khuyenmai";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {

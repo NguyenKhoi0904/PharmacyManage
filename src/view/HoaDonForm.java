@@ -36,6 +36,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private ArrayList<ChiTietHdDTO> listCTHD = new ArrayList<ChiTietHdDTO>();
     private ChiTietHdDTO selectedCTHD;
     private ArrayList<KhuyenMaiDTO> listKM;
+    private ArrayList<ThuocDTO> listThuoc;
     
     private JTable thuocTable;
     private DefaultTableModel thuocTableModel;
@@ -50,6 +51,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         // DEBUG ONLY !!!
         BUSManager.initAllBUS();
         listKM = BUSManager.khuyenMaiBUS.getListKhuyenMai();
+        listThuoc = BUSManager.thuocBUS.getListThuoc();
         
         setupMainLayout();
         
@@ -58,6 +60,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         setupCartProducts();
         
         addEventForInvoicePanel();
+        addEventForSearching(tfTimKiemThuoc ,thuocTable, listThuoc);
     }
     private void setupMainLayout() {
         Container cp = getContentPane();
@@ -166,7 +169,7 @@ public class HoaDonForm extends javax.swing.JFrame {
 
         return thuocTable;
     }
-    // goi khi du lieu thay doi
+    // goi khi du lieu thay doi tren DB
     private void loadThuocData() {
         ArrayList<ThuocDTO> listThuoc = BUSManager.thuocBUS.getListThuoc();
 
@@ -333,6 +336,55 @@ public class HoaDonForm extends javax.swing.JFrame {
         });
 
     } 
+    
+   private void addEventForSearching(JTextField txtSearch, JTable thuocTable, ArrayList<ThuocDTO> originalList) {
+        // Lắng nghe khi nội dung trong ô tìm kiếm thay đổi
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            private void search() {
+                String keyword = txtSearch.getText().trim().toLowerCase();
+
+                // Nếu không nhập gì thì hiển thị toàn bộ danh sách
+                if (keyword.isEmpty()) {
+                    updateThuocTable(originalList, thuocTable);
+                    return;
+                }
+
+                // Lọc danh sách theo từ khóa (ví dụ tìm trong tên hoặc mã thuốc)
+                ArrayList<ThuocDTO> filteredList = new ArrayList<>();
+                for (ThuocDTO thuoc : originalList) {
+                    if (thuoc.getTenThuoc().toLowerCase().contains(keyword) ||
+                        String.valueOf(thuoc.getMaThuoc()).contains(keyword)) {
+                        filteredList.add(thuoc);
+                    }
+                }
+
+                // Cập nhật lại bảng
+                updateThuocTable(filteredList, thuocTable);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) { search(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { search(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { search(); }
+        });
+    }
+
+   private void updateThuocTable(ArrayList<ThuocDTO> list, JTable thuocTable) {
+        DefaultTableModel model = (DefaultTableModel) thuocTable.getModel();
+        model.setRowCount(0); // Xóa hết dữ liệu cũ
+
+        for (ThuocDTO thuoc : list) {
+            model.addRow(new Object[] {
+                thuoc.getMaThuoc(),
+                thuoc.getTenThuoc(),
+                thuoc.getDonViTinh(),
+                thuoc.getGia()
+            });
+        }
+    }
+
 
     private void refreshTongTien() {
         // Lấy tổng tiền hiện tại của giỏ hàng
@@ -399,7 +451,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         magnifyingGlassLabel = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        tfTimKiemThuoc = new javax.swing.JTextField();
         refreshLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
@@ -430,7 +482,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         paymentComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1350, 750));
         setSize(new java.awt.Dimension(1350, 800));
 
         productInfoPanel.setMaximumSize(new java.awt.Dimension(32767, 309));
@@ -547,8 +598,8 @@ public class HoaDonForm extends javax.swing.JFrame {
 
         magnifyingGlassLabel.setText("jLabel8");
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tfTimKiemThuoc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tfTimKiemThuoc.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -558,7 +609,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(magnifyingGlassLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .addComponent(tfTimKiemThuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -567,7 +618,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(magnifyingGlassLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfTimKiemThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -718,9 +769,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11))
-            .addGroup(cartPanelLayout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(cartPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cartProductsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1106,7 +1155,6 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel lblDonGia;
     private javax.swing.JLabel lblMaThuoc;
@@ -1128,6 +1176,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JTextField tfTenThuoc;
     private javax.swing.JTextField tfTienKhachDua;
     private javax.swing.JTextField tfTienThua;
+    private javax.swing.JTextField tfTimKiemThuoc;
     private javax.swing.JTextField tfTongTien;
     // End of variables declaration//GEN-END:variables
 }

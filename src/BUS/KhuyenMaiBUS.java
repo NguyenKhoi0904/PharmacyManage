@@ -71,7 +71,7 @@ public class KhuyenMaiBUS {
         }
 
         // kiểm tra nếu ngày bắt đầu sau ngày kết thúc
-        if (this.checkEffectiveDate(khuyenMaiDTO)) {
+        if (!this.checkEffectiveDate(khuyenMaiDTO)) {
             JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải trước ngày kết thúc", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;

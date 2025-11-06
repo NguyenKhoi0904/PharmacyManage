@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class KhuyenMaiDTO {
+    public enum LOAI_KM{
+        PHAN_TRAM,
+        SAN_PHAM
+    }
+    
     private int maKm;
     private String tenKm;
     private String loaiKm;
@@ -12,6 +17,8 @@ public class KhuyenMaiDTO {
     private Date ngayBatDau;
     private Date ngayKetThuc;
     private int trangThai;
+    
+    private LOAI_KM eLoaiKM;
 
     // Constructor
     public KhuyenMaiDTO(int maKm, String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
@@ -24,6 +31,8 @@ public class KhuyenMaiDTO {
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.trangThai = trangThai;
+        
+        setELoaiKM(loaiKm);
     }
     
     public KhuyenMaiDTO(String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
@@ -35,6 +44,8 @@ public class KhuyenMaiDTO {
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.trangThai = trangThai;
+        
+        setELoaiKM(loaiKm);
     }
     public KhuyenMaiDTO() {
         
@@ -72,6 +83,10 @@ public class KhuyenMaiDTO {
     public int getTrangThai() {
         return this.trangThai;
     }
+    
+    public LOAI_KM getELoaiKM(){
+        return this.eLoaiKM;
+    }
 
     // set
     public void setMaKm(int maKm) {
@@ -84,6 +99,7 @@ public class KhuyenMaiDTO {
 
     public void setLoaiKm(String loaiKm) {
         this.loaiKm = loaiKm;
+        setELoaiKM(loaiKm);
     }
 
     public void setGiaTriKm(BigDecimal giaTriKm) {
@@ -104,6 +120,15 @@ public class KhuyenMaiDTO {
 
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
+    }
+    
+    public void setELoaiKM(String loaiKM){
+        switch (loaiKM) {
+            case "Phần trăm":
+                this.eLoaiKM = LOAI_KM.PHAN_TRAM;
+            default:
+                this.eLoaiKM = LOAI_KM.SAN_PHAM;
+        }
     }
 
     @Override

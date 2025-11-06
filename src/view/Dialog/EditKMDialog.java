@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package view;
+package view.Dialog;
 
 import BUS.BUSManager;
 import DTO.KhuyenMaiDTO;
 import com.toedter.calendar.JDateChooser;
+import java.awt.BorderLayout;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -27,13 +28,72 @@ public class EditKMDialog extends javax.swing.JDialog {
     
     private boolean saved = false; // dùng để biết có lưu thay đổi không
         
-    public EditKMDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public EditKMDialog(java.awt.Frame parent, KhuyenMaiDTO km) {
+        super(parent, "Chỉnh sửa khuyến mãi", true);
+        this.khuyenMai = km;
         initComponents();
+        
+        setupDataChoosers();
+        
+        loadData();
     }
     
     public boolean isSaved() {
         return saved;
+    }
+    
+    
+    private void setupDataChoosers() {
+        // Khởi tạo
+        startDateChooser = new JDateChooser();
+        endDateChooser = new JDateChooser();
+
+        // Cấu hình chung (định dạng, tooltip,...)
+        startDateChooser.setDateFormatString("dd/MM/yyyy");
+        endDateChooser.setDateFormatString("dd/MM/yyyy");
+
+        startDateChooser.setToolTipText("Chọn ngày bắt đầu");
+        endDateChooser.setToolTipText("Chọn ngày kết thúc");
+
+        // Xóa layout cũ để panel chứa vừa date chooser
+        pnlNgayBD.removeAll();
+        pnlNgayKT.removeAll();
+
+        // Đặt layout cho panel (BorderLayout cho fit toàn bộ)
+        pnlNgayBD.setLayout(new BorderLayout());
+        pnlNgayKT.setLayout(new BorderLayout());
+
+        // Thêm date chooser vào giữa panel
+        pnlNgayBD.add(startDateChooser, BorderLayout.CENTER);
+        pnlNgayKT.add(endDateChooser, BorderLayout.CENTER);
+
+        // Refresh lại giao diện
+        pnlNgayBD.revalidate();
+        pnlNgayBD.repaint();
+        pnlNgayKT.revalidate();
+        pnlNgayKT.repaint();
+    }
+    
+    private void loadData(){
+        tfMaKM.setText(khuyenMai.getMaKm() + "");
+        tfTenKM.setText(khuyenMai.getTenKm());
+        setCBLoaiKM();
+        tfGiaTri.setText(khuyenMai.getGiaTriKm() + "");
+        tfDieuKien.setText(khuyenMai.getDieuKienKm());
+        
+        // Set Date chooser base on khuyenMai
+        startDateChooser.setDate(khuyenMai.getNgayBatDau());
+        endDateChooser.setDate(khuyenMai.getNgayKetThuc());
+        
+        cbTrangThai.setSelectedIndex(khuyenMai.getTrangThai());
+    }
+    
+    private void setCBLoaiKM(){
+        if (khuyenMai.getELoaiKM() == KhuyenMaiDTO.LOAI_KM.PHAN_TRAM) {
+            cbLoaiKM.setSelectedIndex(0);
+        } else {
+//            cbLoaiKM.setSelectedIndex(1);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -258,7 +318,7 @@ public class EditKMDialog extends javax.swing.JDialog {
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // Kiểm tra các trường cơ bản
-        String tenKM = tfMaKM.getText();
+        String tenKM = tfTenKM.getText();
         if (!ValidationUtils.isNotEmpty(tenKM)) {
             JOptionPane.showMessageDialog(this, "Tên khuyến mãi không được để trống!");
             return;
@@ -306,6 +366,7 @@ public class EditKMDialog extends javax.swing.JDialog {
 
             // 🔹 Tạo DTO
             KhuyenMaiDTO newKM = new KhuyenMaiDTO(
+                khuyenMai.getMaKm(),
                 tenKM,
                 loaiKM,
                 giaTri,
@@ -316,11 +377,14 @@ public class EditKMDialog extends javax.swing.JDialog {
             );
 
             // 🔹 Gọi BUS để thêm (nếu có)
-            BUSManager.khuyenMaiBUS.addKhuyenMai(newKM);
-
-            JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thành công!");
-            saved = true;
-            dispose(); // đóng dialog
+            if (BUSManager.khuyenMaiBUS.updateKhuyenMai(newKM)){
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thành công!");
+                saved = true;
+                dispose(); // đóng dialog
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thất bại!");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
@@ -356,7 +420,7 @@ public class EditKMDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EditKMDialog dialog = new EditKMDialog(new javax.swing.JFrame(), true);
+                EditKMDialog dialog = new EditKMDialog(new javax.swing.JFrame(), new KhuyenMaiDTO());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

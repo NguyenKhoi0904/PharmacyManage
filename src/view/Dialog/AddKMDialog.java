@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package view;
+package view.Dialog;
 
 import BUS.BUSManager;
 import DTO.KhuyenMaiDTO;
@@ -35,7 +35,6 @@ public class AddKMDialog extends javax.swing.JDialog {
         initComponents();
         
         setupDataChoosers();
-
     }
     
     public boolean isSaved() {
@@ -341,11 +340,14 @@ public class AddKMDialog extends javax.swing.JDialog {
             );
 
             // 🔹 Gọi BUS để thêm (nếu có)
-            BUSManager.khuyenMaiBUS.addKhuyenMai(newKM);
-            
-            JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thành công!");
-            saved = true;
-            dispose(); // đóng dialog
+            if(BUSManager.khuyenMaiBUS.addKhuyenMai(newKM)) {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thành công!");
+                saved = true;
+                dispose(); // đóng 
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thất bại!");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }

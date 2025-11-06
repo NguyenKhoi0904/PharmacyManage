@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package view;
+package view.Dialog;
 
 import BUS.BUSManager;
 import DTO.HoaDonDTO;
@@ -192,6 +192,7 @@ public class EditHDDialog extends javax.swing.JDialog {
         lblMaKM.setText("Mã khuyến mãi:");
 
         tfMaKM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tfMaKM.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Tổng tiền:");
@@ -386,11 +387,21 @@ public class EditHDDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Mã khách hàng không tồn tại!");
             return;
         }
-        
-        int maKM = ValidationUtils.validateMaKM(tfMaKM.getText()) != null ?
-                ValidationUtils.validateMaKM(tfMaKM.getText()) : 302;
 
-                
+        KhuyenMaiDTO km = new KhuyenMaiDTO();
+        int maKM = 2;
+
+        if (ValidationUtils.isValidIntBiggerThanZero(tfMaKM.getText())) {
+            maKM = Integer.parseInt(tfMaKM.getText());
+            km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
+            // Set ma km ve 2 neu ma hien tai het han
+            maKM = BUSManager.khuyenMaiBUS.isKMValid(km) ? km.getMaKm() : 2;
+        }
+        else {
+            // Nhap bua` se tra ve 2
+            maKM = 2;
+        }
+                   
         try {
             hoaDon.setMaNv(maNV);
             hoaDon.setMaKh(maKH);
@@ -402,12 +413,16 @@ public class EditHDDialog extends javax.swing.JDialog {
 
             hoaDon.setPhuongThucTt(cbPayment.getSelectedItem().toString());
             hoaDon.setTrangThai(cbTrangThai.getSelectedIndex());
-
-            BUSManager.hoaDonBUS.updateHoaDon(hoaDon.getMaHd(), hoaDon);
-
-            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thành công!");
-            saved = true; // đánh dấu đã lưu
-            dispose(); // đóng dialog
+            
+            if (BUSManager.hoaDonBUS.updateHoaDon(hoaDon.getMaHd(), hoaDon))
+            {
+                JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thành công!");
+                saved = true; // đánh dấu đã lưu
+                dispose(); // đóng dialog
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thất bại!");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }

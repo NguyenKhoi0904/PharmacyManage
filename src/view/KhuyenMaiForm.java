@@ -1,6 +1,7 @@
 package view;
 
 
+import view.Dialog.AddKMDialog;
 import BUS.BUSManager;
 import BUS.HoaDonBUS;
 import DTO.KhuyenMaiDTO;
@@ -19,11 +20,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import utils.IconUtils;
+import view.Dialog.EditKMDialog;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -51,7 +56,8 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         
         setIcons();
         setupListMaKM();
-
+        
+        addEventForSearching(tfTimKiemKM, maKmTable, listKM);
     }
     
     private void setIcons()
@@ -63,7 +69,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
 
     private JTable createMaKmTable() {
         String[] columnNames = {
-            "STT", "Mã", "Tên", "Loại", "Giá trị", "Điều kiện", "Ngày BĐ", "Ngày KT", "Hiệu lực"
+            "STT", "Mã", "Tên", "Loại", "Giá trị", "Điều kiện", "Ngày BĐ", "Ngày KT", "Trạng Thái"
         };
 
         maKmTableModel = new DefaultTableModel(columnNames, 0);
@@ -120,7 +126,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         return maKmTable;
     }
 
-    private void loadMaKmData() {
+    private void loadData() {
         if (maKmTableModel == null) return;
 
         // Lấy danh sách khuyến mãi từ BUS
@@ -164,13 +170,83 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         listMaKMPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Nạp dữ liệu
-        loadMaKmData();
+        loadData();
 
         listMaKMPanel.revalidate();
         listMaKMPanel.repaint();
     }
 
-    
+    private void addEventForSearching(JTextField txtSearch, JTable table, ArrayList<KhuyenMaiDTO> originalList) {
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            private void search() {
+                String keyword = txtSearch.getText().trim().toLowerCase();
+
+                // Nếu không nhập gì thì hiển thị toàn bộ danh sách
+                if (keyword.isEmpty()) {
+                    updateKhuyenMaiTable(originalList, table);
+                    return;
+                }
+
+                // Lọc danh sách theo từ khóa (tìm theo tên, loại, giá trị, điều kiện, ngày...)
+                ArrayList<KhuyenMaiDTO> filteredList = new ArrayList<>();
+                for (KhuyenMaiDTO km : originalList) {
+                    if (String.valueOf(km.getMaKm()).contains(keyword)
+                        || (km.getTenKm() != null && km.getTenKm().toLowerCase().contains(keyword))
+                        || (km.getLoaiKm() != null && km.getLoaiKm().toLowerCase().contains(keyword))
+                        || (km.getGiaTriKm() != null && km.getGiaTriKm().toString().contains(keyword))
+                        || (km.getDieuKienKm() != null && km.getDieuKienKm().toLowerCase().contains(keyword))
+                        || (km.getNgayBatDau() != null && km.getNgayBatDau().toString().toLowerCase().contains(keyword))
+                        || (km.getNgayKetThuc() != null && km.getNgayKetThuc().toString().toLowerCase().contains(keyword))
+                        || String.valueOf(km.getTrangThai()).contains(keyword)) {
+                        filteredList.add(km);
+                    }
+                }
+
+                // Cập nhật lại bảng
+                updateKhuyenMaiTable(filteredList, table);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) { search(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { search(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { search(); }
+        });
+    }
+    private void updateKhuyenMaiTable(ArrayList<KhuyenMaiDTO> list, JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy"); // định dạng ngắn gọn
+
+        for (KhuyenMaiDTO km : list) {
+            int stt = 1;
+            String ngayBatDauFormatted = "";
+            String ngayKetThucFormatted = "";
+
+            if (km.getNgayBatDau() != null) {
+                ngayBatDauFormatted = dateFormat.format(km.getNgayBatDau());
+            }
+            if (km.getNgayKetThuc() != null) {
+                ngayKetThucFormatted = dateFormat.format(km.getNgayKetThuc());
+            }
+
+            model.addRow(new Object[] {
+                stt,
+                km.getMaKm(),
+                km.getTenKm(),
+                km.getLoaiKm(),
+                km.getGiaTriKm() != null ? km.getGiaTriKm() : "",
+                km.getDieuKienKm(),
+                ngayBatDauFormatted,
+                ngayKetThucFormatted,
+                km.getTrangThai()
+            });
+        }
+    }
+
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -186,7 +262,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         magnifyingGlassLabel = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        tfTimKiemKM = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -195,7 +271,6 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         listMaKMPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1350, 750));
         setSize(new java.awt.Dimension(1350, 750));
 
         jLabel2.setBackground(new java.awt.Color(0, 255, 255));
@@ -218,8 +293,8 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
 
         magnifyingGlassLabel.setText("jLabel8");
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tfTimKiemKM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tfTimKiemKM.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -229,7 +304,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(magnifyingGlassLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                .addComponent(tfTimKiemKM, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -238,7 +313,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(magnifyingGlassLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfTimKiemKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -365,16 +440,52 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         dialog.setVisible(true);
         
         if (dialog.isSaved()){
-            loadMaKmData();
+            loadData();
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
+        if (selectedKM == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Xác nhận với người dùng trước khi xoá
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Bạn có chắc muốn xoá hóa đơn này không?",
+            "Xác nhận xoá",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return; // người dùng chọn NO -> thoát
+        }
+
+        try {
+            boolean deleted = BUSManager.khuyenMaiBUS.deleteKhuyenMai(selectedKM.getMaKm());
+            if (deleted) {
+                JOptionPane.showMessageDialog(this, "Xoá hóa đơn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+                // refresh UI
+                loadData(); 
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi xoá hóa đơn: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
+                // Tạo và hiển thị dialog chỉnh sửa
+        EditKMDialog dialog = new EditKMDialog((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), selectedKM);
+        dialog.setVisible(true);
+        
+        if (dialog.isSaved()){
+            loadData();
+        }
     }//GEN-LAST:event_editButtonActionPerformed
 
     /**
@@ -421,9 +532,9 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JPanel listMaKMPanel;
     private javax.swing.JLabel magnifyingGlassLabel;
     private javax.swing.JLabel refreshLabel;
+    private javax.swing.JTextField tfTimKiemKM;
     // End of variables declaration//GEN-END:variables
 }
