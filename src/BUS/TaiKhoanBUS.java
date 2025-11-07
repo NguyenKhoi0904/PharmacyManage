@@ -78,11 +78,11 @@ public class TaiKhoanBUS {
     public boolean deleteTaiKhoan(int ma_tk) {
         // kiểm tra nếu có nhân viên hay khách hàng đang liên kết với tài khoản này
         // => không cho xoá
-        if (NhanVienBUS.getInstance().getNhanVienByMaTk(ma_tk) == null) {
+        if (NhanVienBUS.getInstance().getNhanVienByMaTk(ma_tk) != null) {
             JOptionPane.showMessageDialog(null, "Tài khoản nhân viên vẫn còn liên kết,xoá nhân viên trước", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if (KhachHangBUS.getInstance().getKhachHangByMaTk(ma_tk) == null) {
+        } else if (KhachHangBUS.getInstance().getKhachHangByMaTk(ma_tk) != null) {
             JOptionPane.showMessageDialog(null, "Tài khoản khách hàng vẫn còn liên kết,xoá khách hàng trước", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -274,4 +274,13 @@ public class TaiKhoanBUS {
     public void setKhachHangBUS(KhachHangBUS khachHangBUS) {
         this.khachHangBUS = khachHangBUS;
     }
+    
+    public int generate_maTK(){
+        int max = 0;
+        for (TaiKhoanDTO tk : listTaiKhoan){
+            if (tk.getMaTk() > max) max = tk.getMaTk();
+        }
+        return max+1;
+    }
+    
 }

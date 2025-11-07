@@ -31,7 +31,7 @@ public class AdminLayout extends javax.swing.JFrame {
         JFrame jFrame_HoaDon = new HoaDonForm();
         JFrame jFrame_LoHang = new LoHangForm();
         // Thiếu Form phiếu nhập
-        // Thiếu Form khách hàng
+        JFrame jFrame_KhachHang = new KhachHangForm();
         JFrame jFrame_Thuoc = new ThuocForm1();
         JFrame jFrame_DanhMucThuoc = new DanhMucThuocForm1();
         JFrame jFrame_NhaCungCap = new NhaCungCapForm();
@@ -58,7 +58,7 @@ public class AdminLayout extends javax.swing.JFrame {
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
         // Thiếu Panel phiếu nhập
-        // Thiếu Panel khách hàng 
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_KhachHang), "KhachHang");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_Thuoc), "Thuoc");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_DanhMucThuoc), "DanhMucThuoc");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhaCungCap), "NhaCungCap");
@@ -69,6 +69,7 @@ public class AdminLayout extends javax.swing.JFrame {
         // /* Dispose giải phóng bộ nhớ
         jFrame_HoaDon.dispose();
         jFrame_LoHang.dispose();
+        jFrame_KhachHang.dispose();
         jFrame_Thuoc.dispose();
         jFrame_DanhMucThuoc.dispose();
         jFrame_NhaCungCap.dispose();
@@ -425,8 +426,8 @@ public class AdminLayout extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,8 +485,8 @@ public class AdminLayout extends javax.swing.JFrame {
 
     private void jToggleButton_KhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_KhachHangActionPerformed
         // TODO add your handling code here:
-        //        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
-        //        card_layout.show(jPanel3, "NhaCungCap");
+                CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+                card_layout.show(jPanel3, "KhachHang");
     }//GEN-LAST:event_jToggleButton_KhachHangActionPerformed
 
     private void jToggleButton_NhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_NhaCungCapActionPerformed

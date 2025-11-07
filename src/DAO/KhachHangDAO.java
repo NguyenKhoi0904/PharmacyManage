@@ -64,7 +64,7 @@ public class KhachHangDAO implements DAOinterface<KhachHangDTO> {
         int result = 0;
         try {
             // init connection
-            String sql = "INSERT INTO khachhang (ma_kh,ma_tk,ngay_dang_ki,diem_tich_luy,trang_thai) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO khachhang (ma_kh,ma_tk,ngay_dang_ky,diem_tich_luy,trang_thai) VALUES (?,?,?,?,?)";
             Connection conn = JDBCUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, data.getMaKh());
@@ -85,7 +85,7 @@ public class KhachHangDAO implements DAOinterface<KhachHangDTO> {
         int result = 0;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "UPDATE khachhang SET ma_tk=?,ngay_dang_ki=?,diem_tich_luy=?,trang_thai=? WHERE ma_kh=?";
+            String sql = "UPDATE khachhang SET ma_tk=?,ngay_dang_ky=?,diem_tich_luy=?,trang_thai=? WHERE ma_kh=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, data.getMaTk());
             ps.setDate(2, data.getNgayDangKy());

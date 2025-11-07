@@ -20,7 +20,7 @@ public class KhachHangBUS {
 
     private KhachHangBUS() {
         this.khachHangDAO = KhachHangDAO.getInstance();
-        // this.taiKhoanBUS = TaiKhoanBUS.getInstance();
+         this.taiKhoanBUS = TaiKhoanBUS.getInstance();
         // this.hoaDonBUS = HoaDonBUS.getInstance();
         this.listKhachHang = this.khachHangDAO.selectAll();
     }
@@ -96,11 +96,11 @@ public class KhachHangBUS {
 
     public boolean deleteKhachHang(int ma_kh) {
         // nếu khách hàng đã từng phát sinh hoadon, thì không được xoá
-        if (this.hoaDonBUS.checkIfMaKhExist(ma_kh)) {
-            JOptionPane.showMessageDialog(null, "Không thể xoá khách hàng đã phát sinh hoá đơn", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+//        if (this.hoaDonBUS.checkIfMaKhExist(ma_kh)) {
+//            JOptionPane.showMessageDialog(null, "Không thể xoá khách hàng đã phát sinh hoá đơn", "Lỗi",
+//                    JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
 
         int ma_tk_cua_kh = this.khachHangDAO.selectById(String.valueOf(ma_kh)).getMaTk();
 
@@ -182,4 +182,15 @@ public class KhachHangBUS {
     public void setHoaDonBUS(HoaDonBUS hoaDonBUS) {
         this.hoaDonBUS = hoaDonBUS;
     }
+    
+    
+    
+    public int generate_maKH(){
+        int max = 0;
+        for (KhachHangDTO kh: listKhachHang){
+            if(kh.getMaKh() > max) max = kh.getMaKh();
+        }
+        return max+1;
+    }
+    
 }

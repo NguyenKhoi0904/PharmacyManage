@@ -8,9 +8,21 @@ package view;
  *
  * @author aries
  */
+import DTO.TaiKhoanDTO;
+import DTO.KhachHangDTO;
+
+import BUS.KhachHangBUS;
+import BUS.TaiKhoanBUS;
+
+import utils.ExportDataToExcel;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.*;
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.util.*;
+import javax.swing.event.DocumentEvent;
 
 public class KhachHangForm extends javax.swing.JFrame {
     
@@ -21,6 +33,8 @@ public class KhachHangForm extends javax.swing.JFrame {
      */
     public KhachHangForm() {
         initComponents();
+        load_Table();
+        findRealTime();
     }
 
     /**
@@ -33,16 +47,24 @@ public class KhachHangForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButton_Them = new javax.swing.JButton();
+        jButton_Sua = new javax.swing.JButton();
+        jButton_Xoa = new javax.swing.JButton();
+        jButton_Export = new javax.swing.JButton();
+        jTextField_TimKiem = new javax.swing.JTextField();
+        jButton_Refresh = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("THÊM");
-        jButton1.putClientProperty(FlatClientProperties.STYLE, ""
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButton_Them.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_Them.setText("THÊM");
+        jButton_Them.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
             + "focusWidth: 0;"
@@ -50,28 +72,20 @@ public class KhachHangForm extends javax.swing.JFrame {
             + "shadowWidth: 0;"
             + "arc: 8;"
             + "selectedBackground: #EBEBEB;");
-        jButton1.setIcon(new FlatSVGIcon("image/add.svg", 30, 30));
-
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setText("SỬA");
-        jButton2.putClientProperty(FlatClientProperties.STYLE, ""
-            + "background: #FFFFFF;"
-            + "borderWidth: 0;"
-            + "focusWidth: 0;"
-            + "innerFocusWidth: 0;"
-            + "shadowWidth: 0;"
-            + "arc: 8;"
-            + "selectedBackground: #EBEBEB;");
-        jButton2.setIcon(new FlatSVGIcon("image/update.svg", 20, 20));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Them.setIcon(new FlatSVGIcon("image/add.svg", 50, 50));
+        jButton_Them.setHorizontalTextPosition(SwingConstants.CENTER);
+        jButton_Them.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jButton_Them.setHorizontalAlignment(SwingConstants.CENTER);
+        jButton_Them.setIconTextGap(5);
+        jButton_Them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton_ThemActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setText("XÓA");
-        jButton3.putClientProperty(FlatClientProperties.STYLE, ""
+        jButton_Sua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_Sua.setText("SỬA");
+        jButton_Sua.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
             + "focusWidth: 0;"
@@ -79,11 +93,20 @@ public class KhachHangForm extends javax.swing.JFrame {
             + "shadowWidth: 0;"
             + "arc: 8;"
             + "selectedBackground: #EBEBEB;");
-        jButton3.setIcon(new FlatSVGIcon("image/delete.svg", 20, 20));
+        jButton_Sua.setIcon(new FlatSVGIcon("image/update.svg", 50, 50));
+        jButton_Sua.setHorizontalTextPosition(SwingConstants.CENTER);
+        jButton_Sua.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jButton_Sua.setHorizontalAlignment(SwingConstants.CENTER);
+        jButton_Sua.setIconTextGap(5);
+        jButton_Sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_SuaActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setText("EXPORT");
-        jButton4.putClientProperty(FlatClientProperties.STYLE, ""
+        jButton_Xoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_Xoa.setText("XÓA");
+        jButton_Xoa.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
             + "borderWidth: 0;"
             + "focusWidth: 0;"
@@ -91,7 +114,58 @@ public class KhachHangForm extends javax.swing.JFrame {
             + "shadowWidth: 0;"
             + "arc: 8;"
             + "selectedBackground: #EBEBEB;");
-        jButton4.setIcon(new FlatSVGIcon("image/export.svg", 20, 20));
+        jButton_Xoa.setIcon(new FlatSVGIcon("image/delete.svg", 50, 50));
+        jButton_Xoa.setHorizontalTextPosition(SwingConstants.CENTER);
+        jButton_Xoa.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jButton_Xoa.setHorizontalAlignment(SwingConstants.CENTER);
+        jButton_Xoa.setIconTextGap(5);
+        jButton_Xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_XoaActionPerformed(evt);
+            }
+        });
+
+        jButton_Export.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton_Export.setText("EXPORT");
+        jButton_Export.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "selectedBackground: #EBEBEB;");
+        jButton_Export.setIcon(new FlatSVGIcon("image/export.svg", 50, 50));
+        jButton_Export.setHorizontalTextPosition(SwingConstants.CENTER);
+        jButton_Export.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jButton_Export.setHorizontalAlignment(SwingConstants.CENTER);
+        jButton_Export.setIconTextGap(5);
+        jButton_Export.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ExportActionPerformed(evt);
+            }
+        });
+
+        jTextField_TimKiem.putClientProperty(
+            FlatClientProperties.TEXT_FIELD_LEADING_ICON,
+            new FlatSVGIcon("image/search.svg", 20, 20)
+        );
+        jTextField_TimKiem.putClientProperty(
+            FlatClientProperties.PLACEHOLDER_TEXT,
+            "Tìm kiếm ..."
+        );
+        jTextField_TimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_TimKiemActionPerformed(evt);
+            }
+        });
+
+        jButton_Refresh.setIcon(new FlatSVGIcon("image/reload.svg", 30, 30));
+        jButton_Refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RefreshActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -99,28 +173,70 @@ public class KhachHangForm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(505, Short.MAX_VALUE))
+                .addComponent(jButton_Export, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                .addComponent(jTextField_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton_Xoa, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                    .addComponent(jButton_Sua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_Them, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_Export, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton_Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Mã KH", "Tên", "SĐT", "Ngày Đăng Ký", "Điểm Tích Lũy"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
                 .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,23 +245,164 @@ public class KhachHangForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 494, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SuaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1){
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng trong bảng");
+            return ;
+        }
+        
+        
+        int maKH = (int)jTable1.getValueAt(selectedRow, 0);
+        String ten = (String) jTable1.getValueAt(selectedRow, 1);
+        String sdt = (String) jTable1.getValueAt(selectedRow, 2);
+        java.sql.Date ngay_dang_ky = (java.sql.Date) jTable1.getValueAt(selectedRow, 3);
+        
+        
+        UpdateKhachHang update_KhachHang = new UpdateKhachHang(maKH, ten, sdt, ngay_dang_ky);
+        update_KhachHang.setVisible(true);
+    }//GEN-LAST:event_jButton_SuaActionPerformed
 
+    private void jButton_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ThemActionPerformed
+        // TODO add your handling code here:
+        AddKhachHang add = new AddKhachHang();
+//        add.addWindowListener(new java.awt.event.WindowAdapter() {
+//            @Override
+//            public void windowClosed(java.awt.event.WindowEvent e) {
+//                load_Table();
+//            }
+//        }); 
+        add.setVisible(true);
+    }//GEN-LAST:event_jButton_ThemActionPerformed
+
+    private void jButton_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_XoaActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1){
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng trong bảng");
+            return ;
+        }
+        
+        int maKH = (int)jTable1.getValueAt(selectedRow, 0);
+        
+        boolean flag = KhachHangBUS.getInstance().deleteKhachHang(maKH);
+        if (flag){
+            JOptionPane.showMessageDialog(rootPane, "Xóa khách hàng thành công");
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Xóa thông tin khách hàng thất bại");
+        }
+        
+    }//GEN-LAST:event_jButton_XoaActionPerformed
+
+    private void jButton_ExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu file Excel");
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if(userSelection == JFileChooser.APPROVE_OPTION){
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!filePath.endsWith(".xlsx")){
+                filePath += ".xlsx";
+            }
+            ExportDataToExcel.exportToExcel(jTable1, filePath);
+        }
+    }//GEN-LAST:event_jButton_ExportActionPerformed
+
+    private void jButton_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RefreshActionPerformed
+        // TODO add your handling code here:
+        load_Table();
+    }//GEN-LAST:event_jButton_RefreshActionPerformed
+
+    private void jTextField_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_TimKiemActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTextField_TimKiemActionPerformed
+
+    private void load_Table(){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        ArrayList<KhachHangDTO> list_KhachHang = KhachHangBUS.getInstance().getListKhachHang();
+        ArrayList<TaiKhoanDTO> list_TaiKhoan = new ArrayList<>();
+        for(TaiKhoanDTO tk : TaiKhoanBUS.getInstance().getListTaiKhoan()){
+            if(tk.getVaiTro().equals("khachhang")){
+                list_TaiKhoan.add(tk);
+            }
+        }
+        for (KhachHangDTO kh: list_KhachHang){
+            TaiKhoanDTO tmp = null;
+            for (TaiKhoanDTO tk : list_TaiKhoan){
+                if (tk.getMaTk() == kh.getMaTk()){
+                    tmp = tk;
+                    break;
+                }
+            }
+            
+            Object[] row = {
+                kh.getMaKh(),
+                tmp.getTen(),
+                tmp.getSdt(),
+                kh.getNgayDangKy(),
+                kh.getDiemTichLuy()
+            }; 
+            model.addRow(row);
+        }
+    }
+    
+    private void findRealTime(){
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        TableRowSorter<DefaultTableModel> sorted = new TableRowSorter<>(model);
+        jTable1.setRowSorter(sorted);
+        
+        jTextField_TimKiem.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filter();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filter();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filter();
+            }
+            
+            private void filter(){
+                String keyword = jTextField_TimKiem.getText().trim();
+                if(keyword.isEmpty()){
+                    sorted.setRowFilter(null);
+                }else{
+                    java.util.List<RowFilter<Object,Object>> filters = new ArrayList<>();
+                    filters.add(RowFilter.regexFilter("(?i)" + keyword, 0));
+                    filters.add(RowFilter.regexFilter("(?i)" + keyword, 1));
+                    filters.add(RowFilter.regexFilter("(?i)" + keyword, 2));
+                    sorted.setRowFilter(RowFilter.orFilter(filters));
+                }
+            }
+        }
+        );
+    }
     /**
      * @param args the command line arguments
      */
@@ -179,10 +436,15 @@ public class KhachHangForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton_Export;
+    private javax.swing.JButton jButton_Refresh;
+    private javax.swing.JButton jButton_Sua;
+    private javax.swing.JButton jButton_Them;
+    private javax.swing.JButton jButton_Xoa;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField_TimKiem;
     // End of variables declaration//GEN-END:variables
 }
