@@ -91,4 +91,10 @@ public class ValidationUtils {
             return null;
         }
     }
+    
+    // Kiểm tra chuỗi không được để trống
+    public static boolean isNotEmpty(String text) {
+        return text != null && !text.trim().isEmpty();
+    }
+
 }

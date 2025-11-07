@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 
 import DAO.KhuyenMaiDAO;
 import DTO.KhuyenMaiDTO;
+import java.time.LocalDate;
+import utils.ValidationUtils;
 
 public class KhuyenMaiBUS {
     // singleton instance
@@ -45,7 +47,7 @@ public class KhuyenMaiBUS {
         }
 
         // kiểm tra nếu ngày bắt đầu sau ngày kết thúc
-        if (this.checkEffectiveDate(khuyenMaiDTO)) {
+        if (!this.checkEffectiveDate(khuyenMaiDTO)) {
             JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải trước ngày kết thúc", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -69,7 +71,7 @@ public class KhuyenMaiBUS {
         }
 
         // kiểm tra nếu ngày bắt đầu sau ngày kết thúc
-        if (this.checkEffectiveDate(khuyenMaiDTO)) {
+        if (!this.checkEffectiveDate(khuyenMaiDTO)) {
             JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải trước ngày kết thúc", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -126,11 +128,11 @@ public class KhuyenMaiBUS {
     }
 
     private boolean checkEffectiveDate(KhuyenMaiDTO khuyenMaiDTO) {
-        if (khuyenMaiDTO.getNgayBatDau().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                .isAfter(khuyenMaiDTO.getNgayKetThuc().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
-            return false;
-        }
-        return true;
+        LocalDate start = khuyenMaiDTO.getNgayBatDau().toLocalDate();
+        LocalDate end = khuyenMaiDTO.getNgayKetThuc().toLocalDate();
+
+        // Nếu ngày bắt đầu sau ngày kết thúc thì sai
+        return !start.isAfter(end);
     }
 
     // ========== GET DỮ LIỆU ==========
@@ -170,5 +172,29 @@ public class KhuyenMaiBUS {
             mapMaKm.put(km.getTenKm(), km);
         }
         return mapMaKm;
+    }
+    
+    
+    public static java.math.BigDecimal getPhanTramGiamFromMaKM(String txtMaKM) {
+       if (ValidationUtils.isValidIntBiggerThanZero(txtMaKM)) {
+           int maKM = Integer.parseInt(txtMaKM);
+           KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
+           if (BUSManager.khuyenMaiBUS.isKMValid(km)) {
+               return km.getGiaTriKm().divide(java.math.BigDecimal.valueOf(100));
+           }
+       }
+       return java.math.BigDecimal.ZERO;
+   }
+    
+    public Boolean isKMValid(KhuyenMaiDTO km){
+        if (km == null) {
+            return false;
+        }
+        
+        if (km.getTrangThai() < 1){
+            return false;
+        }
+        
+        return checkEffectiveDate(km);
     }
 }

@@ -27,13 +27,13 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
         ArrayList<KhuyenMaiDTO> result = new ArrayList<KhuyenMaiDTO>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khuyenmai WHERE trang_thai=1";
+            String sql = "SELECT * FROM khuyenmai";
             PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
                 result.add(new KhuyenMaiDTO(rs.getInt("ma_km"), rs.getString("ten_km"), rs.getString("loai_km"),
                         rs.getBigDecimal("gia_tri_km"), rs.getString("dieu_kien_km"), rs.getDate("ngay_bat_dau"),
-                        rs.getDate("ngay_ket_thuc"), rs.getBoolean("hieu_luc"), rs.getInt("trang_thai")));
+                        rs.getDate("ngay_ket_thuc"), rs.getInt("trang_thai")));
             }
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -53,7 +53,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
             while (rs.next()) {
                 return new KhuyenMaiDTO(rs.getInt("ma_km"), rs.getString("ten_km"), rs.getString("loai_km"),
                         rs.getBigDecimal("gia_tri_km"), rs.getString("dieu_kien_km"), rs.getDate("ngay_bat_dau"),
-                        rs.getDate("ngay_ket_thuc"), rs.getBoolean("hieu_luc"), rs.getInt("trang_thai"));
+                        rs.getDate("ngay_ket_thuc"), rs.getInt("trang_thai"));
             }
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -67,18 +67,16 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
         int result = 0;
         try {
             // init connection
-            String sql = "INSERT INTO khuyenmai (ma_km,ten_km,loai_km,gia_tri_km,dieu_kien_km,ngay_bat_dau,ngay_ket_thuc,hieu_luc,trang_thai) VALUES (?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO khuyenmai (ten_km,loai_km,gia_tri_km,dieu_kien_km,ngay_bat_dau,ngay_ket_thuc,trang_thai) VALUES (?,?,?,?,?,?,?)";
             Connection conn = JDBCUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, data.getMaKm());
-            ps.setString(2, data.getTenKm());
-            ps.setString(3, data.getLoaiKm());
-            ps.setBigDecimal(4, data.getGiaTriKm());
-            ps.setString(5, data.getDieuKienKm());
-            ps.setDate(6, data.getNgayBatDau());
-            ps.setDate(7, data.getNgayKetThuc());
-            ps.setBoolean(8, data.isHieuLuc());
-            ps.setInt(9, data.getTrangThai());
+            ps.setString(1, data.getTenKm());
+            ps.setString(2, data.getLoaiKm());
+            ps.setBigDecimal(3, data.getGiaTriKm());
+            ps.setString(4, data.getDieuKienKm());
+            ps.setDate(5, data.getNgayBatDau());
+            ps.setDate(6, data.getNgayKetThuc());
+            ps.setInt(7, data.getTrangThai());
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -92,7 +90,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
         int result = 0;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "UPDATE khuyenmai SET ten_km=?,loai_km=?,gia_tri_km=?,dieu_kien_km=?,ngay_bat_dau=?,ngay_ket_thuc=?,hieu_luc=?,trang_thai=? WHERE ma_km=?";
+            String sql = "UPDATE khuyenmai SET ten_km=?,loai_km=?,gia_tri_km=?,dieu_kien_km=?,ngay_bat_dau=?,ngay_ket_thuc=?,trang_thai=? WHERE ma_km=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, data.getTenKm());
             ps.setString(2, data.getLoaiKm());
@@ -100,9 +98,8 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
             ps.setString(4, data.getDieuKienKm());
             ps.setDate(5, data.getNgayBatDau());
             ps.setDate(6, data.getNgayKetThuc());
-            ps.setBoolean(7, data.isHieuLuc());
-            ps.setInt(8, data.getTrangThai());
-            ps.setInt(9, data.getMaKm());
+            ps.setInt(7, data.getTrangThai());
+            ps.setInt(8, data.getMaKm());
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {

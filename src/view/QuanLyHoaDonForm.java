@@ -4,6 +4,8 @@
  */
 package view;
 
+import view.Dialog.EditHDDialog;
+import view.Dialog.DetailHDDialog;
 import BUS.BUSManager;
 import BUS.HoaDonBUS;
 import DTO.DanhMucThuocDTO;
@@ -22,8 +24,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import utils.IconUtils;
@@ -46,6 +51,9 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         listHD = HoaDonBUS.getInstance().getListHoaDon();
         
         setupListHoaDon();
+        IconUtils.setIcon(magnifyingGlassLabel4, "magnifying-glass.png", true);
+        
+        addEventForSearching(tfTimKiemHoaDon, listHDTable, listHD);
     }
     
     private JTable createHoaDonTable() {
@@ -140,9 +148,67 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         // Lần đầu load dữ liệu
         loadHoaDonData();
     }
+    private void addEventForSearching(JTextField txtSearch, JTable table, ArrayList<HoaDonDTO> originalList) {
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            private void search() {
+                String keyword = txtSearch.getText().trim().toLowerCase();
 
+                // Nếu không nhập gì thì hiển thị toàn bộ danh sách
+                if (keyword.isEmpty()) {
+                    updateHoaDonTable(originalList, table);
+                    return;
+                }
 
-    
+                // Lọc danh sách theo từ khóa (ví dụ tìm trong mã, nhân viên, khách hàng, phương thức TT, ...)
+                ArrayList<HoaDonDTO> filteredList = new ArrayList<>();
+                for (HoaDonDTO hd : originalList) {
+                    // Ghép logic tìm kiếm theo nhiều trường
+                    if (String.valueOf(hd.getMaHd()).contains(keyword)
+                        || String.valueOf(hd.getMaNv()).contains(keyword)
+                        || String.valueOf(hd.getMaKh()).contains(keyword)
+                        || (hd.getPhuongThucTt() != null && hd.getPhuongThucTt().toLowerCase().contains(keyword))
+                        || (hd.getTongTien() != null && hd.getTongTien().toString().contains(keyword))
+                        || (hd.getNgayXuat() != null && hd.getNgayXuat().toString().toLowerCase().contains(keyword))) {
+                        filteredList.add(hd);
+                    }
+                }
+
+                // Cập nhật lại bảng
+                updateHoaDonTable(filteredList, table);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) { search(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { search(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { search(); }
+        });
+    }
+    private void updateHoaDonTable(ArrayList<HoaDonDTO> list, JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); // định dạng ngày ngắn gọn
+
+        for (HoaDonDTO hd : list) {
+            String ngayXuatFormatted = "";
+            if (hd.getNgayXuat() != null) {
+                ngayXuatFormatted = dateFormat.format(hd.getNgayXuat());
+            }
+            model.addRow(new Object[] {
+                hd.getMaHd(),
+                hd.getMaNv(),
+                hd.getMaKh(),
+                hd.getMaKm() != null ? hd.getMaKm() : "", // tránh null
+                hd.getTongTien() != null ? hd.getTongTien() : "",
+                ngayXuatFormatted,
+                hd.getPhuongThucTt(),
+                hd.getTrangThai()
+            });
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,20 +226,21 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         infoButton = new javax.swing.JButton();
         importButton = new javax.swing.JButton();
         exportButton = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        magnifyingGlassLabel4 = new javax.swing.JLabel();
+        tfTimKiemHoaDon = new javax.swing.JTextField();
         pnlListHD = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(1350, 800));
+        setSize(new java.awt.Dimension(1350, 750));
 
         jLabel2.setBackground(new java.awt.Color(0, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("DANH SÁCH HÓA ĐƠN");
         jLabel2.setOpaque(true);
 
         buttonPanel.setPreferredSize(new java.awt.Dimension(630, 67));
-        buttonPanel.setLayout(null);
 
         editButton.setText("Sửa");
         editButton.addActionListener(new java.awt.event.ActionListener() {
@@ -181,8 +248,6 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 editButtonActionPerformed(evt);
             }
         });
-        buttonPanel.add(editButton);
-        editButton.setBounds(111, 6, 94, 53);
 
         deleteButton.setText("Xóa");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -190,8 +255,6 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 deleteButtonActionPerformed(evt);
             }
         });
-        buttonPanel.add(deleteButton);
-        deleteButton.setBounds(211, 6, 94, 53);
 
         infoButton.setText("Chi tiết");
         infoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -199,8 +262,6 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 infoButtonActionPerformed(evt);
             }
         });
-        buttonPanel.add(infoButton);
-        infoButton.setBounds(311, 6, 94, 53);
 
         importButton.setText("Nhập excel");
         importButton.addActionListener(new java.awt.event.ActionListener() {
@@ -208,8 +269,6 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 importButtonActionPerformed(evt);
             }
         });
-        buttonPanel.add(importButton);
-        importButton.setBounds(411, 6, 94, 53);
 
         exportButton.setText("Xuất excel");
         exportButton.addActionListener(new java.awt.event.ActionListener() {
@@ -217,23 +276,84 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 exportButtonActionPerformed(evt);
             }
         });
-        buttonPanel.add(exportButton);
-        exportButton.setBounds(511, 6, 94, 53);
+
+        javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
+        buttonPanel.setLayout(buttonPanelLayout);
+        buttonPanelLayout.setHorizontalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(infoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(importButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(exportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        buttonPanelLayout.setVerticalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(importButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        magnifyingGlassLabel4.setText("jLabel8");
+
+        tfTimKiemHoaDon.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tfTimKiemHoaDon.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(magnifyingGlassLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfTimKiemHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(magnifyingGlassLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout actionPanelLayout = new javax.swing.GroupLayout(actionPanel);
         actionPanel.setLayout(actionPanelLayout);
         actionPanelLayout.setHorizontalGroup(
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(991, 991, 991))
+                .addGap(34, 34, 34)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         actionPanelLayout.setVerticalGroup(
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout pnlListHDLayout = new javax.swing.GroupLayout(pnlListHD);
@@ -244,7 +364,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         );
         pnlListHDLayout.setVerticalGroup(
             pnlListHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 683, Short.MAX_VALUE)
+            .addGap(0, 630, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -253,12 +373,10 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 719, Short.MAX_VALUE)
-                        .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlListHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlListHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(actionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1350, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,8 +385,8 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlListHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pnlListHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
@@ -326,6 +444,14 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
         // TODO add your handling code here:
+        if (selectedHD == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Tạo và hiển thị dialog chỉnh sửa
+        DetailHDDialog dialog = new DetailHDDialog((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), selectedHD);
+        dialog.setVisible(true);
     }//GEN-LAST:event_infoButtonActionPerformed
 
     private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
@@ -380,6 +506,21 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
     private javax.swing.JButton importButton;
     private javax.swing.JButton infoButton;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel magnifyingGlassLabel;
+    private javax.swing.JLabel magnifyingGlassLabel1;
+    private javax.swing.JLabel magnifyingGlassLabel2;
+    private javax.swing.JLabel magnifyingGlassLabel3;
+    private javax.swing.JLabel magnifyingGlassLabel4;
     private javax.swing.JPanel pnlListHD;
+    private javax.swing.JTextField tfTimKiemHoaDon;
+    private javax.swing.JTextField tfTimKiemThuoc;
+    private javax.swing.JTextField tfTimKiemThuoc1;
+    private javax.swing.JTextField tfTimKiemThuoc2;
+    private javax.swing.JTextField tfTimKiemThuoc3;
     // End of variables declaration//GEN-END:variables
 }

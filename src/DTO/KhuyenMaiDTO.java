@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class KhuyenMaiDTO {
+    public enum LOAI_KM{
+        PHAN_TRAM,
+        SAN_PHAM
+    }
+    
     private int maKm;
     private String tenKm;
     private String loaiKm;
@@ -11,12 +16,13 @@ public class KhuyenMaiDTO {
     private String dieuKienKm;
     private Date ngayBatDau;
     private Date ngayKetThuc;
-    private boolean hieuLuc;
     private int trangThai;
+    
+    private LOAI_KM eLoaiKM;
 
     // Constructor
     public KhuyenMaiDTO(int maKm, String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
-            Date ngayKetThuc, boolean hieuLuc, int trangThai) {
+            Date ngayKetThuc, int trangThai) {
         this.maKm = maKm;
         this.tenKm = tenKm;
         this.loaiKm = loaiKm;
@@ -24,10 +30,27 @@ public class KhuyenMaiDTO {
         this.dieuKienKm = dieuKienKm;
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
-        this.hieuLuc = hieuLuc;
         this.trangThai = trangThai;
+        
+        setELoaiKM(loaiKm);
     }
-
+    
+    public KhuyenMaiDTO(String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
+            Date ngayKetThuc, int trangThai) {
+        this.tenKm = tenKm;
+        this.loaiKm = loaiKm;
+        this.giaTriKm = giaTriKm;
+        this.dieuKienKm = dieuKienKm;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.trangThai = trangThai;
+        
+        setELoaiKM(loaiKm);
+    }
+    public KhuyenMaiDTO() {
+        
+    }
+    
     // get
     public int getMaKm() {
         return this.maKm;
@@ -57,12 +80,12 @@ public class KhuyenMaiDTO {
         return this.ngayKetThuc;
     }
 
-    public boolean isHieuLuc() {
-        return this.hieuLuc;
-    }
-
     public int getTrangThai() {
         return this.trangThai;
+    }
+    
+    public LOAI_KM getELoaiKM(){
+        return this.eLoaiKM;
     }
 
     // set
@@ -76,6 +99,7 @@ public class KhuyenMaiDTO {
 
     public void setLoaiKm(String loaiKm) {
         this.loaiKm = loaiKm;
+        setELoaiKM(loaiKm);
     }
 
     public void setGiaTriKm(BigDecimal giaTriKm) {
@@ -94,12 +118,17 @@ public class KhuyenMaiDTO {
         this.ngayKetThuc = ngayKetThuc;
     }
 
-    public void setHieuLuc(boolean hieuLuc) {
-        this.hieuLuc = hieuLuc;
-    }
-
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
+    }
+    
+    public void setELoaiKM(String loaiKM){
+        switch (loaiKM) {
+            case "Phần trăm":
+                this.eLoaiKM = LOAI_KM.PHAN_TRAM;
+            default:
+                this.eLoaiKM = LOAI_KM.SAN_PHAM;
+        }
     }
 
     @Override
@@ -108,7 +137,6 @@ public class KhuyenMaiDTO {
                 "maKm=" + maKm +
                 ", tenKm='" + tenKm + '\'' +
                 ", giaTriKm=" + giaTriKm + '\'' +
-                ", hieuLuc=" + hieuLuc + '\'' +
                 ", trangthai=" + this.trangThai + '\'' +
                 '}';
     }

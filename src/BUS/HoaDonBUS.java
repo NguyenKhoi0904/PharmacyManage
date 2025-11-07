@@ -273,20 +273,20 @@ public class HoaDonBUS {
         }
 
         // lấy chi tiết hóa đơn trước khi xóa để hoàn tác tồn kho
-        ArrayList<ChiTietHdDTO> chiTietList = this.chiTietHdBUS.getListChiTietHdByMaHd(ma_hd);
+//        ArrayList<ChiTietHdDTO> chiTietList = this.chiTietHdBUS.getListChiTietHdByMaHd(ma_hd);
 
         // hoàn tác tồn kho -> huỷ đơn nên + lại phần đã thanh toán
-        if (chiTietList != null) {
-            for (ChiTietHdDTO chiTiet : chiTietList) {
-                try {
-                    // nếu updateSlTonLoHang thất bại -> gây lệch tồn kho
-                    this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), chiTiet.getSoLuong());
-                } catch (Exception e) {
-                    throw new Exception("Không thể cập nhật tồn kho cho lô " + chiTiet.getMaLh());
-                }
-
-            }
-        }
+//        if (chiTietList != null) {
+//            for (ChiTietHdDTO chiTiet : chiTietList) {
+//                try {
+//                    // nếu updateSlTonLoHang thất bại -> gây lệch tồn kho
+//                    this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), chiTiet.getSoLuong());
+//                } catch (Exception e) {
+//                    throw new Exception("Không thể cập nhật tồn kho cho lô " + chiTiet.getMaLh());
+//                }
+//
+//            }
+//        }
 
         // xoá chi tiết hoá đơn
         if (!this.chiTietHdBUS.deleteAllByMaHd(ma_hd)) {
