@@ -135,4 +135,12 @@ public class DanhMucThuocBUS {
         }
         return map;
     }
+    
+    public int generate_maDMT(){
+    int max = 0;
+    for (DanhMucThuocDTO dmt: listDanhMucThuoc){
+        if(dmt.getMaDmt()> max) max = dmt.getMaDmt();
+    }
+    return max+1;
+}
 }
