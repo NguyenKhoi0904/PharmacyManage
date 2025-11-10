@@ -79,6 +79,7 @@ public class ThemDanhMucThuoc extends javax.swing.JFrame {
         jLabel_Ten.setText("Tên danh mục thuốc");
 
         jButton_Them.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Them.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/plus.png"))); // NOI18N
         jButton_Them.setText("THÊM");
         jButton_Them.putClientProperty(
             FlatClientProperties.STYLE,
@@ -95,6 +96,7 @@ public class ThemDanhMucThuoc extends javax.swing.JFrame {
         });
 
         jButton_Huy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Huy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png"))); // NOI18N
         jButton_Huy.setText("HỦY");
         jButton_Huy.putClientProperty(
             FlatClientProperties.STYLE,

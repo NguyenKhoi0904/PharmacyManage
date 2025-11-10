@@ -108,12 +108,11 @@ public class NhanVienForm extends javax.swing.JFrame {
         exportButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1350, 800));
         setSize(new java.awt.Dimension(1350, 800));
 
         jLabel2.setBackground(new java.awt.Color(0, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("THÔNG TIN NHÂN VIÊN");
         jLabel2.setOpaque(true);
@@ -192,6 +191,7 @@ public class NhanVienForm extends javax.swing.JFrame {
 
         buttonPanel.setLayout(null);
 
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/plus.png"))); // NOI18N
         addButton.setText("them");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,6 +201,7 @@ public class NhanVienForm extends javax.swing.JFrame {
         buttonPanel.add(addButton);
         addButton.setBounds(11, 6, 94, 53);
 
+        editButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/wrench.png"))); // NOI18N
         editButton1.setText("sua");
         editButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +211,7 @@ public class NhanVienForm extends javax.swing.JFrame {
         buttonPanel.add(editButton1);
         editButton1.setBounds(111, 6, 94, 53);
 
+        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png"))); // NOI18N
         deleteButton.setText("xoa");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

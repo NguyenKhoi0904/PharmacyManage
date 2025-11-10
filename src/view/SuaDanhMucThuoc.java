@@ -102,6 +102,7 @@ public class SuaDanhMucThuoc extends javax.swing.JFrame {
         });
 
         jButton_Cancel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Cancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png"))); // NOI18N
         jButton_Cancel.setText("HỦY");
         jButton_Cancel.putClientProperty(
             FlatClientProperties.STYLE,
@@ -167,7 +168,7 @@ public class SuaDanhMucThuoc extends javax.swing.JFrame {
                     .addComponent(jTextField_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();

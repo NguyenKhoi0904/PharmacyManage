@@ -62,6 +62,7 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách mục thuốc ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
 
+        tblDanhMuc.setBackground(new java.awt.Color(255, 255, 255));
         tblDanhMuc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         tblDanhMuc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,6 +108,7 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(78, 245, 209));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("DANH MỤC THUỐC");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -129,6 +131,8 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton_Them.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Them.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Them.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/plus.png"))); // NOI18N
         jButton_Them.setText("Thêm");
         jButton_Them.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -150,6 +154,8 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         });
 
         jButton_Sua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Sua.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Sua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/wrench.png"))); // NOI18N
         jButton_Sua.setText("Sửa");
         jButton_Sua.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -171,6 +177,8 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         });
 
         jButton_Xoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Xoa.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Xoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png"))); // NOI18N
         jButton_Xoa.setText("Xóa");
         jButton_Xoa.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -220,6 +228,8 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
             FlatClientProperties.PLACEHOLDER_TEXT,
             "Tìm kiếm ..."
         );
+        jTextField_TimKiem.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField_TimKiem.setForeground(new java.awt.Color(0, 0, 0));
         jTextField_TimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_TimKiemActionPerformed(evt);
@@ -227,6 +237,8 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         });
 
         jButton_Refresh.setIcon(new FlatSVGIcon("image/reload.svg", 30, 30));
+        jButton_Refresh.setBackground(new java.awt.Color(255, 255, 255));
+        jButton_Refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
         jButton_Refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_RefreshActionPerformed(evt);
@@ -246,31 +258,26 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
                 .addComponent(jButton_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
                 .addComponent(jButton_Export, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152)
-                .addComponent(jTextField_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(86, 86, 86)
                 .addComponent(jButton_Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jButton_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton_Export, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(jButton_Them, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton_Export, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton_Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -323,15 +330,6 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         update.setVisible(true);
     }//GEN-LAST:event_jButton_SuaActionPerformed
 
-    private void jButton_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RefreshActionPerformed
-        // TODO add your handling code here:
-        load_Table();
-    }//GEN-LAST:event_jButton_RefreshActionPerformed
-
-    private void jTextField_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_TimKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_TimKiemActionPerformed
-
     private void jButton_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_XoaActionPerformed
         // TODO add your handling code here:
         int isSelected = tblDanhMuc.getSelectedRow();
@@ -364,6 +362,15 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
             export(tblDanhMuc, filePath);
         }
     }//GEN-LAST:event_jButton_ExportActionPerformed
+
+    private void jButton_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RefreshActionPerformed
+        // TODO add your handling code here:
+        load_Table();
+    }//GEN-LAST:event_jButton_RefreshActionPerformed
+
+    private void jTextField_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_TimKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_TimKiemActionPerformed
 
     private void export(JTable jTable, String filePath){
         try(Workbook workbook = new XSSFWorkbook()){
