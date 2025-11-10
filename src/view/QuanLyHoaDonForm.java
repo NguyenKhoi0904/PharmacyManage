@@ -242,6 +242,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
 
         buttonPanel.setPreferredSize(new java.awt.Dimension(630, 67));
 
+        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/wrench.png"))); // NOI18N
         editButton.setText("Sửa");
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,6 +250,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
             }
         });
 
+        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png"))); // NOI18N
         deleteButton.setText("Xóa");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -506,21 +508,9 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
     private javax.swing.JButton importButton;
     private javax.swing.JButton infoButton;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JLabel magnifyingGlassLabel;
-    private javax.swing.JLabel magnifyingGlassLabel1;
-    private javax.swing.JLabel magnifyingGlassLabel2;
-    private javax.swing.JLabel magnifyingGlassLabel3;
     private javax.swing.JLabel magnifyingGlassLabel4;
     private javax.swing.JPanel pnlListHD;
     private javax.swing.JTextField tfTimKiemHoaDon;
-    private javax.swing.JTextField tfTimKiemThuoc;
-    private javax.swing.JTextField tfTimKiemThuoc1;
-    private javax.swing.JTextField tfTimKiemThuoc2;
-    private javax.swing.JTextField tfTimKiemThuoc3;
     // End of variables declaration//GEN-END:variables
 }
