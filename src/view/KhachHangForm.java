@@ -156,6 +156,10 @@ public class KhachHangForm extends javax.swing.JFrame {
             FlatClientProperties.PLACEHOLDER_TEXT,
             "Tìm kiếm ..."
         );
+        jTextField_TimKiem.putClientProperty(
+            FlatClientProperties.STYLE,
+            "arc: 8;"
+        );
         jTextField_TimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_TimKiemActionPerformed(evt);

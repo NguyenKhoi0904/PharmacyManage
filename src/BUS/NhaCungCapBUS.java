@@ -173,4 +173,13 @@ public class NhaCungCapBUS {
         }
         return mapMaNcc;
     }
+    
+    public int generate_maNCC(){
+        int max = 0;
+        for (NhaCungCapDTO ncc: listNhaCungCap){
+            if(ncc.getMaNcc()> max) max = ncc.getMaNcc();
+        }
+        return max+1;        
+    }
+    
 }

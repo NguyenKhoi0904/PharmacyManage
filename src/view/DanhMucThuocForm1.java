@@ -220,6 +220,10 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
             FlatClientProperties.PLACEHOLDER_TEXT,
             "Tìm kiếm ..."
         );
+        jTextField_TimKiem.putClientProperty(
+            FlatClientProperties.STYLE,
+            "arc: 8;"
+        );
         jTextField_TimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_TimKiemActionPerformed(evt);
@@ -367,7 +371,7 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
 
     private void export(JTable jTable, String filePath){
         try(Workbook workbook = new XSSFWorkbook()){
-            Sheet sheet = workbook.createSheet("Danh sách khách hàng");
+            Sheet sheet = workbook.createSheet("Danh sách Danh Mục Thuốc");
             TableModel model = jTable.getModel();
             
             Row header = sheet.createRow(0);
@@ -389,7 +393,7 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
         }catch(IOException  ex){
-            System.err.println("LỖI Ở HÀM exportToExcel(), ExportDataToExcel.java");
+            System.out.println("view.DanhMucThuocForm1.export()");
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi xuất file Excel");
         }

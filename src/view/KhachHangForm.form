@@ -159,7 +159,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_TimKiemActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTextField_TimKiem.putClientProperty(&#xa;    FlatClientProperties.TEXT_FIELD_LEADING_ICON,&#xa;    new FlatSVGIcon(&quot;image/search.svg&quot;, 20, 20)&#xa;);&#xa;jTextField_TimKiem.putClientProperty(&#xa;    FlatClientProperties.PLACEHOLDER_TEXT,&#xa;    &quot;T&#xec;m ki&#x1ebf;m ...&quot;&#xa;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTextField_TimKiem.putClientProperty(&#xa;    FlatClientProperties.TEXT_FIELD_LEADING_ICON,&#xa;    new FlatSVGIcon(&quot;image/search.svg&quot;, 20, 20)&#xa;);&#xa;jTextField_TimKiem.putClientProperty(&#xa;    FlatClientProperties.PLACEHOLDER_TEXT,&#xa;    &quot;T&#xec;m ki&#x1ebf;m ...&quot;&#xa;);&#xa;jTextField_TimKiem.putClientProperty(&#xa;    FlatClientProperties.STYLE,&#xa;    &quot;arc: 8;&quot;&#xa;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_Refresh">
