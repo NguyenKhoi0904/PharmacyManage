@@ -115,4 +115,22 @@ public class KhachHangDAO implements DAOinterface<KhachHangDTO> {
         }
         return result;
     }
+    
+    public ArrayList<KhachHangDTO> selectAllIncludeInactive(){
+        ArrayList<KhachHangDTO> result = new ArrayList<KhachHangDTO>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM khachhang";
+            PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            while (rs.next()) {
+                result.add(new KhachHangDTO(rs.getInt("ma_kh"), rs.getInt("ma_tk"), rs.getDate("ngay_dang_ky"),
+                        rs.getInt("diem_tich_luy"), rs.getInt("trang_thai")));
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

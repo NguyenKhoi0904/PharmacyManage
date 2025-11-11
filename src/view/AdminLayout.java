@@ -29,8 +29,8 @@ public class AdminLayout extends javax.swing.JFrame {
         
         //
         JFrame jFrame_HoaDon = new HoaDonForm();
-        // JFrame jFrame_LoHang = new LoHangForm();
-        // Thiếu Form phiếu nhập
+        JFrame jFrame_LoHang = new LoHangForm();
+        JFrame jFrame_PhieuNhap = new PhieuNhapForm();
         JFrame jFrame_KhachHang = new KhachHangForm();
         JFrame jFrame_Thuoc = new ThuocForm1();
         JFrame jFrame_DanhMucThuoc = new DanhMucThuocForm1();
@@ -56,8 +56,8 @@ public class AdminLayout extends javax.swing.JFrame {
         // /* Lấy container trong JFrame
         
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");
-        // jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
-        // Thiếu Panel phiếu nhập
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_PhieuNhap), "PhieuNhap");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_KhachHang), "KhachHang");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_Thuoc), "Thuoc");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_DanhMucThuoc), "DanhMucThuoc");
@@ -68,9 +68,8 @@ public class AdminLayout extends javax.swing.JFrame {
         
         // /* Dispose giải phóng bộ nhớ
         jFrame_HoaDon.dispose();
-
-
-        // jFrame_LoHang.dispose();
+        jFrame_LoHang.dispose();
+        jFrame_PhieuNhap.dispose();
         jFrame_Thuoc.dispose();
         jFrame_DanhMucThuoc.dispose();
         jFrame_NhaCungCap.dispose();
@@ -183,6 +182,11 @@ public class AdminLayout extends javax.swing.JFrame {
         jToggleButton_PhieuNhap.setHorizontalAlignment(SwingConstants.LEFT);
         jToggleButton_PhieuNhap.setHorizontalTextPosition(SwingConstants.RIGHT);
         jToggleButton_PhieuNhap.setIconTextGap(5);
+        jToggleButton_PhieuNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_PhieuNhapActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_PhieuNhap);
 
         jToggleButton_LoHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -513,6 +517,12 @@ public class AdminLayout extends javax.swing.JFrame {
         dispose();
         new LoginForm().setVisible(true);
     }//GEN-LAST:event_jButton_DangXuatActionPerformed
+
+    private void jToggleButton_PhieuNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_PhieuNhapActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "PhieuNhap");
+    }//GEN-LAST:event_jToggleButton_PhieuNhapActionPerformed
 
     /**
      * @param args the command line arguments

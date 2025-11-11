@@ -27,17 +27,18 @@ public class NhanVienLayout extends javax.swing.JFrame {
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         
         HoaDonForm HoaDon = new HoaDonForm();
-        // Thiếu form phiếu nhập
+        PhieuNhapForm PhieuNhap = new PhieuNhapForm();
         KhachHangForm KhachHang = new KhachHangForm();
         ThuocForm1 Thuoc = new ThuocForm1();
         
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "HoaDon");
-        //Thiếu Panel phiếu nhập
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "PhieuNhap");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(KhachHang), "KhachHang");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(Thuoc), "Thuoc");
         
         // /*
         HoaDon.dispose();
+        PhieuNhap.dispose();
         KhachHang.dispose();
         Thuoc.dispose();
         
@@ -145,6 +146,11 @@ public class NhanVienLayout extends javax.swing.JFrame {
         jToggleButton_PhieuNhap.setHorizontalAlignment(SwingConstants.LEFT);
         jToggleButton_PhieuNhap.setHorizontalTextPosition(SwingConstants.RIGHT);
         jToggleButton_PhieuNhap.setIconTextGap(5);
+        jToggleButton_PhieuNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_PhieuNhapActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton_PhieuNhap);
 
         jToggleButton_KhachHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -303,6 +309,12 @@ public class NhanVienLayout extends javax.swing.JFrame {
         CardLayout card_layout = (CardLayout) jPanel3.getLayout();
         card_layout.show(jPanel3, "KhachHang");
     }//GEN-LAST:event_jToggleButton_KhachHangActionPerformed
+
+    private void jToggleButton_PhieuNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_PhieuNhapActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "PhieuNhap");
+    }//GEN-LAST:event_jToggleButton_PhieuNhapActionPerformed
 
     /**
      * @param args the command line arguments

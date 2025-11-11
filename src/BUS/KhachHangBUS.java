@@ -20,7 +20,7 @@ public class KhachHangBUS {
 
     private KhachHangBUS() {
         this.khachHangDAO = KhachHangDAO.getInstance();
-         this.taiKhoanBUS = TaiKhoanBUS.getInstance();
+        this.taiKhoanBUS = TaiKhoanBUS.getInstance();
         // this.hoaDonBUS = HoaDonBUS.getInstance();
         this.listKhachHang = this.khachHangDAO.selectAll();
     }
@@ -152,7 +152,7 @@ public class KhachHangBUS {
 
     // sử dụng trong TaiKhoanBUS
     public KhachHangDTO getKhachHangByMaTk(int ma_tk) {
-        for (KhachHangDTO kh : this.listKhachHang) {
+        for (KhachHangDTO kh : khachHangDAO.selectAllIncludeInactive()) {
             if (kh.getMaTk() == ma_tk) {
                 return kh;
             }
@@ -187,7 +187,7 @@ public class KhachHangBUS {
     
     public int generate_maKH(){
         int max = 0;
-        for (KhachHangDTO kh: listKhachHang){
+        for (KhachHangDTO kh: this.khachHangDAO.selectAllIncludeInactive()){
             if(kh.getMaKh() > max) max = kh.getMaKh();
         }
         return max+1;

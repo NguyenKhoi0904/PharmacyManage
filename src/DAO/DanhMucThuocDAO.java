@@ -110,4 +110,21 @@ public class DanhMucThuocDAO implements DAOinterface<DanhMucThuocDTO> {
         }
         return result;
     }
+    
+    public ArrayList<DanhMucThuocDTO> selectAllIncludeInactive(){
+        ArrayList<DanhMucThuocDTO> result = new ArrayList<DanhMucThuocDTO>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM danhmucthuoc";
+            PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            while (rs.next()) {
+                result.add(new DanhMucThuocDTO(rs.getInt("ma_dmt"), rs.getString("ten_dmt"), rs.getInt("trang_thai")));
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;        
+    }
 }
