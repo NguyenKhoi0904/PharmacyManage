@@ -115,7 +115,6 @@ public class AdminLayout extends javax.swing.JFrame {
         jToggleButton_DanhMucThuoc = new javax.swing.JToggleButton();
         jToggleButton_NhanVien = new javax.swing.JToggleButton();
         jToggleButton_KhuyenMai = new javax.swing.JToggleButton();
-        jToggleButton_ThongKe = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -133,7 +132,6 @@ public class AdminLayout extends javax.swing.JFrame {
         buttonGroup1.add(jToggleButton_DanhMucThuoc);
         buttonGroup1.add(jToggleButton_NhanVien);
         buttonGroup1.add(jToggleButton_KhuyenMai);
-        buttonGroup1.add(jToggleButton_ThongKe);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new Color(250, 250, 250));
@@ -343,28 +341,6 @@ public class AdminLayout extends javax.swing.JFrame {
         });
         jPanel2.add(jToggleButton_KhuyenMai);
 
-        jToggleButton_ThongKe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jToggleButton_ThongKe.setText("Thống Kê");
-        jToggleButton_ThongKe.setIcon(new FlatSVGIcon("image/statistics.svg", 20, 20));
-        jToggleButton_ThongKe.setHorizontalAlignment(SwingConstants.LEFT);
-        jToggleButton_ThongKe.setHorizontalTextPosition(SwingConstants.RIGHT);
-        jToggleButton_ThongKe.setIconTextGap(5);
-        jToggleButton_ThongKe.putClientProperty(FlatClientProperties.STYLE, ""
-            + "background: #FFFFFF;"
-            + "borderWidth: 0;"
-            + "focusWidth: 0;"
-            + "innerFocusWidth: 0;"
-            + "shadowWidth: 0;"
-            + "arc: 8;"
-            + "hoverBackground: #A8FFED;"
-            + "selectedBackground: #4EF5D1;");
-        jToggleButton_ThongKe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_ThongKeActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jToggleButton_ThongKe);
-
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
         jPanel3.setLayout(new java.awt.CardLayout());
 
@@ -459,10 +435,6 @@ public class AdminLayout extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jToggleButton_ThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_ThongKeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_ThongKeActionPerformed
 
     private void jToggleButton_KhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_KhuyenMaiActionPerformed
         // TODO add your handling code here:
@@ -573,7 +545,6 @@ public class AdminLayout extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton_NhaCungCap;
     private javax.swing.JToggleButton jToggleButton_NhanVien;
     private javax.swing.JToggleButton jToggleButton_PhieuNhap;
-    private javax.swing.JToggleButton jToggleButton_ThongKe;
     private javax.swing.JToggleButton jToggleButton_Thuoc;
     // End of variables declaration//GEN-END:variables
 }

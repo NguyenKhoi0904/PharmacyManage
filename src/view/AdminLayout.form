@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="buttonGroup1.add(jToggleButton_HoaDon);&#xa;buttonGroup1.add(jToggleButton_LoHang);&#xa;buttonGroup1.add(jToggleButton_NhaCungCap);&#xa;buttonGroup1.add(jToggleButton_PhieuNhap);&#xa;buttonGroup1.add(jToggleButton_KhachHang);&#xa;buttonGroup1.add(jToggleButton_Thuoc);&#xa;buttonGroup1.add(jToggleButton_DanhMucThuoc);&#xa;buttonGroup1.add(jToggleButton_NhanVien);&#xa;buttonGroup1.add(jToggleButton_KhuyenMai);&#xa;buttonGroup1.add(jToggleButton_ThongKe);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="buttonGroup1.add(jToggleButton_HoaDon);&#xa;buttonGroup1.add(jToggleButton_LoHang);&#xa;buttonGroup1.add(jToggleButton_NhaCungCap);&#xa;buttonGroup1.add(jToggleButton_PhieuNhap);&#xa;buttonGroup1.add(jToggleButton_KhachHang);&#xa;buttonGroup1.add(jToggleButton_Thuoc);&#xa;buttonGroup1.add(jToggleButton_DanhMucThuoc);&#xa;buttonGroup1.add(jToggleButton_NhanVien);&#xa;buttonGroup1.add(jToggleButton_KhuyenMai);"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -227,20 +227,6 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_KhuyenMai.setIcon(new FlatSVGIcon(&quot;image/promotion.svg&quot;, 20, 20));&#xa;jToggleButton_KhuyenMai.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_KhuyenMai.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_KhuyenMai.setIconTextGap(5);&#xa;jToggleButton_KhuyenMai.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JToggleButton" name="jToggleButton_ThongKe">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng K&#xea;"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton_ThongKeActionPerformed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jToggleButton_ThongKe.setIcon(new FlatSVGIcon(&quot;image/statistics.svg&quot;, 20, 20));&#xa;jToggleButton_ThongKe.setHorizontalAlignment(SwingConstants.LEFT);&#xa;jToggleButton_ThongKe.setHorizontalTextPosition(SwingConstants.RIGHT);&#xa;jToggleButton_ThongKe.setIconTextGap(5);&#xa;jToggleButton_ThongKe.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;hoverBackground: #A8FFED;&quot;&#xa;    + &quot;selectedBackground: #4EF5D1;&quot;);"/>
           </AuxValues>
         </Component>
       </SubComponents>
