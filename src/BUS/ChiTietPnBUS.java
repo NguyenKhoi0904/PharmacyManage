@@ -233,3 +233,4 @@ public class ChiTietPnBUS {
     public void setLoHangBUS(LoHangBUS loHangBUS) {
         this.loHangBUS = loHangBUS;
     }
+}
