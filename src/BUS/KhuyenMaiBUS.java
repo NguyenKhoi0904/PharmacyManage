@@ -1,6 +1,5 @@
 package BUS;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -58,7 +57,7 @@ public class KhuyenMaiBUS {
             this.listKhuyenMai.add(khuyenMaiDTO);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm addKhuyenMai mục <this.khuyenMaiDAO.insert>", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể thêm khuyến mãi", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -87,7 +86,7 @@ public class KhuyenMaiBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật khuyến mãi.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật khuyến mãi.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -103,7 +102,7 @@ public class KhuyenMaiBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm deleteKhuyenMai: Không tìm thấy khuyến mãi hoặc lỗi CSDL.",
+        JOptionPane.showMessageDialog(null, "Không tìm thấy khuyến mãi.",
                 "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
@@ -173,28 +172,27 @@ public class KhuyenMaiBUS {
         }
         return mapMaKm;
     }
-    
-    
+
     public static java.math.BigDecimal getPhanTramGiamFromMaKM(String txtMaKM) {
-       if (ValidationUtils.isValidIntBiggerThanZero(txtMaKM)) {
-           int maKM = Integer.parseInt(txtMaKM);
-           KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
-           if (BUSManager.khuyenMaiBUS.isKMValid(km)) {
-               return km.getGiaTriKm().divide(java.math.BigDecimal.valueOf(100));
-           }
-       }
-       return java.math.BigDecimal.ZERO;
-   }
-    
-    public Boolean isKMValid(KhuyenMaiDTO km){
+        if (ValidationUtils.isValidIntBiggerThanZero(txtMaKM)) {
+            int maKM = Integer.parseInt(txtMaKM);
+            KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
+            if (BUSManager.khuyenMaiBUS.isKMValid(km)) {
+                return km.getGiaTriKm().divide(java.math.BigDecimal.valueOf(100));
+            }
+        }
+        return java.math.BigDecimal.ZERO;
+    }
+
+    public Boolean isKMValid(KhuyenMaiDTO km) {
         if (km == null) {
             return false;
         }
-        
-        if (km.getTrangThai() < 1){
+
+        if (km.getTrangThai() < 1) {
             return false;
         }
-        
+
         return checkEffectiveDate(km);
     }
 }

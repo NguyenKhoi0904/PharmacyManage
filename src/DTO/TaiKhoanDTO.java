@@ -81,11 +81,6 @@ public class TaiKhoanDTO {
 
     @Override
     public String toString() {
-        return "TaiKhoanDTO{" +
-                "maTk=" + maTk +
-                ", taiKhoan='" + taiKhoan + '\'' +
-                ", vaiTro='" + vaiTro + '\'' +
-                ", trangthai='" + this.trangThai + '\'' +
-                '}';
+        return taiKhoan + " - " + ten + " - " + sdt + " - " + vaiTro;
     }
 }

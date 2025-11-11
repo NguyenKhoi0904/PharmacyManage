@@ -49,7 +49,8 @@ public class LoHangBUS {
             this.listLoHang.add(loHangDTO);
             return true;
         }
-        System.out.println("lỗi hàm addLoHang mục <this.loHangDAO.insert>");
+        JOptionPane.showMessageDialog(null, "Không thể thêm lô hàng", "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
@@ -71,7 +72,8 @@ public class LoHangBUS {
             }
             return true;
         }
-        System.out.println("Lỗi CSDL: Không thể cập nhật lô hàng.");
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật lô hàng.", "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
@@ -114,7 +116,8 @@ public class LoHangBUS {
             }
             return true;
         }
-        System.out.println("lỗi hàm deleteLoHang: Không tìm thấy lô hàng hoặc lỗi CSDL.");
+        JOptionPane.showMessageDialog(null, "Không thể xoá lô hàng.", "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
@@ -166,7 +169,7 @@ public class LoHangBUS {
         }
         return 0;
     }
-    
+
     // sử dụng trong CTHD
     public int getMaLhByMaThuoc(int ma_thuoc) {
         for (LoHangDTO lh : this.listLoHang) {
@@ -176,6 +179,7 @@ public class LoHangBUS {
         }
         return 0;
     }
+
     public HashMap<Integer, LoHangDTO> getMapByMaLh() {
         HashMap<Integer, LoHangDTO> mapMaLh = new HashMap<Integer, LoHangDTO>();
         for (LoHangDTO lh : this.listLoHang) {

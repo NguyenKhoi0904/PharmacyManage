@@ -1,11 +1,9 @@
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import BUS.BUSManager;
-import view.AdminLayout;
 import view.LoginForm;
 
 public class PharmacyManage {
@@ -23,14 +21,9 @@ public class PharmacyManage {
             ex.printStackTrace();
         }
 
-        // view test
+        // UI init
         SwingUtilities.invokeLater(() -> {
-            // ========== DEBUG ==========
-            // new LoginFrame().setVisible(true);
-
-            // main app init
             new LoginForm().setVisible(true);
-            // new AdminLayout().setVisible(true);
         });
     }
 }

@@ -59,7 +59,7 @@ public class KhachHangBUS {
             this.listKhachHang.add(khachHangDTO);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm addKhachHang mục <this.khachHangDAO.insert>", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể thêm khách hàng", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -89,7 +89,7 @@ public class KhachHangBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật khách hàng.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật khách hàng.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -114,11 +114,11 @@ public class KhachHangBUS {
             }
 
             // đặt trạng thái của khách hàng trong bảng taikhoan = 0
-            this.taiKhoanBUS.deleteTaiKhoan(ma_tk_cua_kh);
+            // this.taiKhoanBUS.deleteTaiKhoan(ma_tk_cua_kh);
 
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm deleteKhachHang: Không tìm thấy khách hàng hoặc lỗi CSDL.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể xoá khách hàng.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }

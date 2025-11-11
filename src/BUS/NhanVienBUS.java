@@ -24,6 +24,7 @@ public class NhanVienBUS {
     private NhanVienBUS() {
         this.nhanVienDAO = NhanVienDAO.getInstance();
         this.listNhanVien = nhanVienDAO.selectAll();
+        this.taiKhoanBUS = TaiKhoanBUS.getInstance();
     }
 
     // singleton init
@@ -36,25 +37,32 @@ public class NhanVienBUS {
 
     // ========== DATABASE HANDLE ==========
     public boolean addNhanVien(NhanVienDTO nhanVienDTO) {
-        // FK check: mã tài khoản phải tồn tại
-        if (taiKhoanBUS == null || taiKhoanBUS.getTaiKhoanByMaTk(nhanVienDTO.getMaTk()) == null) {
-            JOptionPane.showMessageDialog(null, "Mã tài khoản không tồn tại trong hệ thống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        // kiểm tra nếu mã tài khoản của NhanVienDTO không tồn tại trong bảng taikhoan
+        if (!this.taiKhoanBUS.getMapByMaTk().containsKey(nhanVienDTO.getMaTk())) {
+            JOptionPane.showMessageDialog(null, "Mã tài khoản liên kết của nhân viên không tồn tại", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // kiểm tra nếu mã nhân viên đã tồn tại
         if (this.checkIfMaNvExist(nhanVienDTO)) {
+            JOptionPane.showMessageDialog(null, "Mã nhân viên của nhân viên đã tồn tại", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // kiểm tra ngày sinh - ngày vào làm
+        // kiểm tra nếu ngày vào làm sớm hơn ngày sinh và ít nhất 18 tuổi
         if (!this.checkEffectiveDate(nhanVienDTO)) {
+            JOptionPane.showMessageDialog(null, "Ngày nhập không hợp lệ", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // kiểm tra email
-        if (!nhanVienDTO.getEmail().contains("@email.com") && !nhanVienDTO.getEmail().contains("@gmail.com")) {
-            JOptionPane.showMessageDialog(null, "Sai định dạng email", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        // kiểm tra nếu email nhân viên sai định dạng đuôi
+        if (!nhanVienDTO.getEmail().contains("@email.com") &&
+                !nhanVienDTO.getEmail().contains("@gmail.com")) {
+            JOptionPane.showMessageDialog(null, "Sai định dạng email", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -68,20 +76,23 @@ public class NhanVienBUS {
             this.listNhanVien.add(nhanVienDTO);
             return true;
         }
-
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL khi thêm nhân viên", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Không thể thêm nhân viên", "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
     public boolean updateNhanVien(NhanVienDTO nhanVienDTO) {
-        // FK check: mã tài khoản phải tồn tại
-        if (taiKhoanBUS == null || taiKhoanBUS.getTaiKhoanByMaTk(nhanVienDTO.getMaTk()) == null) {
-            JOptionPane.showMessageDialog(null, "Mã tài khoản không tồn tại trong hệ thống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        // kiểm tra nếu mã tài khoản của NhanVienDTO không tồn tại trong bảng taikhoan
+        if (!this.taiKhoanBUS.checkIfMaTkExist(nhanVienDTO.getMaTk())) {
+            JOptionPane.showMessageDialog(null, "Mã tài khoản của nhân viên không tồn tại", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // kiểm tra nếu mã nhân viên không tồn tại
         if (!this.checkIfMaNvExist(nhanVienDTO)) {
+            JOptionPane.showMessageDialog(null, "Mã nhân viên của nhân viên không tồn tại", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -90,9 +101,11 @@ public class NhanVienBUS {
             return false;
         }
 
-        // kiểm tra email
-        if (!nhanVienDTO.getEmail().contains("@email.com") && !nhanVienDTO.getEmail().contains("@gmail.com")) {
-            JOptionPane.showMessageDialog(null, "Sai định dạng email", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        // kiểm tra nếu email nhà cung cấp sai định dạng đuôi
+        if (!nhanVienDTO.getEmail().contains("@email.com") &&
+                !nhanVienDTO.getEmail().contains("@gmail.com")) {
+            JOptionPane.showMessageDialog(null, "Sai định dạng email", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -111,54 +124,74 @@ public class NhanVienBUS {
             }
             return true;
         }
-
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật nhân viên.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật nhân viên.", "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
     public boolean deleteNhanVien(int ma_nv) {
-        int ma_tk_cua_nv = this.nhanVienDAO.selectById(String.valueOf(ma_nv)).getMaTk();
+        // int ma_tk_cua_nv = this.nhanVienDAO.selectById(String.valueOf(ma_nv)).getMaTk();
 
         if (this.nhanVienDAO.deleteById(String.valueOf(ma_nv)) > 0) {
-            for (NhanVienDTO nv : listNhanVien) {
-                if (nv.getMaNv() == ma_nv) {
-                    nv.setTrangThai(0);
+            // cập nhật cache: Đặt trạng thái = 0
+            for (int i = 0; i < this.listNhanVien.size(); i++) {
+                if (this.listNhanVien.get(i).getMaNv() == ma_nv) {
+                    this.listNhanVien.remove(i);
                     break;
                 }
             }
-            if (taiKhoanBUS != null) {
-                taiKhoanBUS.deleteTaiKhoan(ma_tk_cua_nv);
-            }
+
+            // đặt trạng thái của nhân viên trong bảng taikhoan = 0
+            // this.taiKhoanBUS.deleteTaiKhoan(ma_tk_cua_nv);
+
             return true;
         }
-
-        JOptionPane.showMessageDialog(null, "Không thể xóa nhân viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Không tìm thấy nhân viên.", "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
     // ========== BUSINESS LOGIC ==========
-    private static boolean isEighteenOrOlder(LocalDate ngay_sinh, LocalDate ngay_vao_lam) {
+    private boolean isEighteenOrOlder(LocalDate ngay_sinh, LocalDate ngay_vao_lam) {
         return Period.between(ngay_sinh, ngay_vao_lam).getYears() >= 18;
     }
 
-    private boolean checkIfMaNvExist(NhanVienDTO nhanVienDTO) {
+    public boolean checkIfMaNvExist(NhanVienDTO nhanVienDTO) {
         if (this.getMapByMaNv().containsKey(nhanVienDTO.getMaNv())) {
+            // nếu mã nhân viên của nhân viên đã tồn tại trong bảng nhanvien
             return true;
         }
         return false;
     }
 
-    private boolean checkEffectiveDate(NhanVienDTO nhanVienDTO) {
-        LocalDate ns = nhanVienDTO.getNgaySinh().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate nvl = nhanVienDTO.getNgayVaoLam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    public boolean checkEffectiveDate(NhanVienDTO nhanVienDTO) {
+        // Chuyển sang LocalDate an toàn dù là java.util.Date hay java.sql.Date
+        LocalDate ngaySinh;
+        LocalDate ngayVaoLam;
 
-        if (!isEighteenOrOlder(ns, nvl)) {
-            JOptionPane.showMessageDialog(null, "Nhân viên chưa đủ 18 tuổi", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return false;
-        } else if (ns.isAfter(nvl)) {
+        if (nhanVienDTO.getNgaySinh() instanceof java.sql.Date) {
+            ngaySinh = ((java.sql.Date) nhanVienDTO.getNgaySinh()).toLocalDate();
+        } else {
+            ngaySinh = nhanVienDTO.getNgaySinh().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+
+        if (nhanVienDTO.getNgayVaoLam() instanceof java.sql.Date) {
+            ngayVaoLam = ((java.sql.Date) nhanVienDTO.getNgayVaoLam()).toLocalDate();
+        } else {
+            ngayVaoLam = nhanVienDTO.getNgayVaoLam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+
+        // Kiểm tra điều kiện logic
+        if (ngayVaoLam.isBefore(ngaySinh)) {
             JOptionPane.showMessageDialog(null, "Ngày sinh phải trước ngày vào làm", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+
+        if (!isEighteenOrOlder(ngaySinh, ngayVaoLam)) {
+            JOptionPane.showMessageDialog(null, "Nhân viên chưa đủ 18 tuổi", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
         return true;
     }
 

@@ -72,8 +72,8 @@ public class NhanVienDAO implements DAOinterface<NhanVienDTO> {
             String sql = "INSERT INTO nhanvien (ma_nv,ma_tk,ngay_vao_lam,luong,email,dia_chi,gioi_tinh,ngay_sinh,vi_tri,trang_thai) VALUES (?,?,?,?,?,?,?,?,?,?)";
             Connection conn = JDBCUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, data.getMaTk());
-            ps.setInt(2, data.getMaNv());
+            ps.setInt(1, data.getMaNv());
+            ps.setInt(2, data.getMaTk());
             ps.setDate(3, data.getNgayVaoLam());
             ps.setBigDecimal(4, data.getLuong());
             ps.setString(5, data.getEmail());

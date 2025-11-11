@@ -64,7 +64,7 @@ public class ChiTietPnBUS {
             return true;
         }
 
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể thêm chi tiết phiếu nhập.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể thêm chi tiết phiếu nhập.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -103,7 +103,7 @@ public class ChiTietPnBUS {
 
         }
 
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật chi tiết phiếu nhập.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật chi tiết phiếu nhập.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -146,7 +146,7 @@ public class ChiTietPnBUS {
 
         }
 
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể xoá chi tiết phiếu nhập.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết phiếu nhập.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -180,7 +180,7 @@ public class ChiTietPnBUS {
             return true;
         }
 
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể xoá chi tiết phiếu nhập.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết phiếu nhập.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }

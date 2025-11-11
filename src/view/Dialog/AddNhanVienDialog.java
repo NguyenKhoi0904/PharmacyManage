@@ -1,0 +1,248 @@
+package view.Dialog;
+
+import java.awt.*;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.function.BiConsumer;
+import javax.swing.*;
+
+import com.toedter.calendar.JDateChooser;
+
+import BUS.BUSManager;
+import DTO.NhanVienDTO;
+import DTO.TaiKhoanDTO;
+import utils.NumberOnlyField;
+import view.NhanVienForm;
+
+public class AddNhanVienDialog extends JDialog {
+    private JTextField maNv, Luong, email, diaChi, viTri;
+    private JTextField maTk, taiKhoan, matKhau, ten, sdt;
+    private JDateChooser ngayVaoLam, ngaySinh;
+    private JComboBox<String> comboGioiTinh;
+    // private JComboBox<TaiKhoanDTO> comboTaiKhoan;
+    private NhanVienForm parent;
+    private static SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+
+    public AddNhanVienDialog(NhanVienForm parent) {
+        super(parent, "🩺 Thêm nhân viên mới", true);
+        this.parent = parent;
+        setSize(1080, 800);
+        setResizable(false);
+        setLocationRelativeTo(parent);
+        setLayout(new BorderLayout(15, 15));
+        getContentPane().setBackground(Color.WHITE);
+
+        // ======= PANEL CHÍNH =======
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 15, 0));
+        mainPanel.setBackground(Color.WHITE);
+        add(mainPanel, BorderLayout.CENTER);
+
+        // =========================
+        // 🔹 PANEL CHÍNH: FORM THÔNG TIN
+        // =========================
+        JPanel infoPanel = new JPanel(new GridBagLayout());
+        infoPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(180, 180, 180), 1),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        infoPanel.setBackground(Color.WHITE);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
+
+        Font font = new Font("Segoe UI", Font.PLAIN, 14);
+        int[] row = { 0 };
+
+        BiConsumer<String, JComponent> addRow = (label, field) -> {
+            gbc.gridx = 0;
+            gbc.gridy = row[0];
+            gbc.weightx = 0.3;
+            JLabel lbl = new JLabel(label, SwingConstants.RIGHT);
+            lbl.setFont(font);
+            infoPanel.add(lbl, gbc);
+
+            gbc.gridx = 1;
+            gbc.weightx = 0.7;
+            infoPanel.add(field, gbc);
+
+            row[0]++;
+        };
+
+        // ======= Các field =======
+        maTk = new JTextField();
+        maTk.setFont(font);
+        addRow.accept("Mã Tài Khoản:", maTk);
+
+        maNv = new JTextField();
+        maNv.setFont(font);
+        addRow.accept("Mã Nhân Viên:", maNv);
+
+        // comboTaiKhoan = new JComboBox<>();
+        // comboTaiKhoan.setFont(font);
+        // loadTaiKhoan();
+        // addRow.accept("Chọn tài khoản của nhân viên:", comboTaiKhoan);
+
+        ngayVaoLam = new JDateChooser();
+        ngayVaoLam.setDateFormatString("yyyy-MM-dd");
+        ngayVaoLam.setFont(font);
+        addRow.accept("Ngày vào làm:", ngayVaoLam);
+
+        Luong = new NumberOnlyField();
+        Luong.setFont(font);
+        addRow.accept("Lương:", Luong);
+
+        email = new JTextField();
+        email.setFont(font);
+        addRow.accept("Email:", email);
+
+        diaChi = new JTextField();
+        diaChi.setFont(font);
+        addRow.accept("Địa chỉ:", diaChi);
+
+        comboGioiTinh = new JComboBox<>();
+        comboGioiTinh.addItem("Nam");
+        comboGioiTinh.addItem("Nữ");
+        comboGioiTinh.setFont(font);
+        addRow.accept("Giới tính:", comboGioiTinh);
+
+        ngaySinh = new JDateChooser();
+        ngaySinh.setDateFormatString("yyyy-MM-dd");
+        ngaySinh.setFont(font);
+        addRow.accept("Ngày sinh:", ngaySinh);
+
+        viTri = new JTextField();
+        viTri.setFont(font);
+        addRow.accept("Vị trí:", viTri);
+
+        taiKhoan = new JTextField();
+        taiKhoan.setFont(font);
+        addRow.accept("Tài Khoản", taiKhoan);
+
+        matKhau = new JTextField();
+        matKhau.setFont(font);
+        addRow.accept("Mật Khẩu", matKhau);
+
+        ten = new JTextField();
+        ten.setFont(font);
+        addRow.accept("Tên", ten);
+
+        sdt = new JTextField();
+        sdt.setFont(font);
+        addRow.accept("Số Điện Thoại", sdt);
+
+        mainPanel.add(infoPanel);
+
+        // =========================
+        // 🔹 PANEL DƯỚI: NÚT HÀNH ĐỘNG
+        // =========================
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 10));
+        buttonPanel.setBackground(Color.WHITE);
+
+        JButton btnCancel = new JButton("Hủy");
+        JButton btnOK = new JButton("Xác nhận");
+
+        btnCancel.addActionListener(e -> setVisible(false));
+        btnOK.addActionListener(e -> {
+            if (validateInput()) {
+                String gioiTinh = (String) comboGioiTinh.getSelectedItem();
+                String ngayVaoLamStr = sdf.format(ngayVaoLam.getDate());
+                String ngaySinhStr = sdf.format(ngaySinh.getDate());
+                NhanVienDTO nhanVienDTO = new NhanVienDTO(Integer.parseInt(maNv.getText()),
+                        Integer.parseInt(maTk.getText()),
+                        java.sql.Date.valueOf(ngayVaoLamStr),
+                        new BigDecimal(Luong.getText()), email.getText(), diaChi.getText(),
+                        gioiTinh, java.sql.Date.valueOf(ngaySinhStr), viTri.getText(), 1);
+
+                // kiểm tra hợp lệ cho nhân viên
+                if (!BUSManager.nhanVienBUS.checkEffectiveDate(nhanVienDTO)
+                        || BUSManager.nhanVienBUS.checkIfMaNvExist(nhanVienDTO)) {
+                    return;
+                }
+
+                // thêm tài khoản vào db
+                if (!BUSManager.taiKhoanBUS
+                        .addTaiKhoan(new TaiKhoanDTO(Integer.parseInt(maTk.getText()), taiKhoan.getText(),
+                                matKhau.getText(), ten.getText(), sdt.getText(), "nhanvien", 1))) {
+                    JOptionPane.showMessageDialog(this, "Không thể thêm tài khoản");
+                    return;
+                }
+
+                // thêm nhân viên vào db
+                if (BUSManager.nhanVienBUS.addNhanVien(nhanVienDTO)) {
+                    JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không thể thêm nhân viên");
+
+                    // xoá tài khoản không được đồng bộ
+                    // BUSManager.taiKhoanBUS.deleteTaiKhoan(Integer.parseInt(maTk.getText()));
+
+                    return;
+                }
+
+                // load danh sách nhân viên
+                this.parent.loadData();
+
+                setVisible(false);
+            }
+        });
+
+        btnOK.setBackground(new Color(0, 120, 215));
+        btnOK.setForeground(Color.WHITE);
+        btnOK.setFocusPainted(false);
+        btnOK.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        buttonPanel.add(btnCancel);
+        buttonPanel.add(btnOK);
+        add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private boolean validateInput() {
+        if (ngayVaoLam.getDate() == null || ngaySinh.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng không để trống ngày sinh hoặc ngày vào làm");
+            return false;
+        }
+
+        if (maNv.getText().trim().isEmpty() ||
+                Luong.getText().trim().isEmpty() ||
+                email.getText().trim().isEmpty() ||
+                diaChi.getText().trim().isEmpty() ||
+                viTri.getText().trim().isEmpty() ||
+                maTk.getText().trim().isEmpty() ||
+                taiKhoan.getText().trim().isEmpty() ||
+                matKhau.getText().trim().isEmpty() ||
+                ten.getText().trim().isEmpty() ||
+                sdt.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return false;
+        }
+
+        try {
+            new BigDecimal(Luong.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Giá tiền không hợp lệ!");
+            return false;
+        }
+
+        // 🔹 Kiểm tra ngày sinh < ngày vào làm
+        java.util.Date birthDate = ngaySinh.getDate();
+        java.util.Date workDate = ngayVaoLam.getDate();
+
+        if (!birthDate.before(workDate)) {
+            JOptionPane.showMessageDialog(this, "Ngày sinh phải nhỏ hơn ngày vào làm!");
+            return false;
+        }
+
+        // 🔹 Kiểm tra đủ 18 tuổi tại thời điểm vào làm
+        long ageInMillis = workDate.getTime() - birthDate.getTime();
+        double years = ageInMillis / (1000.0 * 60 * 60 * 24 * 365.25); // xấp xỉ năm
+
+        if (years < 18) {
+            JOptionPane.showMessageDialog(this, "Nhân viên phải đủ 18 tuổi trở lên tại thời điểm vào làm!");
+            return false;
+        }
+
+        return true;
+    }
+
+}

@@ -45,7 +45,7 @@ CREATE TABLE nhanvien (
     luong DECIMAL(10,2),
     email VARCHAR(100),
     dia_chi VARCHAR(100),
-    gioi_tinh ENUM('Nam','Nu','Khac'),
+    gioi_tinh ENUM('Nam','Nữ','Khac'),
     ngay_sinh DATE,
     vi_tri VARCHAR(50),
     trang_thai INT(2) NOT NULL,
@@ -157,6 +157,7 @@ CREATE TABLE chitiet_hd (
 INSERT INTO taikhoan (ma_tk, tai_khoan, mat_khau, ten, sdt, vai_tro, trang_thai) VALUES
 (1, 'admin01', '$2a$10$C4MBXtcHNdb1X0HAnK/u4eMueASAsbsGCbROFoFLghuf41O4Rd9fq', 'Nguyễn Văn A', '0901234567', 'admin',1),
 (2, 'nv_quyen', '$2a$10$kqoiiCMqfWOEgVzADRyxoetTBZ0cVaZoMd/.pRrX62kxGbCiiPwuu', 'Trần Thị B', '0907654321', 'nhanvien',1),
+(4, 'nv_quyen2', '$2a$10$kqoiiCMqfWOEgVzADRyxoetTBZ0cVaZoMd/.pRrX62kxGbCiiPwuu', 'Trần Thị S', '0999999999', 'nhanvien',1),
 (3, 'kh_vip', '$2a$10$9gVuGM0NntPJpdxSK8tPWuNTRVlNH.6H1DlEGMBqLIM1kGo2NnnHe', 'Lê Văn C', '0912345678', 'khachhang',1);
 
 -- 4. Nhà Cung Cấp (ma_ncc: 101, 102)
@@ -176,12 +177,12 @@ INSERT INTO khuyenmai (ten_km, loai_km, gia_tri_km, dieu_kien_km, ngay_bat_dau, 
 
 -- 2. Nhân Viên (ma_nv: 11, 12. Dùng ma_tk: 1, 2)
 INSERT INTO nhanvien (ma_nv, ma_tk, ngay_vao_lam, luong, email, dia_chi, gioi_tinh, ngay_sinh, vi_tri, trang_thai) VALUES
-(11, 1, '2023-01-15', 25000000.00, 'admin@store.com', 'Quận 1, TP.HCM', 'Nam', '1990-05-10', 'Quản lý',1),
-(12, 2, '2024-03-01', 12000000.00, 'quyen@store.com', 'Quận 3, TP.HCM', 'Nu', '1998-11-20', 'Nhân viên bán hàng', 1);
+(11, 1, '2023-01-15', 25000000.00, 'admin@gmail.com', 'Quận 1, TP.HCM', 'Nam', '1990-05-10', 'Quản lý',1),
+(12, 2, '2024-03-01', 12000000.00, 'quyen@email.com', 'Quận 3, TP.HCM', 'Nữ', '1998-11-20', 'Nhân viên bán hàng', 1),
+(13, 4, '2024-04-01', 12000000.00, 'quyen2@gmail.com', 'Quận 5, TP.HCM', 'Nữ', '1998-11-20', 'Nhân viên bán hàng', 1);
 
 -- 3. Khách Hàng (ma_kh: 21, 22. Dùng ma_tk: 3)
 INSERT INTO khachhang (ma_kh, ma_tk, ngay_dang_ky, diem_tich_luy, trang_thai) VALUES
-(21, 3, '2024-05-20', 150, 1),
 (22, 3, '2024-05-23', 300, 1);
 
 -- 5. Phiếu Nhập (ma_pn: 41, 42. Dùng ma_nv: 11, 12)
@@ -208,7 +209,7 @@ INSERT INTO chitiet_pn (ma_pn, ma_lh, don_gia, so_luong) VALUES
 
 -- 11. Hoá Đơn 
 INSERT INTO hoadon ( ma_nv, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, trang_thai) VALUES
-( 12, 21, 1, 120000.00, '2025-10-08', 'Chuyển khoản', 1), -- NV 12 bán hàng
+( 12, 22, 1, 120000.00, '2025-10-08', 'Chuyển khoản', 1), -- NV 12 bán hàng
 ( 12, 22, 2, 50000.00, '2025-10-08', 'Tiền mặt', 1); -- NV 12 bán hàng
 
 -- 12. Chi Tiết Hoá Đơn (Dùng ma_hd: 71, 72 và ma_lh/ma_thuoc tương ứng)

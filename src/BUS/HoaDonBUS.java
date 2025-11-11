@@ -157,7 +157,7 @@ public class HoaDonBUS {
             return false;
         }
     }
-    
+
     public boolean addHD(HoaDonDTO hoaDonDTO) {
         // ======== 1. KIỂM TRA DỮ LIỆU ========
         if (this.checkIfMaHdExist(hoaDonDTO.getMaHd())) {
@@ -183,16 +183,19 @@ public class HoaDonBUS {
         // ======== 2. THÊM HÓA ĐƠN ========
         if (this.hoaDonDAO.insert(hoaDonDTO) > 0) {
             this.listHoaDon.add(hoaDonDTO);
-            JOptionPane.showMessageDialog(null, "Thêm hóa đơn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Thêm hóa đơn thành công!", "Thành công",
+                    JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(null, "Không thể thêm hóa đơn vào CSDL", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
+
     public boolean addCTHD(int maHd, ArrayList<ChiTietHdDTO> danhSachChiTietHd) {
         if (danhSachChiTietHd == null || danhSachChiTietHd.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Danh sách chi tiết hoá đơn rỗng hoặc null", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Danh sách chi tiết hoá đơn rỗng hoặc null", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -203,11 +206,13 @@ public class HoaDonBUS {
             for (ChiTietHdDTO ct : danhSachChiTietHd) {
                 LoHangDTO lh = this.loHangBUS.getLoHangByMaLh(ct.getMaLh());
                 if (lh == null) {
-                    JOptionPane.showMessageDialog(null, "Không tìm thấy lô hàng " + ct.getMaLh(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Không tìm thấy lô hàng " + ct.getMaLh(), "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 if (lh.getSlTon() < ct.getSoLuong()) {
-                    JOptionPane.showMessageDialog(null, "Không đủ tồn kho cho lô hàng " + ct.getMaLh(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Không đủ tồn kho cho lô hàng " + ct.getMaLh(), "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -226,7 +231,8 @@ public class HoaDonBUS {
                 daThemChiTiet.add(ct);
             }
 
-            JOptionPane.showMessageDialog(null, "Thêm chi tiết hoá đơn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Thêm chi tiết hoá đơn thành công!", "Thành công",
+                    JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
 
@@ -239,7 +245,8 @@ public class HoaDonBUS {
                 this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(), ct.getMaThuoc());
             }
 
-            JOptionPane.showMessageDialog(null, "Thêm chi tiết hoá đơn thất bại! Dữ liệu đã được phục hồi.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Thêm chi tiết hoá đơn thất bại! Dữ liệu đã được phục hồi.", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -261,7 +268,7 @@ public class HoaDonBUS {
             return true;
         }
 
-        JOptionPane.showMessageDialog(null, "Không thể cập nhật hoá đơn trong CSDL", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật hoá đơn", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -274,20 +281,22 @@ public class HoaDonBUS {
         }
 
         // lấy chi tiết hóa đơn trước khi xóa để hoàn tác tồn kho
-//        ArrayList<ChiTietHdDTO> chiTietList = this.chiTietHdBUS.getListChiTietHdByMaHd(ma_hd);
+        // ArrayList<ChiTietHdDTO> chiTietList =
+        // this.chiTietHdBUS.getListChiTietHdByMaHd(ma_hd);
 
         // hoàn tác tồn kho -> huỷ đơn nên + lại phần đã thanh toán
-//        if (chiTietList != null) {
-//            for (ChiTietHdDTO chiTiet : chiTietList) {
-//                try {
-//                    // nếu updateSlTonLoHang thất bại -> gây lệch tồn kho
-//                    this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), chiTiet.getSoLuong());
-//                } catch (Exception e) {
-//                    throw new Exception("Không thể cập nhật tồn kho cho lô " + chiTiet.getMaLh());
-//                }
-//
-//            }
-//        }
+        // if (chiTietList != null) {
+        // for (ChiTietHdDTO chiTiet : chiTietList) {
+        // try {
+        // // nếu updateSlTonLoHang thất bại -> gây lệch tồn kho
+        // this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), chiTiet.getSoLuong());
+        // } catch (Exception e) {
+        // throw new Exception("Không thể cập nhật tồn kho cho lô " +
+        // chiTiet.getMaLh());
+        // }
+        //
+        // }
+        // }
 
         // xoá chi tiết hoá đơn
         if (!this.chiTietHdBUS.deleteAllByMaHd(ma_hd)) {

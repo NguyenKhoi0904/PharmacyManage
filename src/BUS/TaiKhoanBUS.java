@@ -61,7 +61,7 @@ public class TaiKhoanBUS {
         // chuyển mật khẩu thành dạng băm
         String hashedPassword = hashPassword(taiKhoanDTO.getMatKhau());
         if (hashedPassword == null) {
-            JOptionPane.showConfirmDialog(null, "addTaiKhoanDTO : mật khẩu băm rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(null, "Mật khẩu băm rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         taiKhoanDTO.setMatKhau(hashedPassword);
@@ -71,13 +71,14 @@ public class TaiKhoanBUS {
             this.listTaiKhoan.add(taiKhoanDTO);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm addTaiKhoanDTO mục <this.listTaiKhoan.add(taiKhoanDTO)>", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể thêm tài khoản", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
     public boolean deleteTaiKhoan(int ma_tk) {
         // kiểm tra nếu có nhân viên hay khách hàng đang liên kết với tài khoản này
+        // => không cho xoá
         if (NhanVienBUS.getInstance().getNhanVienByMaTk(ma_tk) != null) {
             JOptionPane.showMessageDialog(null, "Tài khoản nhân viên vẫn còn liên kết,xoá nhân viên trước", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
@@ -90,7 +91,7 @@ public class TaiKhoanBUS {
 
         // kiểm tra nếu tài khoản không tồn tại
         if (!this.getMapByMaTk().containsKey(ma_tk)) {
-            JOptionPane.showMessageDialog(null, "lỗi không tìm được mã tài khoản hoặc tài khoản không tồn tại", "Lỗi",
+            JOptionPane.showMessageDialog(null, "Lỗi không tìm được mã tài khoản hoặc tài khoản không tồn tại", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
         }
 
@@ -106,7 +107,7 @@ public class TaiKhoanBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm deleteTaiKhoan: lỗi CSDL.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Không thể xoá tài khoản.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
@@ -146,12 +147,20 @@ public class TaiKhoanBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật tài khoản.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật tài khoản.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
     // ========== BUSINESS LOGIC ==========
+
+    public boolean checkIfMaTkExist(int ma_tk) {
+        if (this.getMapByMaTk().containsKey(ma_tk)) {
+            // nếu mã tài khoản của khách hàng/nhân viên đã tồn tại trong bảng taikhoan
+            return true;
+        }
+        return false;
+    }
 
     private boolean checkIfPasswordValidate(TaiKhoanDTO taiKhoanDTO, String titleAlertPanel) {
         if (taiKhoanDTO.getMatKhau() == null || taiKhoanDTO.getMatKhau().isEmpty()) {

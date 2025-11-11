@@ -44,7 +44,7 @@ public class DanhMucThuocBUS {
             this.listDanhMucThuoc.add(danhMucThuocDTO);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "addDanhMucThuoc: mục <this.danhMucThuocDAO.insert>", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể thêm danh mục thuốc", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -67,7 +67,7 @@ public class DanhMucThuocBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "updateDanhMucThuoc: lỗi CSDL", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật danh mục thuốc", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -99,7 +99,7 @@ public class DanhMucThuocBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "deleteDanhMucThuoc: lỗi CSDL.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể xoá danh mục thuốc.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }

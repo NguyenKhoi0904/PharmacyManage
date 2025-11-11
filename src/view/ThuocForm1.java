@@ -441,31 +441,6 @@ public class ThuocForm1 extends javax.swing.JFrame {
             return;
 
         for (ThuocDTO t : list) {
-            // ImageIcon icon = null;
-            // if (t.getUrlAnh() != null && !t.getUrlAnh().isEmpty()) {
-            // try {
-            // Image image;
-            // // Nếu là đường dẫn tuyệt đối (vd: C:/Users/... hoặc /home/...)
-            // if (new java.io.File(t.getUrlAnh()).exists()) {
-            // image = new ImageIcon(t.getUrlAnh()).getImage();
-            // }
-            // // Nếu là đường dẫn trong resource (vd: /image/placeholder.jpg)
-            // else if (getClass().getResource(t.getUrlAnh()) != null) {
-            // image = new ImageIcon(getClass().getResource(t.getUrlAnh())).getImage();
-            // }
-            // // Nếu không hợp lệ, bỏ qua
-            // else {
-            // image = new
-            // ImageIcon(getClass().getResource("/image/placeholder_them_thuoc.jpg")).getImage();
-            // }
-
-            // Image scaled = image.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-            // icon = new ImageIcon(scaled);
-            // } catch (Exception e) {
-            // System.err.println("⚠️ Lỗi load ảnh: " + t.getUrlAnh() + " → " +
-            // e.getMessage());
-            // }
-            // }
 
             Object[] row = {
                     t.getMaThuoc(),

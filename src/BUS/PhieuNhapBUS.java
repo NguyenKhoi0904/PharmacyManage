@@ -53,7 +53,7 @@ public class PhieuNhapBUS {
 
         // kiểm tra danh sách chi tiết phiếu nhập
         if (danhSachChiTietPn == null || danhSachChiTietPn.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Lỗi hàm addPhieuNhap : danhSachPn rỗng hoặc null", "Lỗi",
+            JOptionPane.showMessageDialog(null, "Danh sách phiếu nhập rỗng", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -80,7 +80,7 @@ public class PhieuNhapBUS {
             this.listPhieuNhap.add(phieuNhapDTO);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Lỗi hàm addPhieuNhap mục <this.phieuNhapDAO.insert>", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể thêm phiếu nhập.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -108,7 +108,7 @@ public class PhieuNhapBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật phiếu nhập.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật phiếu nhập.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -135,7 +135,7 @@ public class PhieuNhapBUS {
             this.listPhieuNhap.removeIf(pn -> pn.getMaPn() == ma_pn);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Lỗi hàm deletePhieuNhap: Không tìm thấy hoặc lỗi CSDL.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể xoá phiếu nhập.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }

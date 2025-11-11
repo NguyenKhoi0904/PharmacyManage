@@ -45,7 +45,7 @@ public class NhaCungCapBUS {
 
         // kiểm tra xem nếu số điện thoại sai định dạng
         if (this.isValidPhone(nhaCungCapDTO.getSdtNcc())) {
-            JOptionPane.showMessageDialog(null, "lỗi hàm addNhaCungCap sai định dạng sdt", "Lỗi",
+            JOptionPane.showMessageDialog(null, "Sai định dạng sdt", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -55,7 +55,7 @@ public class NhaCungCapBUS {
             this.listNhaCungCap.add(nhaCungCapDTO);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm addNhaCungCap mục <this.nhaCungCapDAO.insert>", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể thêm nhà cung cấp", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -74,7 +74,7 @@ public class NhaCungCapBUS {
 
         // kiểm tra xem nếu số điện thoại sai định dạng
         if (this.isValidPhone(nhaCungCapDTO.getSdtNcc())) {
-            JOptionPane.showMessageDialog(null, "lỗi hàm addNhaCungCap sai định dạng sdt", "Lỗi",
+            JOptionPane.showMessageDialog(null, "Sai định dạng sdt", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -89,7 +89,7 @@ public class NhaCungCapBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật nhà cung cấp.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật nhà cung cấp.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -110,7 +110,7 @@ public class NhaCungCapBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm deleteNhaCungCap: Không tìm thấy nhà cung cấp hoặc lỗi CSDL.",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật nhà cung cấp.",
                 "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;

@@ -55,7 +55,7 @@ public class ThuocBUS {
             this.listThuoc.add(thuocDTO);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "addThuoc: mục <this.thuocDAO.insert>", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể thêm thuốc", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -84,7 +84,7 @@ public class ThuocBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "updateThuoc: Mã danh mục thuốc không tồn tại hoặc lỗi CSDL", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể cập nhật thuốc", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -114,7 +114,7 @@ public class ThuocBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "deleteThuoc: lỗi CSDL.", "Lỗi",
+        JOptionPane.showMessageDialog(null, "Không thể xoá thuốc.", "Lỗi",
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
