@@ -240,4 +240,24 @@ public class LoHangDAO implements DAOinterface<LoHangDTO> {
         }
         return tongSlTon;
     }
+    
+    public ArrayList<LoHangDTO> selectAllIncludeInactive(){
+        ArrayList<LoHangDTO> result = new ArrayList<LoHangDTO>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM lohang";
+            PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            while (rs.next()) {
+                result.add(new LoHangDTO(rs.getInt("ma_lh"), rs.getInt("ma_ncc"), rs.getInt("ma_thuoc"),
+                        rs.getInt("sl_nhap"),
+                        rs.getInt("sl_ton"), rs.getDate("ngay_sx"), rs.getDate("han_sd"),
+                        rs.getBigDecimal("gia_nhap"), rs.getInt("trang_thai")));
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;        
+    }
 }

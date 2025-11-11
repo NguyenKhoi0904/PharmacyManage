@@ -138,7 +138,7 @@ public class DanhMucThuocBUS {
     
     public int generate_maDMT(){
     int max = 0;
-    for (DanhMucThuocDTO dmt: listDanhMucThuoc){
+    for (DanhMucThuocDTO dmt: this.danhMucThuocDAO.selectAllIncludeInactive()){
         if(dmt.getMaDmt()> max) max = dmt.getMaDmt();
     }
     return max+1;

@@ -1,7 +1,7 @@
 Cấu trúc folder src:
 src
  └── ├── DTO           # Chứa các class entity (theo ERD & class diagram)
-      │    ├── User.java
+      │    ├── TaiKhoan.java
       │    ├── KhachHang.java
       │    ├── NhanVien.java
       │    ├── Thuoc.java
@@ -12,34 +12,34 @@ src
       │    ├── ChiTietHoaDon.java
       │    ├── PhieuNhap.java
       │    ├── ChiTietPhieuNhap.java
-      │    ├── KhuyenMai.java
-      │    └── HoaDonKhuyenMai.java   # Nếu bạn muốn tách bảng trung gian
+      │    └── .....
       │
       ├── DAO             # Data Access Object (CRUD với DB)
-      │    ├── UserDAO.java
+      │    ├── TaiKhoanDAO.java
       │    ├── ThuocDAO.java
       │    ├── HoaDonDAO.java
       │    ├── PhieuNhapDAO.java
+      │    ├── KhachHangDAO.java
       │    └── ...
       │
       ├── BUS         # Chứa business logic
-      │    ├── UserBUS.java
+      │    ├── TaiKhoanBUS.java
       │    ├── HoaDonBUS.java     # Tính toán tổng tiền, áp dụng khuyến mãi
       │    ├── ThuocBUS.java      # Quản lý tồn kho
       │    ├── PhieuNhapBUS.java
       │    └── ...
       │
       ├── util            # Các tiện ích (helper class)
-      │    ├── DBConnection.java      # Kết nối database
-      │    ├── DateUtils.java
-      │    └── Validator.java
+      │    ├── BigDecimalUtils.java      # Kết nối database
+      │    ├── Convert_JFrame_To_JPanel.java
+      │    └── DateChooser.java
       │
-      ├── ui            # Giao diện (nếu bạn dùng SwingJavaFX)
+      ├── View            # Giao diện 
       │    ├── LoginFrame.java
       │    ├── MainFrame.java
       │    ├── HoaDonPanel.java
       │    ├── ThuocPanel.java
       │    └── ...
       │
-      └── Main.java        # Điểm khởi động chương trình
+      └── PharmacyManage.java        # Điểm khởi động chương trình
       

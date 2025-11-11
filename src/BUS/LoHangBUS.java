@@ -191,7 +191,7 @@ public class LoHangBUS {
     
     public int generate_maLH(){
         int max = 0;
-        for (LoHangDTO lh : listLoHang){
+        for (LoHangDTO lh : this.loHangDAO.selectAllIncludeInactive()){
             if (lh.getMaLh() > max) max = lh.getMaLh();
         }
         return max+1;

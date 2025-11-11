@@ -20,7 +20,7 @@ public class KhachHangBUS {
 
     private KhachHangBUS() {
         this.khachHangDAO = KhachHangDAO.getInstance();
-         this.taiKhoanBUS = TaiKhoanBUS.getInstance();
+        this.taiKhoanBUS = TaiKhoanBUS.getInstance();
         // this.hoaDonBUS = HoaDonBUS.getInstance();
         this.listKhachHang = this.khachHangDAO.selectAll();
     }
@@ -96,11 +96,11 @@ public class KhachHangBUS {
 
     public boolean deleteKhachHang(int ma_kh) {
         // nếu khách hàng đã từng phát sinh hoadon, thì không được xoá
-//        if (this.hoaDonBUS.checkIfMaKhExist(ma_kh)) {
-//            JOptionPane.showMessageDialog(null, "Không thể xoá khách hàng đã phát sinh hoá đơn", "Lỗi",
-//                    JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        }
+        if (this.hoaDonBUS.checkIfMaKhExist(ma_kh)) {
+            JOptionPane.showMessageDialog(null, "Không thể xoá khách hàng đã phát sinh hoá đơn", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
         int ma_tk_cua_kh = this.khachHangDAO.selectById(String.valueOf(ma_kh)).getMaTk();
 
@@ -152,7 +152,7 @@ public class KhachHangBUS {
 
     // sử dụng trong TaiKhoanBUS
     public KhachHangDTO getKhachHangByMaTk(int ma_tk) {
-        for (KhachHangDTO kh : this.listKhachHang) {
+        for (KhachHangDTO kh : khachHangDAO.selectAllIncludeInactive()) {
             if (kh.getMaTk() == ma_tk) {
                 return kh;
             }
@@ -187,7 +187,7 @@ public class KhachHangBUS {
     
     public int generate_maKH(){
         int max = 0;
-        for (KhachHangDTO kh: listKhachHang){
+        for (KhachHangDTO kh: this.khachHangDAO.selectAllIncludeInactive()){
             if(kh.getMaKh() > max) max = kh.getMaKh();
         }
         return max+1;
