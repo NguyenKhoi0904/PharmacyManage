@@ -152,7 +152,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         jLabel2.setBackground(new java.awt.Color(0, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("THÔNG TIN NHÂN VIÊN");
         jLabel2.setOpaque(true);
@@ -164,7 +164,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         listNVPanel.setLayout(listNVPanelLayout);
         listNVPanelLayout.setHorizontalGroup(
             listNVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1300, Short.MAX_VALUE)
         );
         listNVPanelLayout.setVerticalGroup(
             listNVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,10 +176,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
         NVPanelLayout.setHorizontalGroup(
             NVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NVPanelLayout.createSequentialGroup()
-                .addGroup(NVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1300, Short.MAX_VALUE)
-                    .addComponent(listNVPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(NVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(NVPanelLayout.createSequentialGroup()
+                        .addComponent(listNVPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 18, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         NVPanelLayout.setVerticalGroup(
             NVPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,6 +195,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         buttonPanel.setPreferredSize(new java.awt.Dimension(630, 67));
         buttonPanel.setLayout(null);
 
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/plus.png"))); // NOI18N
         addButton.setText("them");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,6 +205,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         buttonPanel.add(addButton);
         addButton.setBounds(11, 6, 94, 53);
 
+        editButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/wrench.png"))); // NOI18N
         editButton1.setText("sua");
         editButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,6 +215,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         buttonPanel.add(editButton1);
         editButton1.setBounds(111, 6, 94, 53);
 
+        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png"))); // NOI18N
         deleteButton.setText("xoa");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

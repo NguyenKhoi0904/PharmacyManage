@@ -10,46 +10,56 @@ import DTO.ChiTietPnDTO;
 
 public class ChiTietPnBUS {
 
-    // singleton instance
+    // Singleton
     private static ChiTietPnBUS instance;
 
-    // field
+    // Fields
     private ArrayList<ChiTietPnDTO> listChiTietPn;
     private final ChiTietPnDAO chiTietPnDAO;
     private LoHangBUS loHangBUS;
 
     private ChiTietPnBUS() {
         this.chiTietPnDAO = ChiTietPnDAO.getInstance();
-        // this.loHangBUS = LoHangBUS.getInstance();
         this.listChiTietPn = this.chiTietPnDAO.selectAll();
     }
 
-    // singleton init
     public static ChiTietPnBUS getInstance() {
+
         if (instance == null) {
             instance = new ChiTietPnBUS();
         }
         return instance;
     }
 
-    // ========== DATABASE HANDLE ==========
-
+    // ==============================
+    // THÊM CHI TIẾT PHIẾU NHẬP
+    // ==============================
     public boolean addChiTietPn(ChiTietPnDTO chiTietPnDTO) {
-        // kiểm tra nếu đã tồn tại mã phiếu nhập và mã lô hàng
+        // Kiểm tra trùng key
         if (this.getMapByKey().containsKey(generateKey(chiTietPnDTO.getMaPn(), chiTietPnDTO.getMaLh()))) {
             JOptionPane.showMessageDialog(null, "Chi tiết phiếu nhập đã tồn tại!", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // kiểm tra nếu lô hàng có tồn tại
+        // Kiểm tra LoHangBUS đã được set
+        if (this.loHangBUS == null) {
+            JOptionPane.showMessageDialog(null, "Lỗi hệ thống: LoHangBUS chưa được khởi tạo!", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Kiểm tra mã lô hàng hợp lệ
         if (this.loHangBUS.getLoHangByMaLh(chiTietPnDTO.getMaLh()) == null) {
             JOptionPane.showMessageDialog(null, "Mã lô hàng không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
+        // Ghi vào DB
         if (this.chiTietPnDAO.insert(chiTietPnDTO) > 0) {
+            // Cập nhật tồn kho
             this.loHangBUS.updateSlTonLoHang(chiTietPnDTO.getMaLh(), chiTietPnDTO.getSoLuong());
+            // Thêm vào cache
             this.listChiTietPn.add(chiTietPnDTO);
             return true;
         }
@@ -59,24 +69,38 @@ public class ChiTietPnBUS {
         return false;
     }
 
+    // ==============================
+    // CẬP NHẬT CHI TIẾT PHIẾU NHẬP
+    // ==============================
     public boolean updateChiTietPn(ChiTietPnDTO chiTietPnDTO) {
-        // kiểm tra tồn tại
         if (!this.getMapByKey().containsKey(generateKey(chiTietPnDTO.getMaPn(), chiTietPnDTO.getMaLh()))) {
             JOptionPane.showMessageDialog(null, "Chi tiết phiếu nhập không tồn tại!", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
+
+
+
+
+
+
+
             return false;
         }
 
         if (this.chiTietPnDAO.update(chiTietPnDTO) > 0) {
-            // cập nhật cache
             for (int i = 0; i < this.listChiTietPn.size(); i++) {
                 ChiTietPnDTO ct = this.listChiTietPn.get(i);
                 if (ct.getMaPn() == chiTietPnDTO.getMaPn() && ct.getMaLh() == chiTietPnDTO.getMaLh()) {
                     this.listChiTietPn.set(i, chiTietPnDTO);
                     break;
                 }
+
+
+
+
+
             }
             return true;
+
         }
 
         JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật chi tiết phiếu nhập.", "Lỗi",
@@ -84,8 +108,10 @@ public class ChiTietPnBUS {
         return false;
     }
 
+    // ==============================
+    // XOÁ CHI TIẾT PHIẾU NHẬP THEO MÃ PN + MÃ LH
+    // ==============================
     public boolean deleteChiTietPn(int maPn, int maLh) {
-        // kiểm tra tồn tại
         if (!this.getMapByKey().containsKey(generateKey(maPn, maLh))) {
             JOptionPane.showMessageDialog(null, "Chi tiết phiếu nhập không tồn tại!", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
@@ -93,20 +119,31 @@ public class ChiTietPnBUS {
         }
 
         if (this.chiTietPnDAO.deleteById(maPn, maLh) > 0) {
-            // trừ tồn kho
             ChiTietPnDTO chiTiet = this.getChiTietPnByKey(maPn, maLh);
-            if (chiTiet != null) {
+            if (chiTiet != null && this.loHangBUS != null) {
                 this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), -chiTiet.getSoLuong());
+
+
+
             }
 
-            // kiểm tra nếu chi tiết phiếu nhập đó là cuối cùng -> xoá phiếu nhập
+
+            // Nếu phiếu nhập không còn chi tiết -> xoá phiếu nhập
             if (this.chiTietPnDAO.selectAllByMaPn(maPn).isEmpty()) {
                 PhieuNhapBUS.getInstance().deletePhieuNhap(maPn);
             }
 
-            // cập nhật cache
             this.listChiTietPn.removeIf(ct -> ct.getMaPn() == maPn && ct.getMaLh() == maLh);
             return true;
+
+
+
+
+
+
+
+
+
         }
 
         JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể xoá chi tiết phiếu nhập.", "Lỗi",
@@ -114,27 +151,31 @@ public class ChiTietPnBUS {
         return false;
     }
 
+    // ==============================
+    // XOÁ TOÀN BỘ CHI TIẾT THEO MÃ PN
+    // ==============================
     public boolean deleteAllByMaPn(int maPn) {
-        // kiểm tra tồn tại
         if (!this.getMapByMaPn().containsKey(maPn)) {
             JOptionPane.showMessageDialog(null, "Chi tiết phiếu nhập không tồn tại!", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
+        ArrayList<ChiTietPnDTO> listToDelete = new ArrayList<>(this.getListChiTietPnByMaPn(maPn));
+
         if (this.chiTietPnDAO.deleteById(maPn) > 0) {
-            // trừ tồn kho
-            ChiTietPnDTO chiTiet = this.getChiTietPnByKey(maPn);
-            if (chiTiet != null) {
-                this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), -chiTiet.getSoLuong());
+            // Cập nhật lại tồn kho
+            for (ChiTietPnDTO ct : listToDelete) {
+                if (this.loHangBUS != null)
+                    this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), -ct.getSoLuong());
             }
 
-            // kiểm tra nếu chi tiết phiếu nhập đó là cuối cùng -> xoá phiếu nhập
+            // Xoá phiếu nhập nếu không còn chi tiết
             if (this.chiTietPnDAO.selectAllByMaPn(maPn).isEmpty()) {
                 PhieuNhapBUS.getInstance().deletePhieuNhap(maPn);
+
             }
 
-            // cập nhật cache
             this.listChiTietPn.removeIf(ct -> ct.getMaPn() == maPn);
             return true;
         }
@@ -144,29 +185,23 @@ public class ChiTietPnBUS {
         return false;
     }
 
-    // ========== GET DỮ LIỆU ==========
-
+    // ==============================
+    // LẤY DỮ LIỆU
+    // ==============================
     public ArrayList<ChiTietPnDTO> getListChiTietPn() {
         return this.listChiTietPn;
     }
 
     public ArrayList<ChiTietPnDTO> getListChiTietPnByMaPn(int ma_pn) {
         return this.chiTietPnDAO.selectAllByMaPn(ma_pn);
+
     }
 
     private ChiTietPnDTO getChiTietPnByKey(int maPn, int maLh) {
         for (ChiTietPnDTO ct : this.listChiTietPn) {
             if (ct.getMaPn() == maPn && ct.getMaLh() == maLh) {
                 return ct;
-            }
-        }
-        return null;
-    }
 
-    private ChiTietPnDTO getChiTietPnByKey(int maPn) {
-        for (ChiTietPnDTO ct : this.listChiTietPn) {
-            if (ct.getMaPn() == maPn) {
-                return ct;
             }
         }
         return null;
@@ -188,13 +223,13 @@ public class ChiTietPnBUS {
         return map;
     }
 
-    // helper - 2 PK
     private String generateKey(int maPn, int maLh) {
         return maPn + "_" + maLh;
     }
 
-    // ========== SET BUS ==========
-
+    // ==============================
+    // SETTER
+    // ==============================
     public void setLoHangBUS(LoHangBUS loHangBUS) {
         this.loHangBUS = loHangBUS;
     }

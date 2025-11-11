@@ -217,8 +217,13 @@ public class UpdateKhachHang extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try{
-            String ten = jTextField_Ten.getText();
-            String sdt = jTextField_SDT.getText();
+            String ten = jTextField_Ten.getText().trim();
+            String sdt = jTextField_SDT.getText().trim();
+            
+            if(ten.isEmpty() || sdt.isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Nhập dữ liệu phù hợp");
+                return;
+            }
             java.util.Date utilDate = jDateChooser_NgayDangKy.getDate();
             java.sql.Date ngay_dang_ky = new java.sql.Date(utilDate.getTime());
 

@@ -9,28 +9,30 @@ package view;
  * @author aries
  */
 
-import java.awt.*;
-import javax.swing.*;
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.*;
-import java.sql.Date;
+import javax.swing.*;
 
-import DTO.KhachHangDTO;
-import DTO.TaiKhoanDTO;
-import BUS.KhachHangBUS;
-import BUS.TaiKhoanBUS;
+import DTO.DanhMucThuocDTO;
+import BUS.DanhMucThuocBUS;
 
-public class AddKhachHang extends javax.swing.JFrame {
+public class SuaDanhMucThuoc extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddKhachHang.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SuaDanhMucThuoc.class.getName());
 
     /**
-     * Creates new form AddKhachHang
+     * Creates new form SuaDanhMucThuoc
      */
-    public AddKhachHang() {
+    public SuaDanhMucThuoc() {
         initComponents();
         setLocationRelativeTo(null);
+    }
+    
+    public SuaDanhMucThuoc(int ma_DMT, String ten){
+        initComponents();
         
+        this.ma_DMT = ma_DMT;
+        jTextField_Ten.setText(ten);
     }
 
     /**
@@ -46,17 +48,15 @@ public class AddKhachHang extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel_Ten = new javax.swing.JLabel();
         jTextField_Ten = new javax.swing.JTextField();
-        jLabel_SDT = new javax.swing.JLabel();
-        jTextField_SDT = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jButton_Them = new javax.swing.JButton();
-        jButton_Huy = new javax.swing.JButton();
+        jButton_Update = new javax.swing.JButton();
+        jButton_Cancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("THÊM KHÁCH HÀNG");
+        jLabel1.setText("SỬA DANH MỤC THUỐC");
         jLabel1.setOpaque(true);
         jLabel1.putClientProperty(
             FlatClientProperties.STYLE,
@@ -71,7 +71,7 @@ public class AddKhachHang extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -85,18 +85,9 @@ public class AddKhachHang extends javax.swing.JFrame {
         jLabel_Ten.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_Ten.setText("Tên");
 
-        jLabel_SDT.setText("Số điện thoại ");
-
-        jTextField_SDT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_SDTActionPerformed(evt);
-            }
-        });
-
-        jButton_Them.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton_Them.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/plus.png"))); // NOI18N
-        jButton_Them.setText("THÊM");
-        jButton_Them.putClientProperty(
+        jButton_Update.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Update.setText("CẬP NHẬT");
+        jButton_Update.putClientProperty(
             FlatClientProperties.STYLE,
             ""
             + "arc: 8;"
@@ -104,25 +95,25 @@ public class AddKhachHang extends javax.swing.JFrame {
             + "foreground:#ffffff;"
             + "hoverBackground: #FF8080"
         );
-        jButton_Them.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ThemActionPerformed(evt);
+                jButton_UpdateActionPerformed(evt);
             }
         });
 
-        jButton_Huy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton_Huy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/remove.png"))); // NOI18N
-        jButton_Huy.setText("HỦY");
-        jButton_Huy.putClientProperty(
+        jButton_Cancel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Cancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png"))); // NOI18N
+        jButton_Cancel.setText("HỦY");
+        jButton_Cancel.putClientProperty(
             FlatClientProperties.STYLE,
             ""
             + "arc: 8;"
             + "background: #00cc66;"
             + "foreground: #ffffff;"
         );
-        jButton_Huy.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_HuyActionPerformed(evt);
+                jButton_CancelActionPerformed(evt);
             }
         });
 
@@ -132,9 +123,9 @@ public class AddKhachHang extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(jButton_Huy, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jButton_Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -142,9 +133,9 @@ public class AddKhachHang extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Huy, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jButton_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,94 +146,70 @@ public class AddKhachHang extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel_SDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel_Ten, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_SDT, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
+                .addComponent(jLabel_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jTextField_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(92, 92, 92)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel_SDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField_SDT, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField_SDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_SDTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_SDTActionPerformed
-
-    private void jButton_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ThemActionPerformed
+    private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpdateActionPerformed
         // TODO add your handling code here:
         try{
             String ten = jTextField_Ten.getText().trim();
-            String sdt = jTextField_SDT.getText().trim();
-            String vaitro = "khachhang";
-            if(ten.isEmpty() || sdt.isEmpty()){
+            if(ten.isEmpty()){
                 JOptionPane.showMessageDialog(rootPane, "Nhập dữ liệu phù hợp");
                 return;
             }
             
-            if (!sdt.matches("^0\\d{9}$")) {
-                JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ. Phải có 10 chữ số và bắt đầu bằng 0.");
-                return;
-            }
-            
-            int diem_tich_luy = 0;
-            Date ngay_dang_ky = new Date(System.currentTimeMillis());
-            
-            int ma_kh = KhachHangBUS.getInstance().generate_maKH();
-            int ma_tk = TaiKhoanBUS.getInstance().generate_maTK();
-            
-            KhachHangDTO khDTO = new KhachHangDTO(ma_kh, ma_tk, ngay_dang_ky, diem_tich_luy, 1);
-            TaiKhoanDTO tkDTO = new TaiKhoanDTO(ma_tk, sdt, "123456@", ten, sdt, vaitro, 1); // đặt tài khoản là số điện thoại
-            //
-            boolean flag = TaiKhoanBUS.getInstance().addTaiKhoan(tkDTO) && KhachHangBUS.getInstance().addKhachHang(khDTO);
+            DanhMucThuocDTO dmt_DTO = new DanhMucThuocDTO(this.getMa_DMT(), ten, 1);
+            boolean flag = DanhMucThuocBUS.getInstance().updateDanhMucThuoc(dmt_DTO);
             if (flag){
-                JOptionPane.showMessageDialog(rootPane, "Thêm khách hàng thành công");
-                jTextField_Ten.setText("");
-                jTextField_SDT.setText("");
+                JOptionPane.showMessageDialog(rootPane, "Cập nhật thông tin danh mục thuốc thành công");
+                dispose();
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Thêm khách hàng thất bại");
+                JOptionPane.showMessageDialog(rootPane, "Cập nhật thông tin danh mục thuốc thất bại");
             }
-            
         }catch (Exception ex){
-            System.err.println("LỖI Ở AddKhachHang.java");
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(rootPane, "LỖI Ở SuaDanhMucThuoc.java");
         }
-    }//GEN-LAST:event_jButton_ThemActionPerformed
 
-    private void jButton_HuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_HuyActionPerformed
+    }//GEN-LAST:event_jButton_UpdateActionPerformed
+
+    private void jButton_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CancelActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton_HuyActionPerformed
+    }//GEN-LAST:event_jButton_CancelActionPerformed
 
+    public int getMa_DMT() {
+        return ma_DMT;
+    }
+
+    public void setMa_DMT(int ma_DMT) {
+        this.ma_DMT = ma_DMT;
+    }
     
-
-            
     /**
      * @param args the command line arguments
      */
@@ -252,7 +219,6 @@ public class AddKhachHang extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        /*
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -263,27 +229,20 @@ public class AddKhachHang extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        */
         //</editor-fold>
-        try{
-            javax.swing.UIManager.setLookAndFeel(new FlatLightLaf());
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        
+
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AddKhachHang().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new SuaDanhMucThuoc().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_Huy;
-    private javax.swing.JButton jButton_Them;
+    private javax.swing.JButton jButton_Cancel;
+    private javax.swing.JButton jButton_Update;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel_SDT;
     private javax.swing.JLabel jLabel_Ten;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField_SDT;
     private javax.swing.JTextField jTextField_Ten;
     // End of variables declaration//GEN-END:variables
+    private int ma_DMT;
 }

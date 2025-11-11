@@ -16,6 +16,9 @@ public class TaiKhoanBUS {
     // singleton instance
     private static TaiKhoanBUS instance;
 
+    //  Lưu tài khoản hiện đang đăng nhập
+    private static TaiKhoanDTO currentUser;
+
     // field
     private ArrayList<TaiKhoanDTO> listTaiKhoan;
     private final TaiKhoanDAO taiKhoanDAO;
@@ -24,8 +27,6 @@ public class TaiKhoanBUS {
 
     private TaiKhoanBUS() {
         this.taiKhoanDAO = TaiKhoanDAO.getInstance();
-        // this.nhanVienBUS = NhanVienBUS.getInstance();
-        // this.khachHangBUS = KhachHangBUS.getInstance();
         this.listTaiKhoan = this.taiKhoanDAO.selectAll();
     }
 
@@ -77,7 +78,6 @@ public class TaiKhoanBUS {
 
     public boolean deleteTaiKhoan(int ma_tk) {
         // kiểm tra nếu có nhân viên hay khách hàng đang liên kết với tài khoản này
-        // => không cho xoá
         if (NhanVienBUS.getInstance().getNhanVienByMaTk(ma_tk) != null) {
             JOptionPane.showMessageDialog(null, "Tài khoản nhân viên vẫn còn liên kết,xoá nhân viên trước", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
@@ -97,7 +97,7 @@ public class TaiKhoanBUS {
         String id = String.valueOf(ma_tk);
 
         if (this.taiKhoanDAO.deleteById(id) > 0) {
-            // cập nhật cache: Đặt trạng thái = 0
+            // cập nhật cache
             for (int i = 0; i < this.listTaiKhoan.size(); i++) {
                 if (this.listTaiKhoan.get(i).getMaTk() == ma_tk) {
                     this.listTaiKhoan.remove(i);
@@ -119,11 +119,6 @@ public class TaiKhoanBUS {
         }
 
         // kiểm tra nếu tên tài khoản đã tồn tại
-        // if (this.getMapByTaiKhoan().containsKey(taiKhoanDTO.getTaiKhoan())) {
-        // JOptionPane.showMessageDialog(null, "Tên tài khoản đã tồn tại,hãy sử dụng tên
-        // khác", "Lỗi Đăng Nhập",
-        // JOptionPane.ERROR_MESSAGE);
-        // }
         TaiKhoanDTO existing = this.getMapByTaiKhoan().get(taiKhoanDTO.getTaiKhoan());
         if (existing != null && existing.getMaTk() != taiKhoanDTO.getMaTk()) {
             JOptionPane.showMessageDialog(null, "Tên tài khoản đã tồn tại, hãy dùng tên khác", "Lỗi",
@@ -158,29 +153,16 @@ public class TaiKhoanBUS {
 
     // ========== BUSINESS LOGIC ==========
 
-    public boolean checkIfMaTkExist(int ma_tk) {
-        if (this.getMapByMaTk().containsKey(ma_tk)) {
-            // nếu mã tài khoản của khách hàng/nhân viên đã tồn tại trong bảng taikhoan
-            JOptionPane.showMessageDialog(null, "Mã tài khoản đã tồn tại", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
-            return true;
-        }
-        return false;
-    }
-
     private boolean checkIfPasswordValidate(TaiKhoanDTO taiKhoanDTO, String titleAlertPanel) {
         if (taiKhoanDTO.getMatKhau() == null || taiKhoanDTO.getMatKhau().isEmpty()) {
-            // kiểm tra nếu mật khẩu rỗng
             JOptionPane.showMessageDialog(null, "Mật khẩu null hoặc rỗng", "Lỗi " + titleAlertPanel,
                     JOptionPane.ERROR_MESSAGE);
             return false;
         } else if (taiKhoanDTO.getMatKhau().length() < 6) {
-            // mật khẩu ít nhất 6 kí tự
             JOptionPane.showMessageDialog(null, "Mật khẩu phải có ít nhất 6 kí tự", "Lỗi " + titleAlertPanel,
                     JOptionPane.ERROR_MESSAGE);
             return false;
         } else if (taiKhoanDTO.getMatKhau().matches("^[^0-9]*$")) {
-            // mật khẩu phải có ít nhất 1 số
             JOptionPane.showMessageDialog(null, "Mật khẩu phải có ít nhất 1 số", "Lỗi " + titleAlertPanel,
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -193,37 +175,31 @@ public class TaiKhoanBUS {
         return true;
     }
 
-    // Hàm kiểm tra đăng nhập (Sử dụng BCrypt Check)
-    // trả về kiểu tài khoản nhân viên hay khách hàng đăng nhập
+    // ✅ Hàm đăng nhập: nếu đúng, lưu luôn user đang đăng nhập
     public Object login(String taiKhoan, String matKhauTho) {
         TaiKhoanDTO taiKhoanDB = taiKhoanDAO.selectByTaiKhoan(taiKhoan);
 
-        if (taiKhoanDB != null) {
-            // dùng BCrypt để so sánh mật khẩu thô với mật khẩu đã băm
-            if (checkLogin(matKhauTho, taiKhoanDB.getMatKhau())) {
-                // Nếu là nhân viên
-                NhanVienDTO nv = this.nhanVienBUS.getNhanVienByMaTk(taiKhoanDB.getMaTk());
-                if (nv != null)
-                    return nv;
+        if (taiKhoanDB != null && checkLogin(matKhauTho, taiKhoanDB.getMatKhau())) {
+            // ✅ Lưu tài khoản đăng nhập hiện tại
+            TaiKhoanBUS.setCurrentUser(taiKhoanDB);
 
-                // Nếu là khách hàng
-                KhachHangDTO kh = this.khachHangBUS.getKhachHangByMaTk(taiKhoanDB.getMaTk());
-                if (kh != null)
-                    return kh;
-            }
+            // Nếu là nhân viên
+            NhanVienDTO nv = this.nhanVienBUS.getNhanVienByMaTk(taiKhoanDB.getMaTk());
+            if (nv != null) return nv;
+
+            // Nếu là khách hàng
+            KhachHangDTO kh = this.khachHangBUS.getKhachHangByMaTk(taiKhoanDB.getMaTk());
+            if (kh != null) return kh;
         }
         return null;
     }
 
-    // Hàm BCrypt: Mã hóa mật khẩu (hàm nội bộ)
+    // Hàm BCrypt
     private String hashPassword(String matKhauTho) {
-        // Sử dụng salt factor là 10 (mặc định)
         return BCrypt.hashpw(matKhauTho, BCrypt.gensalt());
     }
 
-    // Hàm BCrypt: Kiểm tra mật khẩu (hàm nội bộ)
     private boolean checkLogin(String matKhauTho, String matKhauBam) {
-        // So sánh mật khẩu thô với mật khẩu đã băm trong DB
         return BCrypt.checkpw(matKhauTho, matKhauBam);
     }
 
@@ -242,24 +218,16 @@ public class TaiKhoanBUS {
         return null;
     }
 
-    /**
-     * 
-     * @return HashMap&lt;TaiKhoanDTO.getMaTk,TaiKhoanDTO&gt;
-     */
     public HashMap<Integer, TaiKhoanDTO> getMapByMaTk() {
-        HashMap<Integer, TaiKhoanDTO> mapTaiKhoan = new HashMap<Integer, TaiKhoanDTO>();
+        HashMap<Integer, TaiKhoanDTO> mapTaiKhoan = new HashMap<>();
         for (TaiKhoanDTO tk : this.listTaiKhoan) {
             mapTaiKhoan.put(tk.getMaTk(), tk);
         }
         return mapTaiKhoan;
     }
 
-    /**
-     * 
-     * @return HashMap&lt;TaiKhoanDTO.getTaiKhoan,TaiKhoanDTO&gt;
-     */
     public HashMap<String, TaiKhoanDTO> getMapByTaiKhoan() {
-        HashMap<String, TaiKhoanDTO> mapTaiKhoan = new HashMap<String, TaiKhoanDTO>();
+        HashMap<String, TaiKhoanDTO> mapTaiKhoan = new HashMap<>();
         for (TaiKhoanDTO tk : this.listTaiKhoan) {
             mapTaiKhoan.put(tk.getTaiKhoan(), tk);
         }
@@ -267,6 +235,7 @@ public class TaiKhoanBUS {
     }
 
     // ========== SET BUS ==========
+
     public void setNhanVienBUS(NhanVienBUS nhanVienBUS) {
         this.nhanVienBUS = nhanVienBUS;
     }
@@ -274,13 +243,21 @@ public class TaiKhoanBUS {
     public void setKhachHangBUS(KhachHangBUS khachHangBUS) {
         this.khachHangBUS = khachHangBUS;
     }
-    
-    public int generate_maTK(){
+
+    public int generate_maTK() {
         int max = 0;
-        for (TaiKhoanDTO tk : listTaiKhoan){
+        for (TaiKhoanDTO tk : listTaiKhoan) {
             if (tk.getMaTk() > max) max = tk.getMaTk();
         }
-        return max+1;
+        return max + 1;
     }
-    
+
+    //  Getter/Setter cho currentUser
+    public static void setCurrentUser(TaiKhoanDTO user) {
+        currentUser = user;
+    }
+
+    public static TaiKhoanDTO getCurrentUser() {
+        return currentUser;
+    }
 }

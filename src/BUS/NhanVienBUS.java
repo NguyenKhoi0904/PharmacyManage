@@ -24,7 +24,6 @@ public class NhanVienBUS {
     private NhanVienBUS() {
         this.nhanVienDAO = NhanVienDAO.getInstance();
         this.listNhanVien = nhanVienDAO.selectAll();
-        // this.taiKhoanBUS = TaiKhoanBUS.getInstance();
     }
 
     // singleton init
@@ -35,80 +34,75 @@ public class NhanVienBUS {
         return instance;
     }
 
-    // ========== DATABASE HANDLE =========
+    // ========== DATABASE HANDLE ==========
     public boolean addNhanVien(NhanVienDTO nhanVienDTO) {
-        // kiểm tra nếu mã tài khoản của NhanVienDTO không tồn tại trong bảng taikhoan
-        if (!this.taiKhoanBUS.getMapByMaTk().containsKey(nhanVienDTO.getMaTk())) {
+        // FK check: mã tài khoản phải tồn tại
+        if (taiKhoanBUS == null || taiKhoanBUS.getTaiKhoanByMaTk(nhanVienDTO.getMaTk()) == null) {
+            JOptionPane.showMessageDialog(null, "Mã tài khoản không tồn tại trong hệ thống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // kiểm tra nếu mã nhân viên của NhanVienDTO đã tồn tại trong bảng nhanvien
+        // kiểm tra nếu mã nhân viên đã tồn tại
         if (this.checkIfMaNvExist(nhanVienDTO)) {
             return false;
         }
 
-        // kiểm tra nếu ngày vào làm sớm hơn ngày sinh và ít nhất 18 tuổi
-        if (this.checkEffectiveDate(nhanVienDTO)) {
+        // kiểm tra ngày sinh - ngày vào làm
+        if (!this.checkEffectiveDate(nhanVienDTO)) {
             return false;
         }
 
-        // kiểm tra nếu email nhân viên sai định dạng đuôi
-        if (!nhanVienDTO.getEmail().contains("@email.com") &&
-                !nhanVienDTO.getEmail().contains("@gmail.com")) {
-            JOptionPane.showMessageDialog(null, "lỗi hàm addNhanVien sai định dạng email", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+        // kiểm tra email
+        if (!nhanVienDTO.getEmail().contains("@email.com") && !nhanVienDTO.getEmail().contains("@gmail.com")) {
+            JOptionPane.showMessageDialog(null, "Sai định dạng email", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // kiểm tra nếu lương âm
+        // kiểm tra lương âm
         if (nhanVienDTO.getLuong().compareTo(BigDecimal.ZERO) < 0) {
             JOptionPane.showMessageDialog(null, "Lương của nhân viên không được âm", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // thêm vào db + list
         if (this.nhanVienDAO.insert(nhanVienDTO) > 0) {
             this.listNhanVien.add(nhanVienDTO);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm addNhanVien mục <this.nhanVienDAO.insert>", "Lỗi",
-                JOptionPane.ERROR_MESSAGE);
+
+        JOptionPane.showMessageDialog(null, "Lỗi CSDL khi thêm nhân viên", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
     public boolean updateNhanVien(NhanVienDTO nhanVienDTO) {
-        // FK check: kiểm tra nếu mã tài khoản của NhanVienDTO không tồn tại trong bảng
-        // taikhoan
-        if (!this.taiKhoanBUS.checkIfMaTkExist(nhanVienDTO.getMaTk())) {
+        // FK check: mã tài khoản phải tồn tại
+        if (taiKhoanBUS == null || taiKhoanBUS.getTaiKhoanByMaTk(nhanVienDTO.getMaTk()) == null) {
+            JOptionPane.showMessageDialog(null, "Mã tài khoản không tồn tại trong hệ thống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // kiểm tra nếu mã nhân viên của NhanVienDTO không tồn tại trong bảng nhanvien
+        // kiểm tra nếu mã nhân viên không tồn tại
         if (!this.checkIfMaNvExist(nhanVienDTO)) {
             return false;
         }
 
-        // kiểm tra nếu ngày vào làm sớm hơn ngày sinh và ít nhất 18 tuổi
+        // kiểm tra ngày sinh - ngày vào làm
         if (!this.checkEffectiveDate(nhanVienDTO)) {
             return false;
         }
 
-        // kiểm tra nếu email nhà cung cấp sai định dạng đuôi
-        if (!nhanVienDTO.getEmail().contains("@email.com") &&
-                !nhanVienDTO.getEmail().contains("@gmail.com")) {
-            JOptionPane.showMessageDialog(null, "lỗi hàm addNhanVien sai định dạng email", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+        // kiểm tra email
+        if (!nhanVienDTO.getEmail().contains("@email.com") && !nhanVienDTO.getEmail().contains("@gmail.com")) {
+            JOptionPane.showMessageDialog(null, "Sai định dạng email", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // kiểm tra nếu lương âm
+        // kiểm tra lương âm
         if (nhanVienDTO.getLuong().compareTo(BigDecimal.ZERO) < 0) {
             JOptionPane.showMessageDialog(null, "Lương của nhân viên không được âm", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (this.nhanVienDAO.update(nhanVienDTO) > 0) {
-            // cập nhật cache
             for (int i = 0; i < this.listNhanVien.size(); i++) {
                 if (this.listNhanVien.get(i).getMaNv() == nhanVienDTO.getMaNv()) {
                     this.listNhanVien.set(i, nhanVienDTO);
@@ -117,8 +111,8 @@ public class NhanVienBUS {
             }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật nhân viên.", "Lỗi",
-                JOptionPane.ERROR_MESSAGE);
+
+        JOptionPane.showMessageDialog(null, "Lỗi CSDL: Không thể cập nhật nhân viên.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
@@ -126,21 +120,19 @@ public class NhanVienBUS {
         int ma_tk_cua_nv = this.nhanVienDAO.selectById(String.valueOf(ma_nv)).getMaTk();
 
         if (this.nhanVienDAO.deleteById(String.valueOf(ma_nv)) > 0) {
-            // cập nhật cache: Đặt trạng thái = 0
-            for (int i = 0; i < this.listNhanVien.size(); i++) {
-                if (this.listNhanVien.get(i).getMaNv() == ma_nv) {
-                    this.listNhanVien.get(i).setTrangThai(0);
+            for (NhanVienDTO nv : listNhanVien) {
+                if (nv.getMaNv() == ma_nv) {
+                    nv.setTrangThai(0);
                     break;
                 }
             }
-
-            // đặt trạng thái của nhân viên trong bảng taikhoan = 0
-            this.taiKhoanBUS.deleteTaiKhoan(ma_tk_cua_nv);
-
+            if (taiKhoanBUS != null) {
+                taiKhoanBUS.deleteTaiKhoan(ma_tk_cua_nv);
+            }
             return true;
         }
-        JOptionPane.showMessageDialog(null, "lỗi hàm deleteNhanVien: Không tìm thấy nhân viên hoặc lỗi CSDL.", "Lỗi",
-                JOptionPane.ERROR_MESSAGE);
+
+        JOptionPane.showMessageDialog(null, "Không thể xóa nhân viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
@@ -151,33 +143,26 @@ public class NhanVienBUS {
 
     private boolean checkIfMaNvExist(NhanVienDTO nhanVienDTO) {
         if (this.getMapByMaNv().containsKey(nhanVienDTO.getMaNv())) {
-            // nếu mã nhân viên của nhân viên đã tồn tại trong bảng nhanvien
-            JOptionPane.showMessageDialog(null, "Mã nhân viên của nhân viên đã tồn tại", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Mã nhân viên của nhân viên không tồn tại", "Lỗi",
-                JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
     private boolean checkEffectiveDate(NhanVienDTO nhanVienDTO) {
-        if (!isEighteenOrOlder(nhanVienDTO.getNgaySinh().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                nhanVienDTO.getNgayVaoLam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
-            JOptionPane.showMessageDialog(null, "Nhân viên chưa đủ 18 tuổi", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+        LocalDate ns = nhanVienDTO.getNgaySinh().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate nvl = nhanVienDTO.getNgayVaoLam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if (!isEighteenOrOlder(ns, nvl)) {
+            JOptionPane.showMessageDialog(null, "Nhân viên chưa đủ 18 tuổi", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if (nhanVienDTO.getNgaySinh().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                .isAfter(nhanVienDTO.getNgayVaoLam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
-            JOptionPane.showMessageDialog(null, "Ngày sinh phải trước ngày vào làm", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+        } else if (ns.isAfter(nvl)) {
+            JOptionPane.showMessageDialog(null, "Ngày sinh phải trước ngày vào làm", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
     // ========== GET DỮ LIỆU ==========
-
     public ArrayList<NhanVienDTO> getListNhanVien() {
         return this.listNhanVien;
     }
@@ -191,7 +176,6 @@ public class NhanVienBUS {
         return null;
     }
 
-    // sử dụng trong TaiKhoanBUS
     public NhanVienDTO getNhanVienByMaTk(int ma_tk) {
         for (NhanVienDTO nv : this.listNhanVien) {
             if (nv.getMaTk() == ma_tk) {
@@ -201,12 +185,8 @@ public class NhanVienBUS {
         return null;
     }
 
-    /**
-     * 
-     * @return HashMap&lt;NhanVienDTO.getMaNv,NhanVienDTO&gt;
-     */
     public HashMap<Integer, NhanVienDTO> getMapByMaNv() {
-        HashMap<Integer, NhanVienDTO> mapMaNv = new HashMap<Integer, NhanVienDTO>();
+        HashMap<Integer, NhanVienDTO> mapMaNv = new HashMap<>();
         for (NhanVienDTO nv : this.listNhanVien) {
             mapMaNv.put(nv.getMaNv(), nv);
         }

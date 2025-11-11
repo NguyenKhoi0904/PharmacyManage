@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -28,23 +28,17 @@
               <Component id="jPanel1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jLabel_SDT" max="32767" attributes="0"/>
-                  <Component id="jLabel_Ten" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jTextField_Ten" min="-2" pref="265" max="-2" attributes="0"/>
-                  <Component id="jTextField_SDT" min="-2" pref="265" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+              <Component id="jLabel_Ten" min="-2" pref="74" max="-2" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
+              <Component id="jTextField_Ten" min="-2" pref="234" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,19 +47,14 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel_Ten" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="jTextField_Ten" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jLabel_SDT" max="32767" attributes="0"/>
-                  <Component id="jTextField_SDT" pref="40" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace pref="94" max="32767" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -76,16 +65,16 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" pref="490" max="32767" attributes="0"/>
+                  <Component id="jLabel1" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" pref="55" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -100,7 +89,7 @@
               <Font name="Segoe UI" size="16" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="TH&#xca;M KH&#xc1;CH H&#xc0;NG"/>
+            <Property name="text" type="java.lang.String" value="S&#x1eec;A DANH M&#x1ee4;C THU&#x1ed0;C"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jLabel1.setOpaque(true);&#xa;jLabel1.putClientProperty(&#xa;    FlatClientProperties.STYLE,&#xa;    &quot;&quot; &#xa;    + &quot;background:#009999;&quot;&#xa;    + &quot;foreground:#FFFFFF&quot;&#xa;);"/>
@@ -118,76 +107,63 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField_Ten">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel_SDT">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i "/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField_SDT">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_SDTActionPerformed"/>
-      </Events>
-    </Component>
     <Container class="javax.swing.JPanel" name="jPanel2">
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton_Them" min="-2" pref="105" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                  <Component id="jButton_Huy" min="-2" pref="105" max="-2" attributes="0"/>
+                  <Component id="jButton_Update" min="-2" pref="130" max="-2" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <Component id="jButton_Cancel" min="-2" pref="118" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton_Them" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jButton_Huy" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButton_Update" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButton_Cancel" alignment="3" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton_Them">
+        <Component class="javax.swing.JButton" name="jButton_Update">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/view/plus.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="TH&#xca;M"/>
+            <Property name="text" type="java.lang.String" value="C&#x1eac;P NH&#x1eac;T"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_ThemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_UpdateActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_Them.putClientProperty(&#xa;    FlatClientProperties.STYLE,&#xa;    &quot;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;background:#ff6666;&quot;&#xa;    + &quot;foreground:#ffffff;&quot;&#xa;    + &quot;hoverBackground: #FF8080&quot;&#xa;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_Update.putClientProperty(&#xa;    FlatClientProperties.STYLE,&#xa;    &quot;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;background:#ff6666;&quot;&#xa;    + &quot;foreground:#ffffff;&quot;&#xa;    + &quot;hoverBackground: #FF8080&quot;&#xa;);"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton_Huy">
+        <Component class="javax.swing.JButton" name="jButton_Cancel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/view/remove.png"/>
+              <Image iconType="3" name="/image/remove.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="H&#x1ee6;Y"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_HuyActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_CancelActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_Huy.putClientProperty(&#xa;    FlatClientProperties.STYLE,&#xa;    &quot;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;background: #00cc66;&quot;&#xa;    + &quot;foreground: #ffffff;&quot;&#xa;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_Cancel.putClientProperty(&#xa;    FlatClientProperties.STYLE,&#xa;    &quot;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;background: #00cc66;&quot;&#xa;    + &quot;foreground: #ffffff;&quot;&#xa;);"/>
           </AuxValues>
         </Component>
       </SubComponents>

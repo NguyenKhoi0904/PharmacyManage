@@ -96,11 +96,13 @@ public class LoHangBUS {
         // }
 
         // kiểm tra nếu vẫn còn mã thuốc hoạt động
+        /*
         if (this.thuocBUS.getMapByMaThuoc().containsKey(this.getLoHangByMaLh(ma_lh).getMaThuoc())) {
             JOptionPane.showMessageDialog(null, "Không thể xoá lô hàng khi thuốc vẫn tồn tại", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        */
 
         if (this.loHangDAO.deleteById(String.valueOf(ma_lh)) > 0) {
             // cập nhật cache: Đặt trạng thái = 0
@@ -119,11 +121,10 @@ public class LoHangBUS {
     // ========== BUSINESS LOGIC ==========
 
     private boolean checkEffectiveDate(LoHangDTO loHangDTO) {
-        if (loHangDTO.getNgaySx().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                .isAfter(loHangDTO.getHanSd().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
-            return false;
+        if (loHangDTO.getNgaySx().after(loHangDTO.getHanSd())) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     // thêm,bớt số lượng tồn trong lô hàng
@@ -186,5 +187,13 @@ public class LoHangBUS {
     // ========== SET BUS ==========
     public void setThuocBUS(ThuocBUS thuocBUS) {
         this.thuocBUS = thuocBUS;
+    }
+    
+    public int generate_maLH(){
+        int max = 0;
+        for (LoHangDTO lh : listLoHang){
+            if (lh.getMaLh() > max) max = lh.getMaLh();
+        }
+        return max+1;
     }
 }

@@ -57,7 +57,9 @@ public class RegisterForm extends javax.swing.JFrame {
 
         jLabel_TaiKhoan.setText("Tài Khoản");
 
+        jButton_DangKi.setBackground(new java.awt.Color(255, 0, 0));
         jButton_DangKi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_DangKi.setForeground(new java.awt.Color(0, 0, 0));
         jButton_DangKi.setText("Đăng Kí");
         jButton_DangKi.putClientProperty("JButton.buttonType", "roundRect");
         jButton_DangKi.addActionListener(new java.awt.event.ActionListener() {

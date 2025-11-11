@@ -102,10 +102,10 @@ public class NhaCungCapForm extends JFrame {
         buttonPanel.setBackground(new Color(245, 245, 245));
 
         btnThem = createStyledButton("Thêm");
-        btnXoa = createStyledButton("Xóa");
-        btnSua = createStyledButton("Sửa");
-        btnLamMoi = createStyledButton("Làm Mới");
-        btnTimKiem = createStyledButton("Tìm Kiếm");
+        btnXoa = createStyledButton1("Xóa");
+        btnSua = createStyledButton2("Sửa");
+        btnLamMoi = createStyledButton3("Làm Mới");
+        btnTimKiem = createStyledButton4("Tìm Kiếm");
 
         buttonPanel.add(btnThem);
         buttonPanel.add(btnXoa);
@@ -139,16 +139,53 @@ public class NhaCungCapForm extends JFrame {
         loadTableNCC();
     }
 
-    private JButton createStyledButton(String text) {
+    private JButton createStyledButton(String text) { //THÊM
         JButton btn = new JButton(text);
-        btn.setBackground(new Color(0, 255, 255));
+        btn.setBackground(new Color(76, 175, 80));
         btn.setForeground(Color.WHITE);
         btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
         btn.setPreferredSize(new Dimension(140, 45));
         btn.setFocusPainted(false);
         return btn;
     }
-
+    private JButton createStyledButton1(String text) { //XÓA
+        JButton btn = new JButton(text);
+        btn.setBackground(new Color(244, 67, 54));
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btn.setPreferredSize(new Dimension(140, 45));
+        btn.setFocusPainted(false);
+        return btn;
+    }
+    private JButton createStyledButton2(String text) { //SUA
+        JButton btn = new JButton(text);
+        btn.setBackground(new Color(255, 152, 0));
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btn.setPreferredSize(new Dimension(140, 45));
+        btn.setFocusPainted(false);
+        return btn;
+    }
+    private JButton createStyledButton3(String text) { //LAM MOI
+        JButton btn = new JButton(text);
+        btn.setBackground(new Color(25, 118, 210));
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btn.setPreferredSize(new Dimension(140, 45));
+        btn.setFocusPainted(false);
+        return btn;
+    }
+    private JButton createStyledButton4(String text) { //TIM KIEM
+        JButton btn = new JButton(text);
+        btn.setBackground(new Color(25, 118, 210));
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btn.setPreferredSize(new Dimension(140, 45));
+        btn.setFocusPainted(false);
+        return btn;
+    }
+    
+            
     private void addEventHandlers() {
 
         btnThem.addActionListener(e -> {
