@@ -8,6 +8,7 @@ import DAO.HoaDonDAO;
 import DTO.HoaDonDTO;
 import DTO.LoHangDTO;
 import DTO.ChiTietHdDTO;
+import java.math.BigDecimal;
 
 public class HoaDonBUS {
 
@@ -375,5 +376,44 @@ public class HoaDonBUS {
 
     public void setKhuyenMaiBUS(KhuyenMaiBUS khuyenMaiBUS) {
         this.khuyenMaiBUS = khuyenMaiBUS;
+    }
+    
+    
+    public void refreshHoaDon(int maHd) {
+        // 1. Lấy hóa đơn cần refresh
+        HoaDonDTO hoaDon = getHoaDonByMaHd(maHd);
+        if (hoaDon == null) {
+            JOptionPane.showMessageDialog(null, 
+                "Không tìm thấy hóa đơn có mã " + maHd, 
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 2. Lấy danh sách chi tiết hóa đơn từ ChiTietHdBUS
+        ArrayList<ChiTietHdDTO> listCTHD = BUSManager.chiTietHdBUS.getListChiTietHdByMaHd(maHd);
+        if (listCTHD == null || listCTHD.isEmpty()) {
+            hoaDon.setTongTien(BigDecimal.ZERO);
+            updateHoaDon(maHd, hoaDon);
+            return;
+        }
+
+        // 3. Tính lại tổng tiền
+        BigDecimal tongTien = BigDecimal.ZERO;
+        for (ChiTietHdDTO ct : listCTHD) {
+            if (ct.getDonGia() != null)
+                tongTien = tongTien.add(ct.getDonGia().multiply(BigDecimal.valueOf(ct.getSoLuong())));
+        }
+
+        // 4. Cập nhật hóa đơn và lưu vào DB + list cache
+        hoaDon.setTongTien(tongTien);
+        boolean success = updateHoaDon(maHd, hoaDon);
+
+        if (!success) {
+            JOptionPane.showMessageDialog(null, 
+                "Không thể làm mới hóa đơn " + maHd, 
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            System.out.println("✅ Đã refresh hóa đơn " + maHd + " - Tổng tiền mới: " + tongTien);
+        }
     }
 }

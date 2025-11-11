@@ -396,6 +396,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="jLabel8"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="refreshLabelMouseClicked"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel2">
 

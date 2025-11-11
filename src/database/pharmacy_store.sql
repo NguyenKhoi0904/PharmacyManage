@@ -214,4 +214,4 @@ INSERT INTO hoadon ( ma_nv, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, 
 -- 12. Chi Tiết Hoá Đơn (Dùng ma_hd: 71, 72 và ma_lh/ma_thuoc tương ứng)
 INSERT INTO chitiet_hd (ma_hd, ma_lh, ma_thuoc, don_gia, so_luong) VALUES
 (1, 51, 61, 25000.00, 4), -- Bán 4 viên Thuốc 61 từ Lô 51
-(2, 54, 61, 25000.00, 2); -- Bán 2 viên Thuốc 61 từ Lô 54
+(2, 51, 61, 25000.00, 2); -- Bán 2 viên Thuốc 61 từ Lô 51

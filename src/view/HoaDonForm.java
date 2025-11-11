@@ -384,12 +384,16 @@ public class HoaDonForm extends javax.swing.JFrame {
    private void updateThuocTable(ArrayList<ThuocDTO> list, JTable thuocTable) {
         DefaultTableModel model = (DefaultTableModel) thuocTable.getModel();
         model.setRowCount(0); // Xóa hết dữ liệu cũ
-
         for (ThuocDTO thuoc : list) {
+            DanhMucThuocDTO dmt = BUSManager.danhMucThuocBUS.getDmtByMaDmt(thuoc.getMaDmt());
+            
             model.addRow(new Object[] {
                 thuoc.getMaThuoc(),
                 thuoc.getTenThuoc(),
+                dmt.getTenDmt(),
+                thuoc.getXuatXu(),
                 thuoc.getDonViTinh(),
+                thuoc.getNhaSanXuat(),
                 thuoc.getGia()
             });
         }
@@ -634,6 +638,11 @@ public class HoaDonForm extends javax.swing.JFrame {
         );
 
         refreshLabel.setText("jLabel8");
+        refreshLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshLabelMouseClicked(evt);
+            }
+        });
 
         jTextField6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField6.setText("Số lượng");
@@ -1103,6 +1112,11 @@ public class HoaDonForm extends javax.swing.JFrame {
             Logger.getLogger(HoaDonForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnInActionPerformed
+
+    private void refreshLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshLabelMouseClicked
+        // TODO add your handling code here:
+        loadThuocData();
+    }//GEN-LAST:event_refreshLabelMouseClicked
 
     /**
      * @param args the command line arguments

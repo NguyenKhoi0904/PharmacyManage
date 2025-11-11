@@ -15,15 +15,32 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import utils.IconUtils;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -38,6 +55,7 @@ public class DetailHDDialog extends javax.swing.JDialog {
     private DefaultTableModel thuocTableModel;
     
     private boolean saved;
+    private int soLuongSelectedRow;
     
     public DetailHDDialog(java.awt.Frame parent, HoaDonDTO hoaDon) {
         super(parent, "Chi Tiết Hóa Đơn", true);
@@ -49,6 +67,7 @@ public class DetailHDDialog extends javax.swing.JDialog {
     }
     public boolean isSaved() {return saved;}
     private void loadHoaDonData() {
+        BUSManager.hoaDonBUS.refreshHoaDon(hoaDon.getMaHd()); //get lại từ db nếu có thay đổi 
         tfMaHD.setText(String.valueOf(hoaDon.getMaHd()));
         tfMaNV.setText(String.valueOf(hoaDon.getMaNv()));
         tfMaKH.setText(String.valueOf(hoaDon.getMaKh()));
@@ -108,13 +127,15 @@ public class DetailHDDialog extends javax.swing.JDialog {
                 if (selectedRowIndex != -1) {
                     int selectedMaThuoc = (int) tblThuoc.getValueAt(selectedRowIndex, 0);
                     selectedThuoc = BUSManager.thuocBUS.getThuocByMaThuoc(selectedMaThuoc);
+                    
+                    soLuongSelectedRow = (int) tblThuoc.getValueAt(selectedRowIndex, 4);
                 }
             }
         });
         
         return tblThuoc;
     }
-
+    
     private void loadThuocData() {
         // Nếu table hoặc model chưa khởi tạo, thoát sớm tránh NullPointerException
         if (thuocTableModel == null) return;
@@ -133,6 +154,7 @@ public class DetailHDDialog extends javax.swing.JDialog {
                     cthd.getSoLuong()
                 };
                 thuocTableModel.addRow(row);
+                
             }
         }
     }
@@ -158,7 +180,103 @@ public class DetailHDDialog extends javax.swing.JDialog {
         pnlListThuoc.revalidate();
         pnlListThuoc.repaint();
     }
+    
+    private void exportChiTietHdToExcel(ArrayList<ChiTietHdDTO> list, String filePath) {
+        Workbook workbook = new XSSFWorkbook();
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("ChiTietHoaDon");
 
+        // Tạo tiêu đề cột (header)
+        String[] headers = {"Mã HĐ", "Mã Lô Hàng", "Mã Thuốc", "Đơn Giá", "Số Lượng"};
+        Row headerRow = sheet.createRow(0);
+        CellStyle headerStyle = workbook.createCellStyle();
+        org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Ghi dữ liệu
+        int rowNum = 1;
+        for (ChiTietHdDTO item : list) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(item.getMaHd());
+            row.createCell(1).setCellValue(item.getMaLh());
+            row.createCell(2).setCellValue(item.getMaThuoc());
+            row.createCell(3).setCellValue(item.getDonGia().doubleValue());
+            row.createCell(4).setCellValue(item.getSoLuong());
+        }
+
+        // Tự động điều chỉnh độ rộng cột
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        // Ghi ra file
+        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+            workbook.write(fileOut);
+            JOptionPane.showMessageDialog(null, "Đã lưu vào thư mục gốc");
+            System.out.println("✅ Xuất Excel thành công: " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void importChiTietHdFromExcel(String filePath) {
+        try (FileInputStream fis = new FileInputStream(filePath);
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+
+            // Bỏ qua hàng tiêu đề (header)
+            if (rowIterator.hasNext()) rowIterator.next();
+
+            int countAdded = 0;
+            int countUpdated = 0;
+
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+
+                int maHd = (int) row.getCell(0).getNumericCellValue();
+                int maLh = (int) row.getCell(1).getNumericCellValue();
+                int maThuoc = (int) row.getCell(2).getNumericCellValue();
+                BigDecimal donGia = BUSManager.thuocBUS.getThuocByMaThuoc(maThuoc).getGia();
+                int soLuong = (int) row.getCell(4).getNumericCellValue();
+
+                ChiTietHdDTO cthd = new ChiTietHdDTO(maHd, maLh, maThuoc, donGia, soLuong);
+
+                // Kiểm tra xem bản ghi đã tồn tại hay chưa
+                if (BUSManager.chiTietHdBUS.existsCTHD(maHd, maLh, maThuoc)) {
+                    BUSManager.chiTietHdBUS.updateChiTietHd(cthd);
+                    countUpdated++;
+                } else {
+                    BUSManager.chiTietHdBUS.addChiTietHd(cthd);
+                    countAdded++;
+                }
+            }
+
+            JOptionPane.showMessageDialog(null,
+                "✅ Import thành công!\nThêm mới: " + countAdded + "\nCập nhật: " + countUpdated,
+                "Kết quả Import",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Lỗi đọc file: " + e.getMessage(), "Lỗi Import", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi xử lý dữ liệu Excel: " + e.getMessage(), "Lỗi Import", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -461,21 +579,91 @@ public class DetailHDDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        if (selectedThuoc == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một loại thuốc để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
+        
+        // Xác nhận với người dùng trước khi xoá
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Bạn có chắc muốn xoá hóa đơn này không?",
+            "Xác nhận xoá",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return; // người dùng chọn NO -> thoát
+        }
+
+        try {
+            boolean deleted = BUSManager.chiTietHdBUS.deleteChiTietHd(hoaDon.getMaHd(), 
+                    BUSManager.loHangBUS.getMaLhByMaThuoc(selectedThuoc.getMaThuoc()), selectedThuoc.getMaThuoc());
+            if (deleted) {
+                JOptionPane.showMessageDialog(this, "Xoá hóa đơn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+                // refresh UI
+                loadHoaDonData(); 
+                loadThuocData();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi xoá hóa đơn: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
+        if (selectedThuoc == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một loại thuốc để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Tạo và hiển thị dialog chỉnh sửa
+        EditThuocInCTHDDialog dialog = new EditThuocInCTHDDialog( (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), 
+                hoaDon, selectedThuoc,soLuongSelectedRow);
+        dialog.setVisible(true);
+        
+        if (dialog.isSaved()){
+            saved = true;
+            loadThuocData();
+            loadHoaDonData();
+        }
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn file Excel để import");
 
+        // Chỉ cho phép chọn file .xlsx hoặc .xls
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            "Excel Files (*.xlsx, *.xls)", "xlsx", "xls"
+        );
+        fileChooser.setFileFilter(filter);
+
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String filePath = selectedFile.getAbsolutePath();
+
+            // Gọi hàm import Excel
+            importChiTietHdFromExcel(filePath);
+            
+            // Update UI
+            loadHoaDonData();
+            loadThuocData();
+            
+            saved = true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Đã hủy chọn file.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_importButtonActionPerformed
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportButtonActionPerformed
         // TODO add your handling code here:
+        exportChiTietHdToExcel(BUSManager.chiTietHdBUS.getListChiTietHdByMaHd(hoaDon.getMaHd()), "ChiTietHoaDon.xlsx");
     }//GEN-LAST:event_exportButtonActionPerformed
 
     /**

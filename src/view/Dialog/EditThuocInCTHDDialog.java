@@ -2,17 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-
 package view.Dialog;
 
 import BUS.BUSManager;
-import DTO.ChiTietHdDTO;
 import DTO.HoaDonDTO;
 import DTO.ThuocDTO;
-import java.awt.*;
+import DTO.ChiTietHdDTO;
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JWindow;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -20,97 +26,111 @@ import javax.swing.event.DocumentListener;
  *
  * @author admin
  */
-public class AddThuocInCTHDDialog extends javax.swing.JDialog {
+public class EditThuocInCTHDDialog extends javax.swing.JDialog {
 
     private HoaDonDTO hoaDon;
-    private JWindow suggestionWindow;
-    private JList<String> suggestionList;
+    private ThuocDTO thuoc;
+    private int sl;
     private ArrayList<ThuocDTO> listThuoc;
     
+    private JWindow suggestionWindow;
+    private JList<String> suggestionList;
+    
     private boolean saved;
-    /** Creates new form AddThuocInCTHDDialog */
-    public AddThuocInCTHDDialog(java.awt.Frame parent, HoaDonDTO cthd) {
-        super(parent, "Thêm thuốc", true);
-        this.hoaDon = cthd;
+
+    public EditThuocInCTHDDialog(java.awt.Frame parent, HoaDonDTO hd, ThuocDTO thuoc, int soLuong) {
+        super(parent, "Sửa Thuốc", true);
+        this.hoaDon = hd;
+        this.thuoc = thuoc;
+        this.sl = soLuong;
         listThuoc = BUSManager.thuocBUS.getListThuoc();
         initComponents();
+        
         createUI();
+        tfThuoc.setText(thuoc.getTenThuoc());
+        tfMaLH.setText(BUSManager.loHangBUS.getMaLhByMaThuoc(thuoc.getMaThuoc())+ "");
+        tfSoLuong.setText(sl + "");
         
         setLocationRelativeTo(parent);
     }
-    
     public boolean isSaved() {return saved;}
-private void createUI() {
-    suggestionList = new JList<>();
-    suggestionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    JScrollPane scroll = new JScrollPane(suggestionList);
-    scroll.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    private void createUI() {
+        suggestionList = new JList<>();
+        suggestionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scroll = new JScrollPane(suggestionList);
+        scroll.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-    suggestionWindow = new JWindow(this);
-    suggestionWindow.getContentPane().add(scroll);
+        suggestionWindow = new JWindow(this);
+        suggestionWindow.getContentPane().add(scroll);
 
-    tfThuoc.getDocument().addDocumentListener(new DocumentListener() {
-        @Override
-        public void insertUpdate(DocumentEvent e) { showSuggestions(); }
-        @Override
-        public void removeUpdate(DocumentEvent e) { showSuggestions(); }
-        @Override
-        public void changedUpdate(DocumentEvent e) {}
-    });
+        tfThuoc.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) { showSuggestions(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { showSuggestions(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) {}
+        });
 
-    suggestionList.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent e) {
-            if (suggestionList.getSelectedValue() != null) {
-                tfThuoc.setText(suggestionList.getSelectedValue());
-                suggestionWindow.setVisible(false); // chỉ ẩn khi chọn
+        suggestionList.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (suggestionList.getSelectedValue() != null) {
+                    tfThuoc.setText(suggestionList.getSelectedValue());
+                    suggestionWindow.setVisible(false); // chỉ ẩn khi chọn
+                }
+            }
+        });
+
+        // Xử lý ESC để tắt popup
+        tfThuoc.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    suggestionWindow.setVisible(false);
+                }
+            }
+        });
+    }
+
+    private void showSuggestions() {
+        // Nếu text field chưa được hiển thị -> bỏ qua
+        if (!tfThuoc.isShowing()) {
+            return;
+        }
+
+        String text = tfThuoc.getText().trim().toLowerCase();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for (ThuocDTO t : listThuoc) {
+            if (t.getTenThuoc().toLowerCase().contains(text)) {
+                model.addElement(t.getTenThuoc());
             }
         }
-    });
 
-    // Xử lý ESC để tắt popup
-    tfThuoc.addKeyListener(new java.awt.event.KeyAdapter() {
-        @Override
-        public void keyPressed(java.awt.event.KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                suggestionWindow.setVisible(false);
-            }
+        if (model.isEmpty()) {
+            suggestionWindow.setVisible(false);
+            return;
         }
-    });
-}
 
-private void showSuggestions() {
-    String text = tfThuoc.getText().trim().toLowerCase();
-    DefaultListModel<String> model = new DefaultListModel<>();
-    for (ThuocDTO t : listThuoc) {
-        if (t.getTenThuoc().toLowerCase().contains(text)) {
-            model.addElement(t.getTenThuoc());
+        suggestionList.setModel(model);
+        suggestionList.setVisibleRowCount(Math.min(5, model.size())); // show tối đa 5 dòng
+
+        try {
+            Point p = tfThuoc.getLocationOnScreen();
+            suggestionWindow.pack(); // cập nhật lại kích thước dựa trên số item
+            suggestionWindow.setLocation(p.x, p.y + tfThuoc.getHeight());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+
+        suggestionWindow.setVisible(true);
     }
 
-    if (model.isEmpty()) {
-        suggestionWindow.setVisible(false);
-        return;
-    }
 
-    suggestionList.setModel(model);
-    suggestionList.setVisibleRowCount(Math.min(5, model.size())); // show tối đa 5 dòng
-
-    try {
-        Point p = tfThuoc.getLocationOnScreen();
-        suggestionWindow.pack(); // cập nhật lại kích thước dựa trên số item
-        suggestionWindow.setLocation(p.x, p.y + tfThuoc.getHeight());
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    }
-
-    suggestionWindow.setVisible(true);
-}
-
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -121,10 +141,12 @@ private void showSuggestions() {
         lblGiaTri = new javax.swing.JLabel();
         tfThuoc = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        tfSoLuong = new javax.swing.JTextField();
+        tfMaLH = new javax.swing.JTextField();
         btnHuy = new javax.swing.JButton();
-        btnThem = new javax.swing.JButton();
+        btnLuu = new javax.swing.JButton();
         pnlNgayBD = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        tfSoLuong = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -132,7 +154,7 @@ private void showSuggestions() {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("THÊM THUỐC");
+        jLabel1.setText("SỬA THUỐC");
         jLabel1.setOpaque(true);
 
         lblGiaTri.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -141,9 +163,9 @@ private void showSuggestions() {
         tfThuoc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Số lượng:");
+        jLabel5.setText("Mã lô hàng:");
 
-        tfSoLuong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tfMaLH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnHuy.setBackground(new java.awt.Color(255, 0, 0));
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -155,13 +177,13 @@ private void showSuggestions() {
             }
         });
 
-        btnThem.setBackground(new java.awt.Color(51, 255, 0));
-        btnThem.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btnThem.setForeground(new java.awt.Color(255, 255, 255));
-        btnThem.setText("THÊM");
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
+        btnLuu.setBackground(new java.awt.Color(51, 255, 0));
+        btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
+        btnLuu.setText("LƯU");
+        btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
+                btnLuuActionPerformed(evt);
             }
         });
 
@@ -176,6 +198,11 @@ private void showSuggestions() {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Số lượng:");
+
+        tfSoLuong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
         pnlInfo.setLayout(pnlInfoLayout);
         pnlInfoLayout.setHorizontalGroup(
@@ -187,16 +214,18 @@ private void showSuggestions() {
                         .addGap(0, 98, Short.MAX_VALUE)
                         .addComponent(btnHuy)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInfoLayout.createSequentialGroup()
                         .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblGiaTri, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfThuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(tfSoLuong)
-                            .addComponent(pnlNgayBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(tfMaLH)
+                            .addComponent(pnlNgayBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfSoLuong))))
                 .addGap(37, 37, 37))
         );
         pnlInfoLayout.setVerticalGroup(
@@ -208,10 +237,14 @@ private void showSuggestions() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfMaLH, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnThem)
+                    .addComponent(btnLuu)
                     .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(93, 93, 93)
                 .addComponent(pnlNgayBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -233,8 +266,7 @@ private void showSuggestions() {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 156, Short.MAX_VALUE))
         );
 
         pack();
@@ -245,8 +277,8 @@ private void showSuggestions() {
         dispose();
     }//GEN-LAST:event_btnHuyActionPerformed
 
-    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // Kiểm tra các trường cơ bản
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+        // 1️⃣ Lấy và kiểm tra dữ liệu đầu vào
         String tenThuoc = tfThuoc.getText().trim();
         String soLuongStr = tfSoLuong.getText().trim();
 
@@ -267,7 +299,7 @@ private void showSuggestions() {
             return;
         }
 
-        // Tìm thuốc trong listThuoc theo tên
+        // 2️⃣ Tìm thuốc mới trong danh sách
         ThuocDTO selectedThuoc = null;
         for (ThuocDTO t : listThuoc) {
             if (t.getTenThuoc().equalsIgnoreCase(tenThuoc)) {
@@ -277,46 +309,60 @@ private void showSuggestions() {
         }
 
         if (selectedThuoc == null) {
-            JOptionPane.showMessageDialog(this, "Thuốc không tồn tại.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Thuốc không tồn tại trong danh mục.", "Thông báo", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Tạo ChiTietHdDTO mới (giả sử bạn đã có maHd và maLh)
-        int maHd = hoaDon.getMaHd(); // hoặc giá trị thực tế
-        int maLh = BUSManager.loHangBUS.getMaLhByMaThuoc(selectedThuoc.getMaThuoc()); // hoặc lấy từ logic hiện tại
+        // 3️⃣ Lấy các mã liên quan
+        int maHd = hoaDon.getMaHd();
+        int maLhMoi = BUSManager.loHangBUS.getMaLhByMaThuoc(selectedThuoc.getMaThuoc());
+        int maThuocCu = thuoc.getMaThuoc();
+        int maLhCu = BUSManager.loHangBUS.getMaLhByMaThuoc(maThuocCu);
+
+        // 4️⃣ Nếu đổi sang thuốc khác
+        boolean doiThuoc = (selectedThuoc.getMaThuoc() != maThuocCu);
+
         ChiTietHdDTO chiTiet = new ChiTietHdDTO();
         chiTiet.setMaHd(maHd);
-        chiTiet.setMaLh(maLh);
+        chiTiet.setMaLh(maLhMoi);
         chiTiet.setMaThuoc(selectedThuoc.getMaThuoc());
         chiTiet.setSoLuong(soLuong);
         chiTiet.setDonGia(selectedThuoc.getGia());
-        
-        if (!BUSManager.chiTietHdBUS.existsCTHD(maHd, maLh, selectedThuoc.getMaThuoc()))
-        {
-            // Thêm vào database qua BUS
+
+        // 5️⃣ Xử lý tùy theo trường hợp
+        if (doiThuoc) {
+            // Đổi sang thuốc khác → kiểm tra xem thuốc mới đã tồn tại trong CTHD chưa
+            boolean tonTaiThuocMoi = BUSManager.chiTietHdBUS.existsCTHD(maHd, maLhMoi, selectedThuoc.getMaThuoc());
+
+            if (tonTaiThuocMoi) {
+                JOptionPane.showMessageDialog(this, "Thuốc mới đã tồn tại trong hóa đơn, vui lòng chọn thuốc khác.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Xóa thuốc cũ trước để tránh trùng khóa
+            BUSManager.chiTietHdBUS.deleteChiTietHd(maHd, maLhCu, maThuocCu);
+
+            // Thêm bản ghi mới
             if (BUSManager.chiTietHdBUS.addChiTietHd(chiTiet)) {
-                JOptionPane.showMessageDialog(this, "Thêm thuốc thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                saved = true; // đánh dấu đã lưu
-                dispose(); // đóng dialog
+                JOptionPane.showMessageDialog(this, "Cập nhật thuốc thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                saved = true;
+                dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Thêm thuốc thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Không thể thêm thuốc mới!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-        }
-        else {
-            ChiTietHdDTO existing = BUSManager.chiTietHdBUS.getCTHDBy3Key(maHd, maLh, selectedThuoc.getMaThuoc());
-            chiTiet.setSoLuong(soLuong + existing.getSoLuong());
 
-            // Thêm vào database qua BUS
+        } else {
+            // Cùng thuốc, chỉ cập nhật số lượng và đơn giá
             if (BUSManager.chiTietHdBUS.updateChiTietHd(chiTiet)) {
-                JOptionPane.showMessageDialog(this, "Thêm thuốc thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                saved = true; // đánh dấu đã lưu
-                dispose(); // đóng dialog
+                JOptionPane.showMessageDialog(this, "Cập nhật thuốc thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                saved = true;
+                dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Thêm thuốc thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
 
-    }//GEN-LAST:event_btnThemActionPerformed
+    }//GEN-LAST:event_btnLuuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -335,20 +381,20 @@ private void showSuggestions() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddThuocInCTHDDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditThuocInCTHDDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddThuocInCTHDDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditThuocInCTHDDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddThuocInCTHDDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditThuocInCTHDDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddThuocInCTHDDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditThuocInCTHDDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddThuocInCTHDDialog dialog = new AddThuocInCTHDDialog(new javax.swing.JFrame(), new HoaDonDTO());
+                EditThuocInCTHDDialog dialog = new EditThuocInCTHDDialog(new javax.swing.JFrame(), new HoaDonDTO(), new ThuocDTO(), -1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -362,14 +408,15 @@ private void showSuggestions() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;
-    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnLuu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblGiaTri;
     private javax.swing.JPanel pnlInfo;
     private javax.swing.JPanel pnlNgayBD;
+    private javax.swing.JTextField tfMaLH;
     private javax.swing.JTextField tfSoLuong;
     private javax.swing.JTextField tfThuoc;
     // End of variables declaration//GEN-END:variables
-
 }

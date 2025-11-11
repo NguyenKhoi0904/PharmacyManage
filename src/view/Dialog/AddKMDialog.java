@@ -35,6 +35,8 @@ public class AddKMDialog extends javax.swing.JDialog {
         initComponents();
         
         setupDataChoosers();
+        
+        setLocationRelativeTo(parent);
     }
     
     public boolean isSaved() {

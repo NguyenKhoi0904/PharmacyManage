@@ -36,6 +36,8 @@ public class EditKMDialog extends javax.swing.JDialog {
         setupDataChoosers();
         
         loadData();
+        
+        setLocationRelativeTo(parent);
     }
     
     public boolean isSaved() {
