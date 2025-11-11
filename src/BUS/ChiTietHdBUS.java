@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 
 import DAO.ChiTietHdDAO;
 import DTO.ChiTietHdDTO;
+import DTO.HoaDonDTO;
+import java.math.BigDecimal;
 
 public class ChiTietHdBUS {
 
@@ -32,7 +34,23 @@ public class ChiTietHdBUS {
     public boolean addChiTietHd(ChiTietHdDTO chiTietHd) {
         if (this.chiTietHdDAO.insert(chiTietHd) > 0) {
             this.listChiTietHd.add(chiTietHd);
-            return true;
+            
+            try {
+                ArrayList<ChiTietHdDTO> listCTHD = getListChiTietHdByMaHd(chiTietHd.getMaHd());
+                BigDecimal newSum = BigDecimal.ZERO;
+
+                for (ChiTietHdDTO cthd : listCTHD) {
+                    newSum = newSum.add(cthd.getDonGia().multiply(BigDecimal.valueOf(cthd.getSoLuong())));
+                }
+
+                HoaDonDTO hd = BUSManager.hoaDonBUS.getHoaDonByMaHd(chiTietHd.getMaHd());
+                hd.setTongTien(newSum);
+                BUSManager.hoaDonBUS.updateHoaDon(hd.getMaHd(), hd);
+
+                return true;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Không thể cập nhật HĐ: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         }
         return false;
     }
@@ -65,12 +83,27 @@ public class ChiTietHdBUS {
             if (this.chiTietHdDAO.update(chiTietHd) > 0) {
                 // Cập nhật cache
                 listChiTietHd.set(listChiTietHd.indexOf(old), chiTietHd);
-                return true;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Không thể cập nhật tồn kho: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+        
+        try {
+            ArrayList<ChiTietHdDTO> listCTHD = getListChiTietHdByMaHd(chiTietHd.getMaHd());
+            BigDecimal newSum = BigDecimal.ZERO;
 
+            for (ChiTietHdDTO cthd : listCTHD) {
+                newSum = newSum.add(cthd.getDonGia().multiply(BigDecimal.valueOf(cthd.getSoLuong())));
+            }
+            
+            HoaDonDTO hd = BUSManager.hoaDonBUS.getHoaDonByMaHd(chiTietHd.getMaHd());
+            hd.setTongTien(newSum);
+            BUSManager.hoaDonBUS.updateHoaDon(hd.getMaHd(), hd);
+            
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Không thể cập nhật HĐ: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
         return false;
     }
 
@@ -146,4 +179,11 @@ public class ChiTietHdBUS {
         return result;
     }
     
+    public boolean existsCTHD(int maHd, int maLh, int maThuoc) {
+        return ChiTietHdDAO.getInstance().selectByCompositeKey(maHd, maLh, maThuoc) != null;
+    }
+
+    public ChiTietHdDTO getCTHDBy3Key(int maHd, int maLh, int maThuoc) {
+        return ChiTietHdDAO.getInstance().selectByCompositeKey(maHd, maLh, maThuoc);
+    }
 }

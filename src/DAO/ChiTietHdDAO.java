@@ -157,4 +157,33 @@ public class ChiTietHdDAO {
         }
         return result;
     }
+    
+    public ChiTietHdDTO selectByCompositeKey(int maHd, int maLh, int maThuoc) {
+        ChiTietHdDTO result = null;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM chitiet_hd WHERE ma_hd = ? AND ma_lh = ? AND ma_thuoc = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, maHd);
+            ps.setInt(2, maLh);
+            ps.setInt(3, maThuoc);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                result = new ChiTietHdDTO(
+                        rs.getInt("ma_hd"),
+                        rs.getInt("ma_lh"),
+                        rs.getInt("ma_thuoc"),
+                        rs.getBigDecimal("don_gia"),
+                        rs.getInt("so_luong")
+                );
+            }
+
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

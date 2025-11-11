@@ -14,6 +14,8 @@ import DTO.ThuocDTO;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -26,6 +28,14 @@ import javax.swing.table.DefaultTableModel;
 import utils.BigDecimalUtils;
 import utils.IconUtils;
 import utils.ValidationUtils;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  *
  * @author admin
@@ -425,6 +435,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         tfTienThua.setText(tienThuaMoi.toString());
     }
     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1074,7 +1085,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 
                 // Xử lý HD 
                 HoaDonDTO hd = new HoaDonDTO(11, 21, maKM, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
-                        (String) paymentComboBox.getSelectedItem(), 0);
+                        (String) paymentComboBox.getSelectedItem(), 1);
                 if (hoaDonBUS.addHD(hd)) {
                     if (!hoaDonBUS.addCTHD(hd.getMaHd(), listCTHD)) {
                         // Nếu thêm chi tiết thất bại => xóa hóa đơn đã thêm

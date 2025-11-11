@@ -7,7 +7,9 @@ package view;
 import view.Dialog.EditHDDialog;
 import view.Dialog.DetailHDDialog;
 import BUS.BUSManager;
+import BUS.ChiTietHdBUS;
 import BUS.HoaDonBUS;
+import DTO.ChiTietHdDTO;
 import DTO.DanhMucThuocDTO;
 import DTO.HoaDonDTO;
 import DTO.ThuocDTO;
@@ -18,9 +20,15 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -29,8 +37,15 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utils.IconUtils;
 
 /**
@@ -42,7 +57,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
     private HoaDonDTO selectedHD;
     private ArrayList<HoaDonDTO> listHD = new ArrayList<HoaDonDTO>();
     
-    private JTable listHDTable;
+    private JTable tblListHD;
     private DefaultTableModel listHDTableModel;
     public QuanLyHoaDonForm() {
         initComponents();
@@ -53,7 +68,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         setupListHoaDon();
         IconUtils.setIcon(magnifyingGlassLabel4, "magnifying-glass.png", true);
         
-        addEventForSearching(tfTimKiemHoaDon, listHDTable, listHD);
+        addEventForSearching(tfTimKiemHoaDon, tblListHD, listHD);
     }
     
     private JTable createHoaDonTable() {
@@ -63,30 +78,30 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         };
 
         listHDTableModel = new DefaultTableModel(columnNames, 0);
-        listHDTable = new JTable(listHDTableModel);
-        listHDTable.setFillsViewportHeight(true);
-        listHDTable.setRowHeight(28);
-        listHDTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        listHDTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        listHDTable.getTableHeader().setBackground(new Color(240, 240, 240));
-        listHDTable.getTableHeader().setForeground(Color.BLACK);
+        tblListHD = new JTable(listHDTableModel);
+        tblListHD.setFillsViewportHeight(true);
+        tblListHD.setRowHeight(28);
+        tblListHD.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tblListHD.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tblListHD.getTableHeader().setBackground(new Color(240, 240, 240));
+        tblListHD.getTableHeader().setForeground(Color.BLACK);
 
         // Căn giữa
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        listHDTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // mã HĐ
-        listHDTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // mã NV
-        listHDTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // mã KH
-        listHDTable.getColumnModel().getColumn(3).setCellRenderer(centerRenderer); // mã KM
-        listHDTable.getColumnModel().getColumn(7).setCellRenderer(centerRenderer); // trạng thái
+        tblListHD.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // mã HĐ
+        tblListHD.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // mã NV
+        tblListHD.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // mã KH
+        tblListHD.getColumnModel().getColumn(3).setCellRenderer(centerRenderer); // mã KM
+        tblListHD.getColumnModel().getColumn(7).setCellRenderer(centerRenderer); // trạng thái
 
         // Căn phải cho tiền
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-        listHDTable.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // tổng tiền
+        tblListHD.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // tổng tiền
 
         // Hiệu ứng nền xen kẽ
-        listHDTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        tblListHD.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable tbl, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
@@ -98,19 +113,19 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         });
 
         // Sự kiện click chọn hóa đơn
-        listHDTable.addMouseListener(new MouseAdapter() {
+        tblListHD.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int selectedRowIndex = listHDTable.getSelectedRow();
+                int selectedRowIndex = tblListHD.getSelectedRow();
                 if (selectedRowIndex != -1) {
-                    int selectedMaHD = (int) listHDTable.getValueAt(selectedRowIndex, 0);
+                    int selectedMaHD = (int) tblListHD.getValueAt(selectedRowIndex, 0);
                     selectedHD = BUSManager.hoaDonBUS.getHoaDonByMaHd(selectedMaHD);
 
                 }
             }
         });
 
-    return listHDTable;
+    return tblListHD;
 }
 
     private void loadHoaDonData() {
@@ -207,6 +222,280 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 hd.getTrangThai()
             });
         }
+    }
+    
+    private void exportHoaDonToExcel(ArrayList<HoaDonDTO> listHD, ArrayList<ChiTietHdDTO> listCTHD, String filePath) {
+        Workbook workbook = new XSSFWorkbook();
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("HoaDon");
+
+        // ----- STYLE -----
+        CellStyle headerStyle = workbook.createCellStyle();
+        org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        int rowIndex = 0;
+
+        for (HoaDonDTO hd : listHD) {
+            // --- Ghi thông tin hóa đơn ---
+            Row rowHd = sheet.createRow(rowIndex++);
+            rowHd.createCell(0).setCellValue("Mã hóa đơn: " + hd.getMaHd());
+            rowHd.createCell(1).setCellValue("Ngày xuất: " + hd.getNgayXuat());
+            rowHd.createCell(2).setCellValue("Tổng tiền: " + hd.getTongTien());
+            rowHd.createCell(3).setCellValue("PT Thanh toán: " + hd.getPhuongThucTt());
+            rowHd.createCell(4).setCellValue("Trạng thái: " + hd.getTrangThai());
+            rowHd.createCell(5).setCellValue("Mã KM: " + (hd.getMaKm() != null ? hd.getMaKm() : "2"));
+            rowHd.createCell(6).setCellValue("Mã NV: " + hd.getMaNv());
+            rowHd.createCell(7).setCellValue("Mã KH: " + hd.getMaKh());
+
+            // --- Header chi tiết hóa đơn ---
+            Row headerRow = sheet.createRow(rowIndex++);
+            String[] headers = {"Mã Lô Hàng", "Mã Thuốc", "Đơn giá", "Số lượng"};
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            // --- Ghi chi tiết thuộc hóa đơn này ---
+            for (ChiTietHdDTO cthd : listCTHD) {
+                if (cthd.getMaHd() == hd.getMaHd()) {
+                    Row row = sheet.createRow(rowIndex++);
+                    row.createCell(0).setCellValue(cthd.getMaLh());
+                    row.createCell(1).setCellValue(cthd.getMaThuoc());
+                    row.createCell(2).setCellValue(cthd.getDonGia().doubleValue());
+                    row.createCell(3).setCellValue(cthd.getSoLuong());
+                }
+            }
+
+            // --- Dòng trống ngăn cách giữa các hóa đơn ---
+            rowIndex++;
+        }
+
+        // --- Auto-size cột ---
+        for (int i = 0; i < 8; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+            workbook.write(fileOut);
+            workbook.close();            
+            JOptionPane.showMessageDialog(null, "Đã lưu vào thư mục gốc");
+            System.out.println("✅ Xuất file Excel thành công: " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void importHoaDonFromExcel(String filePath) {
+        try (FileInputStream fis = new FileInputStream(filePath);
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0);
+            HoaDonBUS hoaDonBUS = HoaDonBUS.getInstance();
+
+            int rowIndex = 0;
+            int lastRow = sheet.getLastRowNum();
+
+            while (rowIndex <= lastRow) {
+                Row row = sheet.getRow(rowIndex);
+                if (row == null) {
+                    rowIndex++;
+                    continue;
+                }
+
+                // ---- XÁC ĐỊNH DÒNG HÓA ĐƠN ----
+                Cell firstCell = row.getCell(0);
+                if (firstCell == null || firstCell.getCellType() != CellType.STRING ||
+                    !firstCell.getStringCellValue().startsWith("Mã hóa đơn")) {
+                    rowIndex++;
+                    continue;
+                }
+
+                // === LẤY THÔNG TIN HÓA ĐƠN ===
+                String maHdStr = firstCell.getStringCellValue().replace("Mã hóa đơn: ", "").trim();
+                int maHd = Integer.parseInt(maHdStr);
+
+                String ngayXuatStr = getStringCellValue(row.getCell(1)).replace("Ngày xuất: ", "").trim();
+                String tongTienStr = getStringCellValue(row.getCell(2)).replace("Tổng tiền: ", "").trim();
+                String phuongThucTt = getStringCellValue(row.getCell(3)).replace("PT Thanh toán: ", "").trim();
+                String trangThaiStr = getStringCellValue(row.getCell(4)).replace("Trạng thái: ", "").trim();
+                String maKmStr = getStringCellValue(row.getCell(5)).replace("Mã KM: ", "").trim();
+                String maNvStr = getStringCellValue(row.getCell(6)).replace("Mã NV: ", "").trim();
+                int maNv = Integer.parseInt(maNvStr);
+                String maKhStr = getStringCellValue(row.getCell(7)).replace("Mã KH: ", "").trim();
+                int maKh = Integer.parseInt(maKhStr);
+
+                HoaDonDTO hd = new HoaDonDTO();
+                hd.setMaHd(maHd);
+                hd.setMaNv(maNv);
+                hd.setMaKh(maKh);
+
+                // Convert chuỗi sang Date
+                try {
+                    java.sql.Date sqlDate = java.sql.Date.valueOf(ngayXuatStr);
+                    hd.setNgayXuat(sqlDate);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Lỗi định dạng ngày cho hóa đơn " + maHd);
+                    rowIndex++;
+                    continue;
+                }
+
+                // Convert BigDecimal và trạng thái
+                hd.setTongTien(BigDecimal.valueOf(Double.parseDouble(tongTienStr)));
+                hd.setPhuongThucTt(phuongThucTt);
+                try {
+                    hd.setTrangThai(Integer.parseInt(trangThaiStr));
+                } catch (NumberFormatException nfe) {
+                    hd.setTrangThai(0); // mặc định nếu chưa xác định
+                }
+
+                // --- Xử lý mã khuyến mãi ---
+                Integer maKm = null;
+                if (!maKmStr.equalsIgnoreCase("NULL") && !maKmStr.isEmpty()) {
+                    try {
+                        maKm = Integer.parseInt(maKmStr);
+
+                        // ✅ Kiểm tra xem mã KM có tồn tại trong DB không
+                        if (!BUSManager.khuyenMaiBUS.checkIfMaKmExist(maKm)) {
+                            System.out.println("⚠️ Mã KM " + maKm + " không tồn tại. Gán mặc định = 2");
+                            maKm = 2; // mã khuyến mãi mặc định
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("⚠️ Lỗi định dạng mã KM: " + maKmStr + " → Gán mặc định = 2");
+                        maKm = 2;
+                    }
+                } else {
+                    // Nếu NULL hoặc trống → gán mặc định
+                    maKm = 2;
+                }
+
+                hd.setMaKm(maKm);
+
+                rowIndex += 2; // bỏ qua dòng tiêu đề chi tiết hóa đơn
+
+                // ---- ĐỌC CHI TIẾT HÓA ĐƠN ----
+                ArrayList<ChiTietHdDTO> cthdList = new ArrayList<>();
+
+                while (rowIndex <= lastRow) {
+                    Row ctRow = sheet.getRow(rowIndex);
+                    if (ctRow == null) {
+                        rowIndex++;
+                        continue;
+                    }
+
+                    Cell firstCTCell = ctRow.getCell(0);
+                    if (firstCTCell == null || firstCTCell.getCellType() == CellType.BLANK) {
+                        rowIndex++;
+                        break;
+                    }
+
+                    if (firstCTCell.getCellType() == CellType.STRING &&
+                        firstCTCell.getStringCellValue().startsWith("Mã hóa đơn")) {
+                        break;
+                    }
+
+                    ChiTietHdDTO cthd = new ChiTietHdDTO();
+                    cthd.setMaHd(maHd);
+                    cthd.setMaLh((int) ctRow.getCell(0).getNumericCellValue());
+                    cthd.setMaThuoc((int) ctRow.getCell(1).getNumericCellValue());
+                    cthd.setDonGia(BigDecimal.valueOf(ctRow.getCell(2).getNumericCellValue()));
+                    cthd.setSoLuong((int) ctRow.getCell(3).getNumericCellValue());
+
+                    cthdList.add(cthd);
+                    rowIndex++;
+                }
+
+                if (cthdList.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "❌ Hóa đơn " + maHd + " không có chi tiết hóa đơn. Bỏ qua!",
+                            "Lỗi import", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+                
+                // ---- TÍNH LẠI ĐƠN GIÁ & TỔNG TIỀN THEO DB ----
+                BigDecimal tongTien = BigDecimal.ZERO;
+
+                for (ChiTietHdDTO cthd : cthdList) {
+                    // Lấy đơn giá thuốc từ DB theo mã thuốc
+                    BigDecimal donGiaThuoc = BUSManager.thuocBUS.getThuocByMaThuoc(cthd.getMaThuoc()).getGia();
+                    if (donGiaThuoc == null) {
+                        System.out.println("⚠️ Không tìm thấy đơn giá cho thuốc " + cthd.getMaThuoc() + ". Gán = 0");
+                        donGiaThuoc = BigDecimal.ZERO;
+                    }
+
+                    // Cập nhật lại đơn giá và cộng dồn tổng tiền
+                    cthd.setDonGia(donGiaThuoc);
+                    BigDecimal thanhTien = donGiaThuoc.multiply(BigDecimal.valueOf(cthd.getSoLuong()));
+                    tongTien = tongTien.add(thanhTien);
+                }
+
+                // Cập nhật tổng tiền hóa đơn
+                hd.setTongTien(tongTien);
+                
+                // ---- LƯU DATABASE ----
+                if (hoaDonBUS.checkIfMaHdExist(hd.getMaHd())) {
+                    // Cập nhật hóa đơn nếu tồn tại
+                    if (hoaDonBUS.updateHoaDon(hd.getMaHd(), hd)) {
+                        System.out.println("🔄 Cập nhật hóa đơn " + maHd + " thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Không thể cập nhật hóa đơn " + maHd,
+                                "Lỗi import", JOptionPane.ERROR_MESSAGE);
+                        continue;
+                    }
+                } else {
+                    // Thêm mới nếu chưa có
+                    if (hoaDonBUS.addHD(hd)) {
+                        System.out.println("✅ Thêm mới hóa đơn " + maHd + " thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Không thể thêm hóa đơn " + maHd,
+                                "Lỗi import", JOptionPane.ERROR_MESSAGE);
+                        continue;
+                    }
+                }
+
+                // ---- Lưu chi tiết hóa đơn ----
+                ChiTietHdBUS chiTietHdBUS = ChiTietHdBUS.getInstance();
+                for (ChiTietHdDTO cthd : cthdList) {
+                    if (chiTietHdBUS.existsCTHD(cthd.getMaHd(), cthd.getMaLh(), cthd.getMaThuoc())) {
+                        // Nếu đã có → cập nhật
+                        if (chiTietHdBUS.updateChiTietHd(cthd)) {
+                            System.out.println("🔄 Cập nhật CTHD (HD=" + maHd + ", LH=" + cthd.getMaLh() + ")");
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    "Không thể cập nhật chi tiết hóa đơn cho mã " + maHd,
+                                    "Lỗi import", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        // Nếu chưa có → thêm mới
+                        if (chiTietHdBUS.addChiTietHd(cthd)) {
+                            System.out.println("➕ Thêm mới CTHD (HD=" + maHd + ", LH=" + cthd.getMaLh() + ")");
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    "Không thể thêm chi tiết hóa đơn cho mã " + maHd,
+                                    "Lỗi import", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "✅ Import hoàn tất!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "❌ Lỗi khi đọc file Excel: " + e.getMessage(),
+                    "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Trả về giá trị chuỗi từ ô Excel, an toàn kể cả khi null.
+     */
+    private String getStringCellValue(Cell cell) {
+        if (cell == null) return "";
+        if (cell.getCellType() == CellType.STRING) return cell.getStringCellValue();
+        if (cell.getCellType() == CellType.NUMERIC) return String.valueOf(cell.getNumericCellValue());
+        return "";
     }
 
     /**
@@ -452,14 +741,42 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         // Tạo và hiển thị dialog chỉnh sửa
         DetailHDDialog dialog = new DetailHDDialog((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), selectedHD);
         dialog.setVisible(true);
+        
+        if (dialog.isSaved())
+        {
+            loadHoaDonData();
+        }
     }//GEN-LAST:event_infoButtonActionPerformed
 
     private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn file Excel để import");
+
+        // Chỉ cho phép chọn file .xlsx hoặc .xls
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            "Excel Files (*.xlsx, *.xls)", "xlsx", "xls"
+        );
+        fileChooser.setFileFilter(filter);
+
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String filePath = selectedFile.getAbsolutePath();
+
+            // Gọi hàm import Excel
+            importHoaDonFromExcel(filePath);
+            
+            // Update UI
+            updateHoaDonTable(listHD, tblListHD);
+        } else {
+            JOptionPane.showMessageDialog(this, "Đã hủy chọn file.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_importButtonActionPerformed
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportButtonActionPerformed
         // TODO add your handling code here:
+        exportHoaDonToExcel(listHD, BUSManager.chiTietHdBUS.getListChiTietHd(), "HoaDon.xlsx");
     }//GEN-LAST:event_exportButtonActionPerformed
 
     /**

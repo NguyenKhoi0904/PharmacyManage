@@ -12,23 +12,27 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import utils.IconUtils;
 import view.Dialog.EditKMDialog;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -45,7 +49,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
     private ArrayList<KhuyenMaiDTO> listKM = new ArrayList<KhuyenMaiDTO>();
     
     private DefaultTableModel maKmTableModel;
-    private JTable maKmTable;
+    private JTable tblMaKM;
     
     public KhuyenMaiForm() {
         initComponents();
@@ -57,7 +61,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         setIcons();
         setupListMaKM();
         
-        addEventForSearching(tfTimKiemKM, maKmTable, listKM);
+        addEventForSearching(tfTimKiemKM, tblMaKM, listKM);
     }
     
     private void setIcons()
@@ -73,23 +77,23 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         };
 
         maKmTableModel = new DefaultTableModel(columnNames, 0);
-        maKmTable = new JTable(maKmTableModel);
-        maKmTable.setFillsViewportHeight(true);
-        maKmTable.setRowHeight(28);
-        maKmTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        maKmTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        maKmTable.getTableHeader().setBackground(new Color(240, 240, 240));
-        maKmTable.getTableHeader().setForeground(Color.BLACK);
+        tblMaKM = new JTable(maKmTableModel);
+        tblMaKM.setFillsViewportHeight(true);
+        tblMaKM.setRowHeight(28);
+        tblMaKM.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tblMaKM.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tblMaKM.getTableHeader().setBackground(new Color(240, 240, 240));
+        tblMaKM.getTableHeader().setForeground(Color.BLACK);
 
         // Căn giữa cột STT
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        maKmTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblMaKM.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 
         // Căn phải cho cột "Giá trị"
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-        maKmTable.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+        tblMaKM.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 
         // Hiệu ứng nền xen kẽ
         DefaultTableCellRenderer alternateRenderer = new DefaultTableCellRenderer() {
@@ -105,25 +109,25 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                 return c;
             }
         };
-        maKmTable.setDefaultRenderer(Object.class, alternateRenderer);
+        tblMaKM.setDefaultRenderer(Object.class, alternateRenderer);
 
         // Tự động giãn cột
-        maKmTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tblMaKM.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         
         
-        // Sự kiện click chọn hóa đơn
-        maKmTable.addMouseListener(new MouseAdapter() {
+        // Sự kiện click chọn khuyến mãi
+        tblMaKM.addMouseListener(new MouseAdapter() {
             @Override 
             public void mouseClicked(MouseEvent e) {
-                int selectedRowIndex = maKmTable.getSelectedRow();
+                int selectedRowIndex = tblMaKM.getSelectedRow();
                 if (selectedRowIndex != -1) {
-                    int selectedMaKM = (int) maKmTable.getValueAt(selectedRowIndex, 1); // Ma KM
+                    int selectedMaKM = (int) tblMaKM.getValueAt(selectedRowIndex, 1); // Ma KM
                     selectedKM = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(selectedMaKM);
                 }
             }
         });
 
-        return maKmTable;
+        return tblMaKM;
     }
 
     private void loadData() {
@@ -149,16 +153,16 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                 km.getDieuKienKm(),
                 (km.getNgayBatDau() != null) ? sdf.format(km.getNgayBatDau()) : "",
                 (km.getNgayKetThuc() != null) ? sdf.format(km.getNgayKetThuc()) : "",
-                km.getTrangThai() > 0 ? "TRUE" : "FALSE"
+                km.getTrangThai() > 0 ? "Hoạt động" : "Tạm ngừng"
             };
             maKmTableModel.addRow(row);
         }
     }
 
     private void setupListMaKM() {
-        maKmTable = createMaKmTable();
+        tblMaKM = createMaKmTable();
 
-        JScrollPane scrollPane = new JScrollPane(maKmTable);
+        JScrollPane scrollPane = new JScrollPane(tblMaKM);
         scrollPane.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(220, 220, 220)),
             BorderFactory.createEmptyBorder(5, 5, 5, 5)
@@ -241,13 +245,148 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                 km.getDieuKienKm(),
                 ngayBatDauFormatted,
                 ngayKetThucFormatted,
-                km.getTrangThai()
+                km.getTrangThai() == 1 ? "Hoạt động" : "Tạm ngừng"
             });
         }
     }
 
+    private void exportKhuyenMaiToExcel(ArrayList<KhuyenMaiDTO> list, String filePath) {
+        Workbook workbook = new XSSFWorkbook();
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("DanhSachKhuyenMai");
 
+        // Tạo style cho header
+        CellStyle headerStyle = workbook.createCellStyle();
+        org.apache.poi.ss.usermodel.Font font = workbook.createFont();
+        font.setBold(true);
+        headerStyle.setFont(font);
+        headerStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        // Tạo hàng tiêu đề
+        Row headerRow = sheet.createRow(0);
+        String[] columns = {
+                "Mã KM", "Tên KM", "Loại KM", "Giá trị KM",
+                "Điều kiện KM", "Ngày bắt đầu", "Ngày kết thúc", "Trạng thái"
+        };
+
+        for (int i = 0; i < columns.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columns[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Ghi dữ liệu
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        int rowNum = 1;
+        for (KhuyenMaiDTO km : list) {
+            Row row = sheet.createRow(rowNum++);
+
+            row.createCell(0).setCellValue(km.getMaKm());
+            row.createCell(1).setCellValue(km.getTenKm());
+            row.createCell(2).setCellValue(km.getLoaiKm());
+            row.createCell(3).setCellValue(km.getGiaTriKm() != null ? km.getGiaTriKm().toString() : "");
+            row.createCell(4).setCellValue(km.getDieuKienKm());
+            row.createCell(5).setCellValue(km.getNgayBatDau() != null ? dateFormat.format(km.getNgayBatDau()) : "");
+            row.createCell(6).setCellValue(km.getNgayKetThuc() != null ? dateFormat.format(km.getNgayKetThuc()) : "");
+            row.createCell(7).setCellValue(km.getTrangThai() == 1 ? "Hoạt động" : "Tạm ngừng");
+        }
+
+        // Tự động điều chỉnh độ rộng cột
+        for (int i = 0; i < columns.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        // Ghi ra file
+        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+            workbook.write(fileOut);
+            JOptionPane.showMessageDialog(null, "Đã lưu vào thư mục gốc");
+            System.out.println("✅ Xuất Excel thành công: " + filePath);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Lưu thất bại");
+            e.printStackTrace();
+        } finally {
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     
+    private void importKhuyenMaiFromExcel(String filePath) {
+        try (FileInputStream fis = new FileInputStream(filePath);
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0); // lấy sheet đầu tiên
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            int successCount = 0;
+            int updateCount = 0;
+
+            // Bỏ qua dòng đầu (header)
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if (row == null) continue;
+
+                try {
+                    int maKm = (int) row.getCell(0).getNumericCellValue();
+                    String tenKm = row.getCell(1).getStringCellValue();
+                    String loaiKm = row.getCell(2).getStringCellValue();
+                    BigDecimal giaTriKm = new BigDecimal(row.getCell(3).getStringCellValue());
+                    String dieuKienKm = row.getCell(4).getStringCellValue();
+
+                    java.sql.Date ngayBatDau = null;
+                    java.sql.Date ngayKetThuc = null;
+
+                    // parse ngày
+                    if (row.getCell(5) != null && !row.getCell(5).getStringCellValue().isEmpty()) {
+                        ngayBatDau = new java.sql.Date(dateFormat.parse(row.getCell(5).getStringCellValue()).getTime());
+                    }
+                    if (row.getCell(6) != null && !row.getCell(6).getStringCellValue().isEmpty()) {
+                        ngayKetThuc = new java.sql.Date(dateFormat.parse(row.getCell(6).getStringCellValue()).getTime());
+                    }
+
+                    String trangThaiStr = row.getCell(7).getStringCellValue();
+                    int trangThai = "Hoạt động".equalsIgnoreCase(trangThaiStr) ? 1 : 0;
+
+                    // Tạo DTO
+                    KhuyenMaiDTO km = new KhuyenMaiDTO();
+                    km.setMaKm(maKm);
+                    km.setTenKm(tenKm);
+                    km.setLoaiKm(loaiKm);
+                    km.setGiaTriKm(giaTriKm);
+                    km.setDieuKienKm(dieuKienKm);
+                    km.setNgayBatDau(ngayBatDau);
+                    km.setNgayKetThuc(ngayKetThuc);
+                    km.setTrangThai(trangThai);
+
+                    // Nếu đã tồn tại thì update, không thì insert
+                    if (BUSManager.khuyenMaiBUS.checkIfMaKmExist(maKm)) {
+                        if (BUSManager.khuyenMaiBUS.updateKhuyenMai(km)) {
+                            updateCount++;
+                        }
+                    } else {
+                        if (BUSManager.khuyenMaiBUS.addKhuyenMai(km)) {
+                            successCount++;
+                        }
+                    }
+
+                } catch (Exception rowEx) {
+                    System.err.println("⚠️ Lỗi khi đọc dòng " + (i + 1) + ": " + rowEx.getMessage());
+                }
+            }
+
+            JOptionPane.showMessageDialog(null,
+                    "✅ Import thành công!\nThêm mới: " + successCount + "\nCập nhật: " + updateCount,
+                    "Kết quả Import", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                    "❌ Lỗi khi import file Excel: " + e.getMessage(),
+                    "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -267,6 +406,8 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
+        importButton = new javax.swing.JButton();
+        exportButton = new javax.swing.JButton();
         refreshLabel = new javax.swing.JLabel();
         listMaKMPanel = new javax.swing.JPanel();
 
@@ -338,27 +479,47 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
             }
         });
 
+        importButton.setText("Import");
+        importButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importButtonActionPerformed(evt);
+            }
+        });
+
+        exportButton.setText("Export");
+        exportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(12, 12, 12)
+                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(importButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(importButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -375,8 +536,8 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(refreshLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 449, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 440, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(68, 68, 68))
         );
         actionPanelLayout.setVerticalGroup(
@@ -397,18 +558,18 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         listMaKMPanel.setLayout(listMaKMPanelLayout);
         listMaKMPanelLayout.setHorizontalGroup(
             listMaKMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1350, Short.MAX_VALUE)
+            .addGap(0, 1389, Short.MAX_VALUE)
         );
         listMaKMPanelLayout.setVerticalGroup(
             listMaKMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+            .addGap(0, 647, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1350, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1389, Short.MAX_VALUE)
             .addComponent(listMaKMPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
@@ -423,7 +584,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                 .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listMaKMPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
 
         pack();
@@ -447,14 +608,14 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
         if (selectedKM == null) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khuyến mãi để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
         // Xác nhận với người dùng trước khi xoá
         int confirm = JOptionPane.showConfirmDialog(
             this,
-            "Bạn có chắc muốn xoá hóa đơn này không?",
+            "Bạn có chắc muốn xoá khuyến mãi này không?",
             "Xác nhận xoá",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.WARNING_MESSAGE
@@ -465,15 +626,19 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         }
 
         try {
-            boolean deleted = BUSManager.khuyenMaiBUS.deleteKhuyenMai(selectedKM.getMaKm());
-            if (deleted) {
-                JOptionPane.showMessageDialog(this, "Xoá hóa đơn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            KhuyenMaiDTO newKM = new KhuyenMaiDTO(selectedKM.getMaKm(), selectedKM.getTenKm(), selectedKM.getLoaiKm(), 
+                    selectedKM.getGiaTriKm(),selectedKM.getDieuKienKm(), selectedKM.getNgayBatDau(),
+                    selectedKM.getNgayKetThuc(), 0); // set trang thai ve 0
+            
+            boolean voHieu = BUSManager.khuyenMaiBUS.updateKhuyenMai(newKM);
+            if (voHieu) {
+                JOptionPane.showMessageDialog(this, "Vô hiệu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
                 // refresh UI
                 loadData(); 
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi xoá hóa đơn: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Lỗi khi vô hiệu: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -487,6 +652,37 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
             loadData();
         }
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn file Excel để import");
+
+        // Chỉ cho phép chọn file .xlsx hoặc .xls
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            "Excel Files (*.xlsx, *.xls)", "xlsx", "xls"
+        );
+        fileChooser.setFileFilter(filter);
+
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String filePath = selectedFile.getAbsolutePath();
+
+            // Gọi hàm import Excel
+            importKhuyenMaiFromExcel(filePath);
+            
+            // Update UI
+            updateKhuyenMaiTable(BUSManager.khuyenMaiBUS.getListKhuyenMai(), tblMaKM);
+        } else {
+            JOptionPane.showMessageDialog(this, "Đã hủy chọn file.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_importButtonActionPerformed
+
+    private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportButtonActionPerformed
+        // TODO add your handling code here:
+        exportKhuyenMaiToExcel(BUSManager.khuyenMaiBUS.getListKhuyenMai(), "ListKM.xlsx");
+    }//GEN-LAST:event_exportButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -528,6 +724,8 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton editButton;
+    private javax.swing.JButton exportButton;
+    private javax.swing.JButton importButton;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

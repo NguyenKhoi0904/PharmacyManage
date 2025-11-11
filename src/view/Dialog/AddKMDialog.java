@@ -82,10 +82,10 @@ public class AddKMDialog extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         pnlInfo = new javax.swing.JPanel();
-        lblMaNV = new javax.swing.JLabel();
+        lblMaKM = new javax.swing.JLabel();
         tfTenKM = new javax.swing.JTextField();
         lblMaKH = new javax.swing.JLabel();
-        lblMaKM = new javax.swing.JLabel();
+        lblGiaTri = new javax.swing.JLabel();
         tfGiaTri = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         tfDieuKien = new javax.swing.JTextField();
@@ -108,16 +108,16 @@ public class AddKMDialog extends javax.swing.JDialog {
         jLabel1.setText("THÊM KHUYẾN MÃI");
         jLabel1.setOpaque(true);
 
-        lblMaNV.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblMaNV.setText("Tên khuyến mãi:");
+        lblMaKM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblMaKM.setText("Tên khuyến mãi:");
 
         tfTenKM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         lblMaKH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblMaKH.setText("Loại khuyến mãi:");
 
-        lblMaKM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblMaKM.setText("Giá trị:");
+        lblGiaTri.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblGiaTri.setText("Giá trị:");
 
         tfGiaTri.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -195,9 +195,9 @@ public class AddKMDialog extends javax.swing.JDialog {
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInfoLayout.createSequentialGroup()
                         .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGiaTri, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,7 +217,7 @@ public class AddKMDialog extends javax.swing.JDialog {
             pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoLayout.createSequentialGroup()
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfTenKM, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -225,7 +225,7 @@ public class AddKMDialog extends javax.swing.JDialog {
                     .addComponent(cbLoaiKM, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGiaTri, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfGiaTri, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -405,9 +405,9 @@ public class AddKMDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lblGiaTri;
     private javax.swing.JLabel lblMaKH;
     private javax.swing.JLabel lblMaKM;
-    private javax.swing.JLabel lblMaNV;
     private javax.swing.JPanel pnlInfo;
     private javax.swing.JPanel pnlNgayBD;
     private javax.swing.JPanel pnlNgayKT;

@@ -45,7 +45,7 @@ public class HoaDonBUS {
 
     public boolean addHoaDon(HoaDonDTO hoaDonDTO, ArrayList<ChiTietHdDTO> danhSachChiTietHd) {
         // ======== 1. KIỂM TRA DỮ LIỆU ========
-        if (this.checkIfMaHdExist(hoaDonDTO))
+        if (this.checkIfMaHdExist(hoaDonDTO.getMaHd()))
             return false;
 
         if (!this.nhanVienBUS.getMapByMaNv().containsKey(hoaDonDTO.getMaNv())) {
@@ -159,8 +159,8 @@ public class HoaDonBUS {
     
     public boolean addHD(HoaDonDTO hoaDonDTO) {
         // ======== 1. KIỂM TRA DỮ LIỆU ========
-        if (this.checkIfMaHdExist(hoaDonDTO)) {
-            JOptionPane.showMessageDialog(null, "Mã hóa đơn đã tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (this.checkIfMaHdExist(hoaDonDTO.getMaHd())) {
+            System.out.println("Mã hóa đơn đã tồn tại");
             return false;
         }
 
@@ -308,8 +308,8 @@ public class HoaDonBUS {
 
     // ========== BUSINESS LOGIC ==========
 
-    public boolean checkIfMaHdExist(HoaDonDTO hoaDonDTO) {
-        if (this.getMapByMaHd().containsKey(hoaDonDTO.getMaHd())) {
+    public boolean checkIfMaHdExist(int maHD) {
+        if (this.getMapByMaHd().containsKey(maHD)) {
             JOptionPane.showMessageDialog(null, "Mã hoá đơn đã tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return true;
         }

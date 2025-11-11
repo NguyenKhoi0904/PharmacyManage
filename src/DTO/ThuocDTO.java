@@ -26,7 +26,10 @@ public class ThuocDTO {
         this.url_anh = url_anh;
         this.trangThai = trangThai;
     }
-
+    
+    public ThuocDTO(){
+        
+    }
     // get
     public int getMaThuoc() {
         return this.maThuoc;

@@ -32,8 +32,12 @@ import utils.IconUtils;
 public class DetailHDDialog extends javax.swing.JDialog {
 
     private HoaDonDTO hoaDon;
-    private JTable thuocTable;
+    private ThuocDTO selectedThuoc;
+    
+    private JTable tblThuoc;
     private DefaultTableModel thuocTableModel;
+    
+    private boolean saved;
     
     public DetailHDDialog(java.awt.Frame parent, HoaDonDTO hoaDon) {
         super(parent, "Chi Tiết Hóa Đơn", true);
@@ -43,6 +47,7 @@ public class DetailHDDialog extends javax.swing.JDialog {
         setupListProduct();
         setLocationRelativeTo(parent);
     }
+    public boolean isSaved() {return saved;}
     private void loadHoaDonData() {
         tfMaHD.setText(String.valueOf(hoaDon.getMaHd()));
         tfMaNV.setText(String.valueOf(hoaDon.getMaNv()));
@@ -55,90 +60,104 @@ public class DetailHDDialog extends javax.swing.JDialog {
         cbTrangThai.setSelectedIndex(hoaDon.getTrangThai());
     }
     private JTable createThuocTable() {
-    String[] columnNames = {
-        "Mã thuốc", "Tên thuốc", "Đơn vị tính", "Đơn giá"
-    };
+        String[] columnNames = {
+            "Mã thuốc", "Tên thuốc", "Đơn vị tính", "Đơn giá", "Số lượng"
+        };
 
-    thuocTableModel = new DefaultTableModel(columnNames, 0);
-    thuocTable = new JTable(thuocTableModel);
-    thuocTable.setFillsViewportHeight(true);
-    thuocTable.setRowHeight(28);
-    thuocTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-    thuocTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-    thuocTable.getTableHeader().setBackground(new Color(240, 240, 240));
-    thuocTable.getTableHeader().setForeground(Color.BLACK);
+        thuocTableModel = new DefaultTableModel(columnNames, 0);
+        tblThuoc = new JTable(thuocTableModel);
+        tblThuoc.setFillsViewportHeight(true);
+        tblThuoc.setRowHeight(28);
+        tblThuoc.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tblThuoc.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tblThuoc.getTableHeader().setBackground(new Color(240, 240, 240));
+        tblThuoc.getTableHeader().setForeground(Color.BLACK);
 
-    // Căn giữa cột "Mã thuốc"
-    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-    thuocTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        // Căn giữa cột "Mã thuốc"
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblThuoc.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 
-    // Căn phải cho cột "Đơn giá"
-    DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-    rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-    thuocTable.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        // Căn phải cho cột "Đơn giá"
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        tblThuoc.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
 
-    // Hiệu ứng nền xen kẽ (striped rows)
-    DefaultTableCellRenderer alternateRenderer = new DefaultTableCellRenderer() {
-        @Override
-        public Component getTableCellRendererComponent(JTable tbl, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
-            if (!isSelected) {
-                c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(248, 248, 248));
-            } else {
-                c.setBackground(new Color(184, 207, 229)); // màu chọn nhẹ
+        // Hiệu ứng nền xen kẽ (striped rows)
+        DefaultTableCellRenderer alternateRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable tbl, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(248, 248, 248));
+                } else {
+                    c.setBackground(new Color(184, 207, 229)); // màu chọn nhẹ
+                }
+                return c;
             }
-            return c;
-        }
-    };
-    thuocTable.setDefaultRenderer(Object.class, alternateRenderer);
+        };
 
-    return thuocTable;
-}
+        tblThuoc.setDefaultRenderer(Object.class, alternateRenderer);
 
-private void loadThuocData() {
-    // Nếu table hoặc model chưa khởi tạo, thoát sớm tránh NullPointerException
-    if (thuocTableModel == null) return;
+            // Sự kiện click chọn hóa đơn
+        tblThuoc.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedRowIndex = tblThuoc.getSelectedRow();
+                if (selectedRowIndex != -1) {
+                    int selectedMaThuoc = (int) tblThuoc.getValueAt(selectedRowIndex, 0);
+                    selectedThuoc = BUSManager.thuocBUS.getThuocByMaThuoc(selectedMaThuoc);
+                }
+            }
+        });
+        
+        return tblThuoc;
+    }
 
-    ArrayList<ChiTietHdDTO> listCTHD = BUSManager.chiTietHdBUS.getListChiTietHdByMaHd(hoaDon.getMaHd());
-    thuocTableModel.setRowCount(0); // Clear dữ liệu cũ
+    private void loadThuocData() {
+        // Nếu table hoặc model chưa khởi tạo, thoát sớm tránh NullPointerException
+        if (thuocTableModel == null) return;
 
-    for (ChiTietHdDTO cthd : listCTHD) {
-        ThuocDTO thuoc = BUSManager.thuocBUS.getThuocByMaThuoc(cthd.getMaThuoc());
-        if (thuoc != null) {
-            Object[] row = {
-                thuoc.getMaThuoc(),
-                thuoc.getTenThuoc(),
-                thuoc.getDonViTinh(),
-                String.format("%,.0f", thuoc.getGia()) // format tiền đẹp
-            };
-            thuocTableModel.addRow(row);
+        ArrayList<ChiTietHdDTO> listCTHD = BUSManager.chiTietHdBUS.getListChiTietHdByMaHd(hoaDon.getMaHd());
+        thuocTableModel.setRowCount(0); // Clear dữ liệu cũ
+
+        for (ChiTietHdDTO cthd : listCTHD) {
+            ThuocDTO thuoc = BUSManager.thuocBUS.getThuocByMaThuoc(cthd.getMaThuoc());
+            if (thuoc != null) {
+                Object[] row = {
+                    thuoc.getMaThuoc(),
+                    thuoc.getTenThuoc(),
+                    thuoc.getDonViTinh(),
+                    String.format("%,.0f", thuoc.getGia()), // format tiền đẹp
+                    cthd.getSoLuong()
+                };
+                thuocTableModel.addRow(row);
+            }
         }
     }
-}
 
-private void setupListProduct() {
-    // Chỉ tạo bảng 1 lần
-    thuocTable = createThuocTable();
+    private void setupListProduct() {
+        // Chỉ tạo bảng 1 lần
+        tblThuoc = createThuocTable();
 
-    JScrollPane scrollPane = new JScrollPane(thuocTable);
-    scrollPane.setBorder(BorderFactory.createCompoundBorder(
-        BorderFactory.createLineBorder(new Color(220, 220, 220)),
-        BorderFactory.createEmptyBorder(5, 5, 5, 5)
-    ));
-    scrollPane.getViewport().setBackground(Color.WHITE);
+        JScrollPane scrollPane = new JScrollPane(tblThuoc);
+        scrollPane.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(220, 220, 220)),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)
+        ));
+        scrollPane.getViewport().setBackground(Color.WHITE);
 
-    pnlListThuoc.setLayout(new BorderLayout());
-    pnlListThuoc.removeAll(); // xóa nội dung cũ nếu có
-    pnlListThuoc.add(scrollPane, BorderLayout.CENTER);
+        pnlListThuoc.setLayout(new BorderLayout());
+        pnlListThuoc.removeAll(); // xóa nội dung cũ nếu có
+        pnlListThuoc.add(scrollPane, BorderLayout.CENTER);
 
-    // Gọi load sau khi bảng đã sẵn sàng
-    loadThuocData();
+        // Gọi load sau khi bảng đã sẵn sàng
+        loadThuocData();
 
-    pnlListThuoc.revalidate();
-    pnlListThuoc.repaint();
-}
+        pnlListThuoc.revalidate();
+        pnlListThuoc.repaint();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,6 +188,12 @@ private void setupListProduct() {
         tfNgayXuat = new javax.swing.JTextField();
         pnlListThuoc = new javax.swing.JPanel();
         btnHuy = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        addButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
+        importButton = new javax.swing.JButton();
+        exportButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -300,7 +325,7 @@ private void setupListProduct() {
         );
         pnlListThuocLayout.setVerticalGroup(
             pnlListThuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
+            .addGap(0, 293, Short.MAX_VALUE)
         );
 
         btnHuy.setBackground(new java.awt.Color(255, 0, 0));
@@ -313,6 +338,71 @@ private void setupListProduct() {
             }
         });
 
+        addButton.setText("Thêm");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Xóa");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        editButton.setText("Sửa");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
+
+        importButton.setText("Import");
+        importButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importButtonActionPerformed(evt);
+            }
+        });
+
+        exportButton.setText("Export");
+        exportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(importButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(importButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -320,19 +410,22 @@ private void setupListProduct() {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(12, 12, 12)
-                .addComponent(pnlListThuoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)
+                        .addComponent(pnlListThuoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(243, 243, 243)
-                .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
@@ -340,8 +433,10 @@ private void setupListProduct() {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnHuy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnHuy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8))
         );
 
@@ -352,6 +447,36 @@ private void setupListProduct() {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // Tạo và hiển thị dialog chỉnh sửa
+        AddThuocInCTHDDialog dialog = new AddThuocInCTHDDialog((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), hoaDon);
+        dialog.setVisible(true);
+        
+        if (dialog.isSaved()){
+            saved = true;
+            loadThuocData();
+            loadHoaDonData();
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_importButtonActionPerformed
+
+    private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exportButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -396,14 +521,20 @@ private void setupListProduct() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
     private javax.swing.JButton btnHuy;
     private javax.swing.JComboBox<String> cbPayment;
     private javax.swing.JComboBox<String> cbTrangThai;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton editButton;
+    private javax.swing.JButton exportButton;
+    private javax.swing.JButton importButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblMaKH;
     private javax.swing.JLabel lblMaKM;
     private javax.swing.JLabel lblMaNV;
