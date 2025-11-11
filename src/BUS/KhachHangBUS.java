@@ -96,11 +96,11 @@ public class KhachHangBUS {
 
     public boolean deleteKhachHang(int ma_kh) {
         // nếu khách hàng đã từng phát sinh hoadon, thì không được xoá
-//        if (this.hoaDonBUS.checkIfMaKhExist(ma_kh)) {
-//            JOptionPane.showMessageDialog(null, "Không thể xoá khách hàng đã phát sinh hoá đơn", "Lỗi",
-//                    JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        }
+        if (this.hoaDonBUS.checkIfMaKhExist(ma_kh)) {
+            JOptionPane.showMessageDialog(null, "Không thể xoá khách hàng đã phát sinh hoá đơn", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
         int ma_tk_cua_kh = this.khachHangDAO.selectById(String.valueOf(ma_kh)).getMaTk();
 

@@ -337,7 +337,7 @@ public class KhachHangForm extends javax.swing.JFrame {
         if (flag){
             JOptionPane.showMessageDialog(rootPane, "Xóa khách hàng thành công");
         }else{
-            JOptionPane.showMessageDialog(rootPane, "Xóa thông tin khách hàng thất bại");
+            JOptionPane.showMessageDialog(rootPane, "Xóa khách hàng thất bại");
         }
         
     }//GEN-LAST:event_jButton_XoaActionPerformed

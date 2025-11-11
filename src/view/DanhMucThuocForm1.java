@@ -21,7 +21,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import DTO.DanhMucThuocDTO;
+import DTO.ThuocDTO;
 import BUS.DanhMucThuocBUS;
+import BUS.ThuocBUS;
 
 
 public class DanhMucThuocForm1 extends javax.swing.JFrame {
