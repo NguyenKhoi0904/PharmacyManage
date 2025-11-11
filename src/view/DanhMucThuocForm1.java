@@ -62,7 +62,6 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách mục thuốc ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
 
-        tblDanhMuc.setBackground(new java.awt.Color(255, 255, 255));
         tblDanhMuc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         tblDanhMuc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -108,7 +107,6 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(78, 245, 209));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("DANH MỤC THUỐC");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -131,8 +129,6 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton_Them.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton_Them.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Them.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/plus.png"))); // NOI18N
         jButton_Them.setText("Thêm");
         jButton_Them.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -154,8 +150,6 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         });
 
         jButton_Sua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton_Sua.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Sua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/wrench.png"))); // NOI18N
         jButton_Sua.setText("Sửa");
         jButton_Sua.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -177,8 +171,6 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         });
 
         jButton_Xoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton_Xoa.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Xoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/remove.png"))); // NOI18N
         jButton_Xoa.setText("Xóa");
         jButton_Xoa.putClientProperty(FlatClientProperties.STYLE, ""
             + "background: #FFFFFF;"
@@ -239,8 +231,6 @@ public class DanhMucThuocForm1 extends javax.swing.JFrame {
         });
 
         jButton_Refresh.setIcon(new FlatSVGIcon("image/reload.svg", 30, 30));
-        jButton_Refresh.setBackground(new java.awt.Color(255, 255, 255));
-        jButton_Refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
         jButton_Refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_RefreshActionPerformed(evt);
