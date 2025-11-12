@@ -217,13 +217,13 @@ public class LoginForm extends javax.swing.JFrame {
                 // chuyển trang admin
                 JOptionPane.showMessageDialog(this, "Chào admin: " + username);
                 SwingUtilities.invokeLater(() -> {
-                    new AdminLayout().setVisible(true);
+                    new AdminLayout(nv.getMaNv()).setVisible(true);
                 });
             } else {
                 // chuyển trang nhân viên
                 JOptionPane.showMessageDialog(this, "Chào nhân viên: " + username);
                 SwingUtilities.invokeLater(() -> {
-                    new NhanVienLayout().setVisible(true);
+                    new NhanVienLayout(nv.getMaNv()).setVisible(true);
                 });
 
             }

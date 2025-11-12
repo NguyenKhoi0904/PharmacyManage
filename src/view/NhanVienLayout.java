@@ -26,7 +26,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
         initComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         
-        HoaDonForm HoaDon = new HoaDonForm();
+        HoaDonForm HoaDon = new HoaDonForm(11);
         PhieuNhapForm PhieuNhap = new PhieuNhapForm();
         KhachHangForm KhachHang = new KhachHangForm();
         ThuocForm1 Thuoc = new ThuocForm1();
@@ -48,6 +48,33 @@ public class NhanVienLayout extends javax.swing.JFrame {
         jPanel3.repaint();
         
     }
+    
+    public NhanVienLayout(int ma_NV) {
+        initComponents();
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        
+        HoaDonForm HoaDon = new HoaDonForm(ma_NV);
+        PhieuNhapForm PhieuNhap = new PhieuNhapForm();
+        KhachHangForm KhachHang = new KhachHangForm();
+        ThuocForm1 Thuoc = new ThuocForm1();
+        
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "HoaDon");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "PhieuNhap");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(KhachHang), "KhachHang");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(Thuoc), "Thuoc");
+        
+        // /*
+        HoaDon.dispose();
+        PhieuNhap.dispose();
+        KhachHang.dispose();
+        Thuoc.dispose();
+        
+        // */
+        
+        jPanel3.revalidate();
+        jPanel3.repaint();
+        
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.

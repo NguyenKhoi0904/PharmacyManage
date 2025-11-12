@@ -28,7 +28,7 @@ public class AdminLayout extends javax.swing.JFrame {
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);   
         
         //
-        JFrame jFrame_HoaDon = new HoaDonForm();
+        JFrame jFrame_HoaDon = new HoaDonForm(11);
         JFrame jFrame_LoHang = new LoHangForm();
         JFrame jFrame_PhieuNhap = new PhieuNhapForm();
         JFrame jFrame_KhachHang = new KhachHangForm();
@@ -78,18 +78,64 @@ public class AdminLayout extends javax.swing.JFrame {
         
         // */
         
-        /*
-        jPanel3.add(jPanel_HoaDon, "HoaDon");
-        jPanel3.add(jPanel_LoHang, "LoHang");
+        jPanel3.revalidate();  // Cập nhật layout
+        jPanel3.repaint();  
+    }
+    
+    public AdminLayout(int ma_NV) {
+        initComponents();
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);   
+        
+        //
+        JFrame jFrame_HoaDon = new HoaDonForm(ma_NV);
+        JFrame jFrame_LoHang = new LoHangForm();
+        JFrame jFrame_PhieuNhap = new PhieuNhapForm();
+        JFrame jFrame_KhachHang = new KhachHangForm();
+        JFrame jFrame_Thuoc = new ThuocForm1();
+        JFrame jFrame_DanhMucThuoc = new DanhMucThuocForm1();
+        JFrame jFrame_NhaCungCap = new NhaCungCapForm();
+        JFrame jFrame_NhanVien = new NhanVienForm();
+        JFrame jFrame_KhuyenMai = new KhuyenMaiForm();
+        // Thiếu Form thống kê
+        
+        
+        /* 
+        JPanel jPanel_HoaDon = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_HoaDon);
+        JPanel jPanel_LoHang = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_LoHang);
         // Thiếu Panel phiếu nhập
-        // Thiếu Panel khách hàng 
-        jPanel3.add(jPanel_Thuoc, "Thuoc");
-        jPanel3.add(jPanel_DanhMucThuoc, "DanhMucThuoc");
-        jPanel3.add(jPanel_NhaCungCap, "NhaCungCap");
-        jPanel3.add(jPanel_NhanVien, "NhanVien");
-        jPanel3.add(jPanel_KhuyenMai, "KhuyenMai");
+        // Thiếu Panel khách hàng
+        JPanel jPanel_Thuoc = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_Thuoc);
+        JPanel jPanel_DanhMucThuoc = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_DanhMucThuoc);
+        JPanel jPanel_NhaCungCap = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_NhaCungCap);
+        JPanel jPanel_NhanVien = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_NhanVien);
+        JPanel jPanel_KhuyenMai = Convert_JFrame_To_JPanel.convert_jframe_to_jpanel(jFrame_KhuyenMai);
         // Thiếu Panel thống kê
         */
+        
+        // /* Lấy container trong JFrame
+        
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_PhieuNhap), "PhieuNhap");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_KhachHang), "KhachHang");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_Thuoc), "Thuoc");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_DanhMucThuoc), "DanhMucThuoc");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhaCungCap), "NhaCungCap");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_NhanVien), "NhanVien");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_KhuyenMai), "KhuyenMai");
+        // */
+        
+        // /* Dispose giải phóng bộ nhớ
+        jFrame_HoaDon.dispose();
+        jFrame_LoHang.dispose();
+        jFrame_PhieuNhap.dispose();
+        jFrame_Thuoc.dispose();
+        jFrame_DanhMucThuoc.dispose();
+        jFrame_NhaCungCap.dispose();
+        jFrame_NhanVien.dispose();
+        jFrame_KhuyenMai.dispose();
+        
+        // */
         
         jPanel3.revalidate();  // Cập nhật layout
         jPanel3.repaint();  
@@ -499,6 +545,7 @@ public class AdminLayout extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
