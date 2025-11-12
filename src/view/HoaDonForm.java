@@ -47,6 +47,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private ChiTietHdDTO selectedCTHD;
     private ArrayList<KhuyenMaiDTO> listKM;
     private ArrayList<ThuocDTO> listThuoc;
+    private int maNV = 12; // default
     
     private JTable thuocTable;
     private DefaultTableModel thuocTableModel;
@@ -55,8 +56,10 @@ public class HoaDonForm extends javax.swing.JFrame {
     /**
      * Creates new form HoaDonGUI
      */
-    public HoaDonForm() {
+    public HoaDonForm(int maNV) {
         initComponents();
+        
+        this.maNV = maNV;
         
         // DEBUG ONLY !!!
         BUSManager.initAllBUS();
@@ -1093,7 +1096,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 }
                 
                 // Xử lý HD 
-                HoaDonDTO hd = new HoaDonDTO(11, 21, maKM, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
+                HoaDonDTO hd = new HoaDonDTO(maNV, 21, maKM, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
                         (String) paymentComboBox.getSelectedItem(), 1);
                 if (hoaDonBUS.addHD(hd)) {
                     if (!hoaDonBUS.addCTHD(hd.getMaHd(), listCTHD)) {
@@ -1151,7 +1154,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HoaDonForm().setVisible(true);
+                new HoaDonForm(12).setVisible(true);
             }
         });
     }
