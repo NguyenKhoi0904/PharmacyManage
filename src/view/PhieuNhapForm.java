@@ -31,7 +31,6 @@ public class PhieuNhapForm extends JFrame {
         setSize(1350, 800);
         setLayout(new BorderLayout());
 
-        // ================= HEADER =================
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(new Color(0, 255, 255));
         JLabel lblTitle = new JLabel("QUẢN LÝ PHIẾU NHẬP");
@@ -40,7 +39,6 @@ public class PhieuNhapForm extends JFrame {
         headerPanel.add(lblTitle);
         add(headerPanel, BorderLayout.NORTH);
 
-        // ================= FORM INPUT + BUTTON =================
         JPanel inputPanel = new JPanel(new GridBagLayout());
         inputPanel.setBackground(new Color(245, 245, 245));
         inputPanel.setBorder(BorderFactory.createTitledBorder("Thông tin phiếu nhập"));
@@ -72,7 +70,6 @@ public class PhieuNhapForm extends JFrame {
         gbc.gridx = 3; gbc.gridy = 0;
         inputPanel.add(txtDiaDiem, gbc);
 
-        // Hiển thị mã NV hiện tại (chỉ đọc)
         JLabel lblNv = new JLabel("Nhân viên:");
         lblNv.setFont(lblFont);
         gbc.gridx = 0; gbc.gridy = 1;
@@ -95,7 +92,6 @@ public class PhieuNhapForm extends JFrame {
         inputPanel.add(txtNhanVien, gbc);
         gbc.gridwidth = 1;
 
-        // --- Button Panel ---
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
         buttonPanel.setBackground(new Color(245, 245, 245));
 
@@ -115,13 +111,12 @@ public class PhieuNhapForm extends JFrame {
 
         add(topPanel, BorderLayout.NORTH);
 
-        // ================= BẢNG SONG SONG =================
         JPanel tablePanel = new JPanel(new GridLayout(1, 2, 10, 0));
         tablePanel.setBackground(new Color(245, 245, 245));
         tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         modelPhieuNhap = new DefaultTableModel(
-                new Object[]{"Mã PN", "Mã NV", "Thời gian nhập", "Địa điểm", "Trạng thái"}, 0);
+                new Object[]{"Mã PN", "Mã NV", "Thời gian nhập", "Địa điểm"}, 0);
         tblPhieuNhap = new JTable(modelPhieuNhap);
         tblPhieuNhap.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         tblPhieuNhap.setRowHeight(28);
@@ -140,7 +135,6 @@ public class PhieuNhapForm extends JFrame {
         tablePanel.add(scrollCt);
         add(tablePanel, BorderLayout.CENTER);
 
-        // ================= KẾT NỐI BUS =================
         PhieuNhapBUS pnBUS = PhieuNhapBUS.getInstance();
         ChiTietPnBUS ctBUS = ChiTietPnBUS.getInstance();
         pnBUS.setChiTietPnBUS(ctBUS);
@@ -148,10 +142,8 @@ public class PhieuNhapForm extends JFrame {
         pnBUS.setNhanVienBUS(NhanVienBUS.getInstance());
         ctBUS.setLoHangBUS(LoHangBUS.getInstance());
 
-        // ================= LOAD DỮ LIỆU BAN ĐẦU =================
         loadPhieuNhapData();
 
-        // ================= SỰ KIỆN =================
         tblPhieuNhap.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int row = tblPhieuNhap.getSelectedRow();
@@ -185,7 +177,7 @@ public class PhieuNhapForm extends JFrame {
         ArrayList<PhieuNhapDTO> list = PhieuNhapBUS.getInstance().getListPhieuNhap();
         for (PhieuNhapDTO pn : list) {
             modelPhieuNhap.addRow(new Object[]{
-                    pn.getMaPn(), pn.getMaNv(), pn.getThoiGianNhap(), pn.getDiaDiem(), pn.getTrangThai()
+                    pn.getMaPn(), pn.getMaNv(), pn.getThoiGianNhap(), pn.getDiaDiem()
             });
         }
     }
@@ -223,7 +215,6 @@ public class PhieuNhapForm extends JFrame {
             String diaDiem = txtDiaDiem.getText().trim();
             Timestamp now = new Timestamp(System.currentTimeMillis());
 
-            // Nếu mã PN rỗng → để DB tự sinh AUTO_INCREMENT
             int maPn = txtMaPn.getText().isEmpty() ? 0 : Integer.parseInt(txtMaPn.getText());
 
             PhieuNhapDTO pn = new PhieuNhapDTO(maPn, maNv, now, diaDiem, 1);
@@ -257,7 +248,6 @@ public class PhieuNhapForm extends JFrame {
             int maNv = nv.getMaNv();
             String diaDiem = txtDiaDiem.getText().trim();
 
-            // Giữ lại thời gian nhập cũ
             Timestamp thoiGianNhap = (Timestamp) modelPhieuNhap.getValueAt(row, 2);
 
             PhieuNhapDTO pn = new PhieuNhapDTO(maPn, maNv, thoiGianNhap, diaDiem, 1);
@@ -310,5 +300,3 @@ public class PhieuNhapForm extends JFrame {
         SwingUtilities.invokeLater(() -> new PhieuNhapForm().setVisible(true));
     }
 }
-
-//nhanvienBUS,taikhoanBUS,Nhanvienbus,taikhoanDTO
