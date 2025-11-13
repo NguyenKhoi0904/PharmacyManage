@@ -1,3 +1,4 @@
+
 package view;
 
 import BUS.NhaCungCapBUS;
@@ -9,11 +10,10 @@ import java.awt.*;
 
 public class NhaCungCapForm extends JFrame {
 
-    private JTextField txtMaNCC, txtTenNCC, txtDiaChi, txtSoDT, txtEmail;
+    private JTextField txtMaNCC, txtTenNCC, txtDiaChi, txtSoDT, txtEmail, txtTimKiem;
     private JTable table;
-    private JButton btnThem, btnXoa, btnSua, btnLamMoi, btnTimKiem;
+    private JButton btnThem, btnXoa, btnSua, btnLamMoi;
 
-    // Thêm BUS
     private NhaCungCapBUS nccBUS = NhaCungCapBUS.getInstance();
 
     public NhaCungCapForm() {
@@ -22,7 +22,6 @@ public class NhaCungCapForm extends JFrame {
         setSize(1350, 800);
         setLayout(new BorderLayout());
 
-        // ================= PANEL TIÊU ĐỀ =================
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(new Color(0, 255, 255));
         JLabel lblTitle = new JLabel("QUẢN LÝ NHÀ CUNG CẤP");
@@ -31,7 +30,6 @@ public class NhaCungCapForm extends JFrame {
         headerPanel.add(lblTitle);
         add(headerPanel, BorderLayout.NORTH);
 
-        // ================= PANEL TRUNG TÂM =================
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBackground(new Color(245, 245, 245));
 
@@ -98,20 +96,21 @@ public class NhaCungCapForm extends JFrame {
         inputPanel.add(txtDiaChi, gbc);
         gbc.gridwidth = 1;
 
-       	JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
         buttonPanel.setBackground(new Color(245, 245, 245));
 
         btnThem = createStyledButton("Thêm");
         btnXoa = createStyledButton1("Xóa");
         btnSua = createStyledButton2("Sửa");
         btnLamMoi = createStyledButton3("Làm Mới");
-        btnTimKiem = createStyledButton4("Tìm Kiếm");
+        txtTimKiem = new JTextField(15);
+        txtTimKiem.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 
         buttonPanel.add(btnThem);
         buttonPanel.add(btnXoa);
         buttonPanel.add(btnSua);
         buttonPanel.add(btnLamMoi);
-        buttonPanel.add(btnTimKiem);
+        buttonPanel.add(txtTimKiem);
 
         JPanel topCenterPanel = new JPanel(new BorderLayout());
         topCenterPanel.add(inputPanel, BorderLayout.CENTER);
@@ -120,8 +119,7 @@ public class NhaCungCapForm extends JFrame {
         centerPanel.add(topCenterPanel, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
 
-        // ================= BẢNG DỮ LIỆU =================
-        String[] columnNames = {"Mã NCC", "Tên NCC", "Số điện thoại", "Email", "Địa chỉ", "Trạng thái"};
+        String[] columnNames = {"Mã NCC", "Tên NCC", "Số điện thoại", "Email", "Địa chỉ"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);
         table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -129,17 +127,13 @@ public class NhaCungCapForm extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Danh sách nhà cung cấp"));
-
         add(scrollPane, BorderLayout.SOUTH);
 
-        // ================= SỰ KIỆN NÚT =================
         addEventHandlers();
-
-//        setVisible(true);
         loadTableNCC();
     }
 
-    private JButton createStyledButton(String text) { //THÊM
+    private JButton createStyledButton(String text) {
         JButton btn = new JButton(text);
         btn.setBackground(new Color(76, 175, 80));
         btn.setForeground(Color.WHITE);
@@ -148,7 +142,7 @@ public class NhaCungCapForm extends JFrame {
         btn.setFocusPainted(false);
         return btn;
     }
-    private JButton createStyledButton1(String text) { //XÓA
+    private JButton createStyledButton1(String text) {
         JButton btn = new JButton(text);
         btn.setBackground(new Color(244, 67, 54));
         btn.setForeground(Color.WHITE);
@@ -157,7 +151,7 @@ public class NhaCungCapForm extends JFrame {
         btn.setFocusPainted(false);
         return btn;
     }
-    private JButton createStyledButton2(String text) { //SUA
+    private JButton createStyledButton2(String text) {
         JButton btn = new JButton(text);
         btn.setBackground(new Color(255, 152, 0));
         btn.setForeground(Color.WHITE);
@@ -166,7 +160,7 @@ public class NhaCungCapForm extends JFrame {
         btn.setFocusPainted(false);
         return btn;
     }
-    private JButton createStyledButton3(String text) { //LAM MOI
+    private JButton createStyledButton3(String text) {
         JButton btn = new JButton(text);
         btn.setBackground(new Color(25, 118, 210));
         btn.setForeground(Color.WHITE);
@@ -175,17 +169,7 @@ public class NhaCungCapForm extends JFrame {
         btn.setFocusPainted(false);
         return btn;
     }
-    private JButton createStyledButton4(String text) { //TIM KIEM
-        JButton btn = new JButton(text);
-        btn.setBackground(new Color(25, 118, 210));
-        btn.setForeground(Color.WHITE);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        btn.setPreferredSize(new Dimension(140, 45));
-        btn.setFocusPainted(false);
-        return btn;
-    }
-    
-            
+
     private void addEventHandlers() {
 
         btnThem.addActionListener(e -> {
@@ -236,9 +220,9 @@ public class NhaCungCapForm extends JFrame {
             txtSoDT.setText("");
             txtEmail.setText("");
             txtDiaChi.setText("");
+            txtTimKiem.setText("");
         });
 
-        // Click bảng -> đổ textfield
         table.getSelectionModel().addListSelectionListener(e -> {
             int row = table.getSelectedRow();
             if (row >= 0) {
@@ -260,8 +244,7 @@ public class NhaCungCapForm extends JFrame {
                     ncc.getTenNcc(),
                     ncc.getSdtNcc(),
                     ncc.getEmailNcc(),
-                    ncc.getDiaChi(),
-                    ncc.getTrangThai()
+                    ncc.getDiaChi()
             });
         }
     }
