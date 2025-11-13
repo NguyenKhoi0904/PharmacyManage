@@ -75,7 +75,11 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1, data.getMaNv());
-            ps.setInt(2, data.getMaKh());
+            if (data.getMaKh() <= 0) {
+                ps.setNull(2, java.sql.Types.INTEGER); // cho phép hóa đơn không có KH
+            } else {
+                ps.setInt(2, data.getMaKh());
+            }
             ps.setInt(3, data.getMaKm());
             ps.setBigDecimal(4, data.getTongTien());
             ps.setDate(5, data.getNgayXuat());
@@ -111,7 +115,11 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
             String sql = "UPDATE hoadon SET ma_nv=?,ma_kh=?,ma_km=?,tong_tien=?,ngay_xuat=?,phuong_thuc_tt=?,trang_thai=? WHERE ma_hd=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, data.getMaNv());
-            ps.setInt(2, data.getMaKh());
+            if (data.getMaKh() <= 0) {
+                ps.setNull(2, java.sql.Types.INTEGER); // cho phép hóa đơn không có KH
+            } else {
+                ps.setInt(2, data.getMaKh());
+            }
             ps.setInt(3, data.getMaKm());
             ps.setBigDecimal(4, data.getTongTien());
             ps.setDate(5, data.getNgayXuat());

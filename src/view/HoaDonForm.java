@@ -9,7 +9,9 @@ import static BUS.BUSManager.hoaDonBUS;
 import DTO.ChiTietHdDTO;
 import DTO.DanhMucThuocDTO;
 import DTO.HoaDonDTO;
+import DTO.KhachHangDTO;
 import DTO.KhuyenMaiDTO;
+import DTO.TaiKhoanDTO;
 import DTO.ThuocDTO;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -48,6 +50,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private ArrayList<KhuyenMaiDTO> listKM;
     private ArrayList<ThuocDTO> listThuoc;
     private int maNV = 12; // default
+    private int maKH = -1;
     
     private JTable thuocTable;
     private DefaultTableModel thuocTableModel;
@@ -74,6 +77,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         
         addEventForInvoicePanel();
         addEventForSearching(tfTimKiemThuoc ,thuocTable, listThuoc);
+        addEventForTFMaKH();
     }
     private void setupMainLayout() {
         Container cp = getContentPane();
@@ -442,6 +446,34 @@ public class HoaDonForm extends javax.swing.JFrame {
         tfTienThua.setText(tienThuaMoi.toString());
     }
     
+    private void addEventForTFMaKH(){
+        // Ma KM
+        tfMaKH.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) { refreshTenKH(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { refreshTenKH(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { refreshTenKH(); }
+        });
+    }
+    
+    // Tam thoi chua co field tenKH
+    private void refreshTenKH(){
+        if (ValidationUtils.isValidInt(tfMaKH.getText())){
+            int maKH = Integer.parseInt(tfMaKH.getText());
+            KhachHangDTO kh = BUSManager.khachHangBUS.getKhachHangByMaKh(maKH);
+            if (kh != null)
+            {
+                TaiKhoanDTO tk = BUSManager.taiKhoanBUS.getTaiKhoanByMaTk(kh.getMaTk());
+                tfTenKH.setText(tk.getTen() + "");
+                
+                this.maKH = kh.getMaKh();
+            }
+            else
+                tfTenKH.setText("");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -498,6 +530,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         tfMaKM = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         paymentComboBox = new javax.swing.JComboBox<>();
+        tfMaKH = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1350, 800));
@@ -825,6 +858,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel11.setText("Tên KH");
 
         tfTenKH.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tfTenKH.setEnabled(false);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setText("Tổng tiền:");
@@ -869,6 +903,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         paymentComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         paymentComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản" }));
 
+        tfMaKH.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tfMaKH.setText("Mã KH");
+
         javax.swing.GroupLayout invoicePanelLayout = new javax.swing.GroupLayout(invoicePanel);
         invoicePanel.setLayout(invoicePanelLayout);
         invoicePanelLayout.setHorizontalGroup(
@@ -906,7 +943,8 @@ public class HoaDonForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(genderComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfMaKM, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
+                            .addComponent(tfMaKM, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                            .addComponent(tfMaKH, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
                         .addContainerGap(62, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, invoicePanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -922,7 +960,9 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(invoicePanelLayout.createSequentialGroup()
@@ -1056,10 +1096,13 @@ public class HoaDonForm extends javax.swing.JFrame {
         String name = tfTenKH.getText();
         String phone = tfSDT.getText();
         String money = tfTienKhachDua.getText();
-
-        if (!ValidationUtils.isValidCustomerName(name)) {
-            JOptionPane.showMessageDialog(this, "Tên khách hàng không hợp lệ!");
-            return;
+        
+        if (!name.isBlank())
+        {
+            if (!ValidationUtils.isValidCustomerName(name)) {
+                JOptionPane.showMessageDialog(this, "Tên khách hàng không hợp lệ!");
+                return;
+            }
         }
 
         if (!ValidationUtils.isValidPhoneNumber(phone)) {
@@ -1072,6 +1115,11 @@ public class HoaDonForm extends javax.swing.JFrame {
             return;
         }
         
+        if (getCartSum().compareTo(BigDecimal.ZERO) <= 0) { 
+            JOptionPane.showMessageDialog(this, "Giỏ hàng không được trống!");
+            return;
+        }
+                
         try {
             float tienKhachDua = Float.parseFloat(money);
             float tongTien = Float.parseFloat(tfTongTien.getText());
@@ -1096,7 +1144,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 }
                 
                 // Xử lý HD 
-                HoaDonDTO hd = new HoaDonDTO(maNV, 21, maKM, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
+                HoaDonDTO hd = new HoaDonDTO(maNV, this.maKH, maKM, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
                         (String) paymentComboBox.getSelectedItem(), 1);
                 if (hoaDonBUS.addHD(hd)) {
                     if (!hoaDonBUS.addCTHD(hd.getMaHd(), listCTHD)) {
@@ -1110,7 +1158,7 @@ public class HoaDonForm extends javax.swing.JFrame {
             }
         }
         catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Chỉ được nhập số nguyên");
+            JOptionPane.showMessageDialog(null, "Kiểm tra tổng tiền và giỏ hàng!");
         } catch (Exception ex) {
             Logger.getLogger(HoaDonForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1197,6 +1245,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JLabel refreshLabel;
     private javax.swing.JTextArea taThanPhan;
     private javax.swing.JTextField tfDonGia;
+    private javax.swing.JTextField tfMaKH;
     private javax.swing.JTextField tfMaKM;
     private javax.swing.JTextField tfMaThuoc;
     private javax.swing.JTextField tfSDT;

@@ -170,10 +170,10 @@ public class HoaDonBUS {
             return false;
         }
 
-        if (!this.khachHangBUS.getMapByMaKh().containsKey(hoaDonDTO.getMaKh())) {
-            JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+//        if (!this.khachHangBUS.getMapByMaKh().containsKey(hoaDonDTO.getMaKh())) {
+//            JOptionPane.showMessageDialog(null, "Mã khách hàng không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
 
         if (hoaDonDTO.getMaKm() != null && !this.khuyenMaiBUS.getMapByMaKm().containsKey(hoaDonDTO.getMaKm())) {
             JOptionPane.showMessageDialog(null, "Mã khuyến mãi không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);

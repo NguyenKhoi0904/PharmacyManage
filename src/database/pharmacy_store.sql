@@ -124,7 +124,7 @@ CREATE TABLE khuyenmai (
 CREATE TABLE hoadon (
     ma_hd INT AUTO_INCREMENT PRIMARY KEY,
     ma_nv INT,
-    ma_kh INT,
+    ma_kh INT NULL,
     ma_km INT NULL,
     tong_tien DECIMAL(10,2),
     ngay_xuat DATE NOT NULL,
