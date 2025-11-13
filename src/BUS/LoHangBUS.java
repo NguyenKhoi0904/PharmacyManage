@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import DAO.LoHangDAO;
 import DTO.LoHangDTO;
+import java.util.Date;
 
 public class LoHangBUS {
 
@@ -38,9 +39,7 @@ public class LoHangBUS {
     // ========== DATABASE HANDLE ==========
     public boolean addLoHang(LoHangDTO loHangDTO) {
         // kiểm tra nếu ngay_sx sau han_sd
-        if (this.checkEffectiveDate(loHangDTO)) {
-            JOptionPane.showMessageDialog(null, "Ngày sản xuất phải trước hạn sử dụng", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+        if (!this.checkEffectiveDate(loHangDTO)) {
             return false;
         }
 
@@ -56,9 +55,7 @@ public class LoHangBUS {
 
     public boolean updateLoHang(int ma_lh, LoHangDTO loHangDTO) {
         // kiểm tra nếu ngay_sx sau han_sd
-        if (this.checkEffectiveDate(loHangDTO)) {
-            JOptionPane.showMessageDialog(null, "Ngày sản xuất phải trước hạn sử dụng", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+        if (!this.checkEffectiveDate(loHangDTO)) {
             return false;
         }
 
@@ -125,9 +122,18 @@ public class LoHangBUS {
 
     private boolean checkEffectiveDate(LoHangDTO loHangDTO) {
         if (loHangDTO.getNgaySx().after(loHangDTO.getHanSd())) {
-            return true;
+            JOptionPane.showMessageDialog(null, "Ngày sản xuất phải trước hạn sử dụng", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        return false;
+        
+        Date today = new Date(); // Ngày giờ hiện tại
+        if (loHangDTO.getHanSd().before(today)) { // Nếu HSD đã trước hôm nay → quá hạn
+            JOptionPane.showMessageDialog(null, "Hạn sử dụng đã quá hạn", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // Không hợp lệ
+        }
+        return true;
     }
 
     // thêm,bớt số lượng tồn trong lô hàng
