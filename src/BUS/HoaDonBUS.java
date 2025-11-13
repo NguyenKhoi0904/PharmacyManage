@@ -210,6 +210,12 @@ public class HoaDonBUS {
                             JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
+                if (!BUSManager.loHangBUS.checkEffectiveDate(lh, true))
+                {
+                    JOptionPane.showMessageDialog(null, "Lô hàng đã qua HSD" + ct.getMaLh(), "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
                 if (lh.getSlTon() < ct.getSoLuong()) {
                     JOptionPane.showMessageDialog(null, "Không đủ tồn kho cho lô hàng " + ct.getMaLh(), "Lỗi",
                             JOptionPane.ERROR_MESSAGE);

@@ -39,7 +39,7 @@ public class LoHangBUS {
     // ========== DATABASE HANDLE ==========
     public boolean addLoHang(LoHangDTO loHangDTO) {
         // kiểm tra nếu ngay_sx sau han_sd
-        if (!this.checkEffectiveDate(loHangDTO)) {
+        if (!this.checkEffectiveDate(loHangDTO, false)) {
             return false;
         }
 
@@ -55,7 +55,7 @@ public class LoHangBUS {
 
     public boolean updateLoHang(int ma_lh, LoHangDTO loHangDTO) {
         // kiểm tra nếu ngay_sx sau han_sd
-        if (!this.checkEffectiveDate(loHangDTO)) {
+        if (!this.checkEffectiveDate(loHangDTO, false)) {
             return false;
         }
 
@@ -120,17 +120,23 @@ public class LoHangBUS {
 
     // ========== BUSINESS LOGIC ==========
 
-    private boolean checkEffectiveDate(LoHangDTO loHangDTO) {
+    public boolean checkEffectiveDate(LoHangDTO loHangDTO, boolean ignoreNoti) {
         if (loHangDTO.getNgaySx().after(loHangDTO.getHanSd())) {
-            JOptionPane.showMessageDialog(null, "Ngày sản xuất phải trước hạn sử dụng", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+            if (ignoreNoti)
+            {
+                JOptionPane.showMessageDialog(null, "Ngày sản xuất phải trước hạn sử dụng", "Lỗi",
+          JOptionPane.ERROR_MESSAGE);
+            }
             return false;
         }
         
         Date today = new Date(); // Ngày giờ hiện tại
         if (loHangDTO.getHanSd().before(today)) { // Nếu HSD đã trước hôm nay → quá hạn
-            JOptionPane.showMessageDialog(null, "Hạn sử dụng đã quá hạn", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+            if (ignoreNoti)
+            {
+                JOptionPane.showMessageDialog(null, "Hạn sử dụng đã quá hạn", "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
+            }
             return false; // Không hợp lệ
         }
         return true;
@@ -180,7 +186,8 @@ public class LoHangBUS {
     public int getMaLhByMaThuoc(int ma_thuoc) {
         for (LoHangDTO lh : this.listLoHang) {
             if (lh.getMaThuoc() == ma_thuoc) {
-                return lh.getMaLh();
+                if (checkEffectiveDate(lh, false))
+                    return lh.getMaLh();
             }
         }
         return 0;
