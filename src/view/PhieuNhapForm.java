@@ -78,14 +78,13 @@ public class PhieuNhapForm extends JFrame {
         JTextField txtNhanVien = new JTextField(20);
         txtNhanVien.setFont(txtFont);
         txtNhanVien.setEditable(false);
+        TaiKhoanDTO tk = TaiKhoanBUS.getCurrentUser();
+        int maNv = 0;
+        var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(tk.getMaTk());
+        if (nv != null) {
+            maNv = nv.getMaNv();  // Nếu tài khoản thuộc nhân viên}
+            txtNhanVien.setText("Mã NV: " + maNv);
 
-        var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(TaiKhoanBUS.getCurrentUser().getMaTk());
-        if (nv == null) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên cho tài khoản đăng nhập!");
-            return;
-        }
-        int maNv = nv.getMaNv();
-        txtNhanVien.setText("Mã NV: " + maNv);
 
         gbc.gridx = 1; gbc.gridy = 1;
         gbc.gridwidth = 3;
@@ -205,13 +204,13 @@ public class PhieuNhapForm extends JFrame {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập địa điểm!");
                 return;
             }
-
-            var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(TaiKhoanBUS.getCurrentUser().getMaTk());
-            if (nv == null) {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên đăng nhập!");
-                return;
+            TaiKhoanDTO tk = TaiKhoanBUS.getCurrentUser();
+            int maNv = 0;
+            var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(tk.getMaTk());
+            if (nv != null) {
+                maNv = nv.getMaNv();          
             }
-            int maNv = nv.getMaNv();
+
             String diaDiem = txtDiaDiem.getText().trim();
             Timestamp now = new Timestamp(System.currentTimeMillis());
 
@@ -240,12 +239,13 @@ public class PhieuNhapForm extends JFrame {
             }
 
             int maPn = Integer.parseInt(txtMaPn.getText());
-            var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(TaiKhoanBUS.getCurrentUser().getMaTk());
-            if (nv == null) {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên cho tài khoản đăng nhập!");
-                return;
+            TaiKhoanDTO tk = TaiKhoanBUS.getCurrentUser();
+            int maNv = 0;
+            var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(tk.getMaTk());
+            if (nv != null) {
+                maNv = nv.getMaNv();
             }
-            int maNv = nv.getMaNv();
+
             String diaDiem = txtDiaDiem.getText().trim();
 
             Timestamp thoiGianNhap = (Timestamp) modelPhieuNhap.getValueAt(row, 2);
@@ -289,14 +289,8 @@ public class PhieuNhapForm extends JFrame {
 
     public static void main(String[] args) {
         TaiKhoanDTO fakeUser = new TaiKhoanDTO(
-                3, "nhanvien1", "123456", "Nguyen Van A", "0123456789", "nhanvien", 1);
+                3, "nhanvien1", "123456", "Nguyen Van A","0123456789", "admin", 1);
         TaiKhoanBUS.setCurrentUser(fakeUser);
-
-        TaiKhoanBUS taiKhoanBUS = TaiKhoanBUS.getInstance();
-        NhanVienBUS nhanVienBUS = NhanVienBUS.getInstance();
-        taiKhoanBUS.setNhanVienBUS(nhanVienBUS);
-        nhanVienBUS.setTaiKhoanBUS(taiKhoanBUS);
-
         SwingUtilities.invokeLater(() -> new PhieuNhapForm().setVisible(true));
     }
 }
