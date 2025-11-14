@@ -23,9 +23,14 @@ import BUS.TaiKhoanBUS;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.util.*;
+import javax.swing.event.DocumentEvent;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class QuanLyHoaDon extends javax.swing.JFrame {
     
@@ -36,6 +41,8 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
      */
     public QuanLyHoaDon() {
         initComponents();
+        loadTable();
+        findRealTime();
     }
 
     /**
@@ -50,7 +57,6 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton_Sua = new javax.swing.JButton();
         jButton_Xoa = new javax.swing.JButton();
         jTextField_TimKiem = new javax.swing.JTextField();
         jButton_Refresh = new javax.swing.JButton();
@@ -59,7 +65,7 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(78, 245, 209));
 
@@ -86,22 +92,6 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton_Sua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton_Sua.setText("SỬA");
-        jButton_Sua.putClientProperty(FlatClientProperties.STYLE, ""
-            + "background: #FFFFFF;"
-            + "borderWidth: 0;"
-            + "focusWidth: 0;"
-            + "innerFocusWidth: 0;"
-            + "shadowWidth: 0;"
-            + "arc: 8;"
-            + "selectedBackground: #EBEBEB;");
-        jButton_Sua.setIcon(new FlatSVGIcon("image/update.svg", 50, 50));
-        jButton_Sua.setHorizontalTextPosition(SwingConstants.CENTER);
-        jButton_Sua.setVerticalTextPosition(SwingConstants.BOTTOM);
-        jButton_Sua.setHorizontalAlignment(SwingConstants.CENTER);
-        jButton_Sua.setIconTextGap(5);
-
         jButton_Xoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton_Xoa.setText("XÓA");
         jButton_Xoa.putClientProperty(FlatClientProperties.STYLE, ""
@@ -117,6 +107,11 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         jButton_Xoa.setVerticalTextPosition(SwingConstants.BOTTOM);
         jButton_Xoa.setHorizontalAlignment(SwingConstants.CENTER);
         jButton_Xoa.setIconTextGap(5);
+        jButton_Xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_XoaActionPerformed(evt);
+            }
+        });
 
         jTextField_TimKiem.putClientProperty(
             FlatClientProperties.TEXT_FIELD_LEADING_ICON,
@@ -130,8 +125,18 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
             FlatClientProperties.STYLE,
             "arc: 8;"
         );
+        jTextField_TimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_TimKiemActionPerformed(evt);
+            }
+        });
 
         jButton_Refresh.setIcon(new FlatSVGIcon("image/reload.svg", 30, 30));
+        jButton_Refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RefreshActionPerformed(evt);
+            }
+        });
 
         jButton_Export.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton_Export.setText("XUẤT FILE");
@@ -159,11 +164,9 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(20, 20, 20)
                 .addComponent(jButton_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(44, 44, 44)
                 .addComponent(jButton_Export, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,10 +179,9 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton_Export, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton_Sua, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                        .addComponent(jButton_Xoa, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton_Export, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,28 +246,146 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
 
     private void jButton_ExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExportActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu file");
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION){
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            if(!filePath.endsWith(".xlsx")){
+                filePath += ".xlsx";
+            }
+            export(jTable1, filePath);
+        }
     }//GEN-LAST:event_jButton_ExportActionPerformed
 
+    private void jButton_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RefreshActionPerformed
+        // TODO add your handling code here:
+        loadTable();
+    }//GEN-LAST:event_jButton_RefreshActionPerformed
+
+    private void jTextField_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_TimKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_TimKiemActionPerformed
+
+    private void jButton_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_XoaActionPerformed
+        // TODO add your handling code here:
+        int isSelected = jTable1.getSelectedRow();
+        if(isSelected == -1){
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng trong bảng");
+            return;
+        }
+        
+        int ma_hd = (int)jTable1.getValueAt(isSelected, 0);
+        
+        try{
+            boolean flag = HoaDonBUS.getInstance().deleteHoaDon(ma_hd);
+            if(flag){
+                JOptionPane.showMessageDialog(rootPane, "Xóa hóa đơn thành công");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Xóa hóa đơn thất bại");
+            }
+        }catch(Exception ex){
+            System.out.println("view.QuanLyHoaDon.jButton_XoaActionPerformed()");
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton_XoaActionPerformed
     
     private void loadTable(){
+        try{
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            model.setRowCount(0);
+            ArrayList<HoaDonDTO> list_hd = HoaDonBUS.getInstance().getListHoaDon();
+            ArrayList<KhachHangDTO> list_kh = KhachHangBUS.getInstance().getListKhachHang();
+            ArrayList<NhanVienDTO> list_nv = NhanVienBUS.getInstance().getListNhanVien();
+            ArrayList<KhuyenMaiDTO> list_km = KhuyenMaiBUS.getInstance().getListKhuyenMai();
+
+            for(HoaDonDTO hd: list_hd){
+                int ma_tk_kh = KhachHangBUS.getInstance().getKhachHangByMaKh(hd.getMaKh()).getMaTk();
+                int ma_tk_nv = NhanVienBUS.getInstance().getNhanVienByMaNv(hd.getMaNv()).getMaTk();
+
+                Object[] row = {
+                    hd.getMaHd(),
+                    TaiKhoanBUS.getInstance().getTaiKhoanByMaTk(ma_tk_nv).getTen(),
+                    TaiKhoanBUS.getInstance().getTaiKhoanByMaTk(ma_tk_kh).getTen(),
+                    KhuyenMaiBUS.getInstance().getKhuyenMaiByMaKm(hd.getMaKm()).getTenKm(),
+                    hd.getTongTien(),
+                    hd.getNgayXuat(),
+                    hd.getPhuongThucTt()
+                };
+                model.addRow(row);
+            }
+        }catch(Exception ex){
+            System.out.println("view.QuanLyHoaDon.loadTable()");
+            ex.printStackTrace();
+        }
+    }
+    
+    private void findRealTime(){
         DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-        model.setRowCount(0);
-        ArrayList<HoaDonDTO> list_hd = HoaDonBUS.getInstance().getListHoaDon();
-        ArrayList<KhachHangDTO> list_kh = KhachHangBUS.getInstance().getListKhachHang();
-        ArrayList<NhanVienDTO> list_nv = NhanVienBUS.getInstance().getListNhanVien();
-        ArrayList<KhuyenMaiDTO> list_km = KhuyenMaiBUS.getInstance().getListKhuyenMai();
+        TableRowSorter<DefaultTableModel> sorted = new TableRowSorter<>(model);
+        jTable1.setRowSorter(sorted);
+        jTextField_TimKiem.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filters();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filters();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filters();
+            }
+            
+            private void filters(){
+                String keyword = jTextField_TimKiem.getText();
+                if(keyword.isEmpty()){
+                    sorted.setRowFilter(null);
+                }else{
+                    java.util.List<RowFilter<Object,Object>> filter = new ArrayList<>();
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 0));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 1));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 2));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 3));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 4));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 6));
+                    sorted.setRowFilter(RowFilter.orFilter(filter));
+                }
+            }
+        });
         
-        for(HoaDonDTO hd: list_hd){
-            int ma_tk_kh = KhachHangBUS.getInstance().getKhachHangByMaKh(hd.getMaKh()).getMaTk();
-            int ma_tk_nv = NhanVienBUS.getInstance().getNhanVienByMaNv(hd.getMaNv()).getMaTk();
-            Object[] row = {
-                hd.getMaHd(),
-                TaiKhoanBUS.getInstance().getTaiKhoanByMaTk(ma_tk_nv).getTen(),
-                TaiKhoanBUS.getInstance().getTaiKhoanByMaTk(ma_tk_kh).getTen(),
-                hd.getTongTien(),
-                
-                
-            };
+    }
+    
+    private void export(JTable jTable, String filePath){
+        try(Workbook workbook = new XSSFWorkbook()){
+            Sheet sheet = workbook.createSheet("Danh sách Danh Mục Thuốc");
+            TableModel model = jTable.getModel();
+            
+            Row header = sheet.createRow(0);
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                Cell cell = header.createCell(i);
+                cell.setCellValue(model.getColumnName(i));
+            }
+        
+            for(int i = 0; i < model.getRowCount(); i++){
+                Row row = sheet.createRow(i+1);
+                for(int j = 0; j < model.getColumnCount(); j++){
+                    Object value = model.getValueAt(i, j);
+                    row.createCell(j).setCellValue(value != null ? value.toString() : "");
+                }
+            }
+            try(FileOutputStream fos = new FileOutputStream(filePath)){
+                workbook.write(fos);
+            }
+            
+            JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
+        }catch(IOException  ex){
+            System.out.println("view.DanhMucThuocForm1.export()");
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi xuất file Excel");
         }
     }
     
@@ -305,7 +425,6 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Export;
     private javax.swing.JButton jButton_Refresh;
-    private javax.swing.JButton jButton_Sua;
     private javax.swing.JButton jButton_Xoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

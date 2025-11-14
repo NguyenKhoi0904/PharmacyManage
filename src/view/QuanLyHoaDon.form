@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -100,11 +100,9 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="jButton_Sua" min="-2" pref="115" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jButton_Xoa" min="-2" pref="115" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Component id="jButton_Export" min="-2" pref="115" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jTextField_TimKiem" min="-2" pref="200" max="-2" attributes="0"/>
@@ -119,10 +117,9 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jButton_Export" alignment="1" max="32767" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="jButton_Sua" alignment="3" pref="80" max="32767" attributes="0"/>
-                          <Component id="jButton_Xoa" alignment="3" pref="80" max="32767" attributes="0"/>
+                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                          <Component id="jButton_Export" alignment="3" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="jButton_Xoa" alignment="3" min="-2" pref="80" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -138,17 +135,6 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton_Sua">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="S&#x1eec;A"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_Sua.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;selectedBackground: #EBEBEB;&quot;);&#xa;jButton_Sua.setIcon(new FlatSVGIcon(&quot;image/update.svg&quot;, 50, 50));&#xa;jButton_Sua.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;jButton_Sua.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;jButton_Sua.setHorizontalAlignment(SwingConstants.CENTER);&#xa;jButton_Sua.setIconTextGap(5);"/>
-          </AuxValues>
-        </Component>
         <Component class="javax.swing.JButton" name="jButton_Xoa">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -156,16 +142,25 @@
             </Property>
             <Property name="text" type="java.lang.String" value="X&#xd3;A"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_XoaActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_Xoa.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;selectedBackground: #EBEBEB;&quot;);&#xa;jButton_Xoa.setIcon(new FlatSVGIcon(&quot;image/delete.svg&quot;, 50, 50));&#xa;jButton_Xoa.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;jButton_Xoa.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;jButton_Xoa.setHorizontalAlignment(SwingConstants.CENTER);&#xa;jButton_Xoa.setIconTextGap(5);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_TimKiem">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_TimKiemActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTextField_TimKiem.putClientProperty(&#xa;    FlatClientProperties.TEXT_FIELD_LEADING_ICON,&#xa;    new FlatSVGIcon(&quot;image/search.svg&quot;, 20, 20)&#xa;);&#xa;jTextField_TimKiem.putClientProperty(&#xa;    FlatClientProperties.PLACEHOLDER_TEXT,&#xa;    &quot;T&#xec;m ki&#x1ebf;m ...&quot;&#xa;);&#xa;jTextField_TimKiem.putClientProperty(&#xa;    FlatClientProperties.STYLE,&#xa;    &quot;arc: 8;&quot;&#xa;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_Refresh">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_RefreshActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jButton_Refresh.setIcon(new FlatSVGIcon(&quot;image/reload.svg&quot;, 30, 30));"/>
           </AuxValues>

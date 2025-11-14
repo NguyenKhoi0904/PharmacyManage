@@ -5,8 +5,12 @@ import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.extras.*;
+import java.util.ArrayList;
+import javax.swing.event.DocumentEvent;
+import javax.swing.table.*;
 
 public class NhaCungCapForm extends JFrame {
 
@@ -105,6 +109,18 @@ public class NhaCungCapForm extends JFrame {
         btnLamMoi = createStyledButton3("Làm Mới");
         txtTimKiem = new JTextField(15);
         txtTimKiem.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        txtTimKiem.putClientProperty(
+            FlatClientProperties.TEXT_FIELD_LEADING_ICON,
+            new FlatSVGIcon("image/search.svg", 20, 20)
+        );
+        txtTimKiem.putClientProperty(
+            FlatClientProperties.PLACEHOLDER_TEXT,
+            "Tìm kiếm ..."
+        );
+        txtTimKiem.putClientProperty(
+            FlatClientProperties.STYLE,
+            "arc: 8;"
+        );
 
         buttonPanel.add(btnThem);
         buttonPanel.add(btnXoa);
@@ -131,6 +147,7 @@ public class NhaCungCapForm extends JFrame {
 
         addEventHandlers();
         loadTableNCC();
+        findRealTime();
     }
 
     private JButton createStyledButton(String text) {
@@ -247,6 +264,44 @@ public class NhaCungCapForm extends JFrame {
                     ncc.getDiaChi()
             });
         }
+    }
+    
+    private void findRealTime(){
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        TableRowSorter<DefaultTableModel> sorted = new TableRowSorter<>(model);
+        table.setRowSorter(sorted);
+        
+        txtTimKiem.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filters();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filters();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filters();
+            }
+            
+            private void filters(){
+                String keyword = txtTimKiem.getText();
+                if(keyword.isEmpty()){
+                    sorted.setRowFilter(null);
+                }else{
+                    java.util.List<RowFilter<Object, Object>> filter = new ArrayList<>();
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 0));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 1));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 2));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 3));
+                    filter.add(RowFilter.regexFilter("(?i)" + keyword, 4));
+                    sorted.setRowFilter(RowFilter.orFilter(filter));
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
