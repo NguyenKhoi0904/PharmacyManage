@@ -15,6 +15,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import java.awt.Color;
+
 
 public class PhieuNhapForm extends JFrame {
     private JTable tblPhieuNhap;
@@ -84,6 +87,7 @@ public class PhieuNhapForm extends JFrame {
         if (nv != null) {
             maNv = nv.getMaNv();  // Nếu tài khoản thuộc nhân viên}
             txtNhanVien.setText("Mã NV: " + maNv);
+        }
 
 
         gbc.gridx = 1; gbc.gridy = 1;
