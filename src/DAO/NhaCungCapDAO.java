@@ -118,4 +118,22 @@ public class NhaCungCapDAO implements DAOinterface<NhaCungCapDTO> {
         }
         return result;
     }
+    
+    public ArrayList<NhaCungCapDTO> selectAllIncludeInactive() {
+        ArrayList<NhaCungCapDTO> result = new ArrayList<NhaCungCapDTO>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM nhacungcap";
+            PreparedStatement pst = (PreparedStatement) conn.prepareStatement(sql);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            while (rs.next()) {
+                result.add(new NhaCungCapDTO(rs.getInt("ma_ncc"), rs.getString("ten_ncc"), rs.getString("sdt_ncc"),
+                        rs.getString("dia_chi"), rs.getString("email_ncc"), rs.getInt("trang_thai")));
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

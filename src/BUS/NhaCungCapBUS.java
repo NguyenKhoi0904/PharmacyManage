@@ -176,7 +176,7 @@ public class NhaCungCapBUS {
     
     public int generate_maNCC(){
         int max = 0;
-        for (NhaCungCapDTO ncc: listNhaCungCap){
+        for (NhaCungCapDTO ncc: this.nhaCungCapDAO.selectAllIncludeInactive()){
             if(ncc.getMaNcc()> max) max = ncc.getMaNcc();
         }
         return max+1;        
