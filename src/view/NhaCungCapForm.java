@@ -1,4 +1,3 @@
-
 package view;
 
 import BUS.NhaCungCapBUS;
@@ -55,6 +54,7 @@ public class NhaCungCapForm extends JFrame {
 
         txtMaNCC = new JTextField(15);
         txtMaNCC.setFont(txtFont);
+        txtMaNCC.setEditable(false); // user không sửa mã
         gbc.gridx = 1; gbc.gridy = 0;
         inputPanel.add(txtMaNCC, gbc);
 
@@ -148,6 +148,11 @@ public class NhaCungCapForm extends JFrame {
         addEventHandlers();
         loadTableNCC();
         findRealTime();
+        autoGenerateMaNCC();
+    }
+
+    private void autoGenerateMaNCC() {
+        txtMaNCC.setText(String.valueOf(nccBUS.generate_maNCC()));
     }
 
     private JButton createStyledButton(String text) {
@@ -191,13 +196,14 @@ public class NhaCungCapForm extends JFrame {
 
         btnThem.addActionListener(e -> {
             try {
-                int ma = Integer.parseInt(txtMaNCC.getText());
+                int ma = nccBUS.generate_maNCC(); // tự tạo mã
                 NhaCungCapDTO ncc = new NhaCungCapDTO(ma, txtTenNCC.getText(), txtSoDT.getText(),
                         txtDiaChi.getText(), txtEmail.getText(), 1);
 
                 if (nccBUS.addNhaCungCap(ncc)) {
                     JOptionPane.showMessageDialog(this, "Thêm thành công!");
                     loadTableNCC();
+                    autoGenerateMaNCC();
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ!");
@@ -225,6 +231,7 @@ public class NhaCungCapForm extends JFrame {
                 if (nccBUS.deleteNhaCungCap(ma)) {
                     JOptionPane.showMessageDialog(this, "Xóa thành công!");
                     loadTableNCC();
+                    autoGenerateMaNCC();
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Chọn mã nhà cung cấp hợp lệ!");
@@ -232,12 +239,12 @@ public class NhaCungCapForm extends JFrame {
         });
 
         btnLamMoi.addActionListener(e -> {
-            txtMaNCC.setText("");
             txtTenNCC.setText("");
             txtSoDT.setText("");
             txtEmail.setText("");
             txtDiaChi.setText("");
             txtTimKiem.setText("");
+            autoGenerateMaNCC();
         });
 
         table.getSelectionModel().addListSelectionListener(e -> {
