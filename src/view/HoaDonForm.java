@@ -1119,29 +1119,35 @@ public class HoaDonForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Giỏ hàng không được trống!");
             return;
         }
-                
+        
+        // MA KM
+        int maKM = 2;
+        KhuyenMaiDTO km = new KhuyenMaiDTO();
+
+        if (ValidationUtils.isValidIntBiggerThanZero(tfMaKM.getText())) {
+            maKM = Integer.parseInt(tfMaKM.getText());
+            km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
+            // Set ma km ve 2 neu ma hien tai het han
+            maKM = BUSManager.khuyenMaiBUS.isKMValid(km) ? km.getMaKm() : 2;
+            
+            if (!BUSManager.khuyenMaiBUS.checkDieuKienKM(km, BUSManager.khachHangBUS.getKhachHangByMaKh(this.maKH), listCTHD)) {
+                JOptionPane.showMessageDialog(this, "Không đạt đủ điều kiện");
+                return;
+            }
+        }
+        else {
+            // Nhap bua` se tra ve 2
+            maKM = 2;
+        }
+        
         try {
             float tienKhachDua = Float.parseFloat(money);
             float tongTien = Float.parseFloat(tfTongTien.getText());
             
             // MÃ KM DEFAULT = 2!!!!!!!!!!!
-//            (Mã NV, KH CẦN được lấy lại đúng!!!)
             if (tienKhachDua >= tongTien) {
                 JOptionPane.showMessageDialog(null, "Tiến hành in hóa đơn");
                 BigDecimal bd = new BigDecimal(Float.toString(tongTien));
-                KhuyenMaiDTO km = new KhuyenMaiDTO();
-                int maKM = 2;
-                
-                if (ValidationUtils.isValidIntBiggerThanZero(tfMaKM.getText())) {
-                    maKM = Integer.parseInt(tfMaKM.getText());
-                    km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
-                    // Set ma km ve 2 neu ma hien tai het han
-                    maKM = BUSManager.khuyenMaiBUS.isKMValid(km) ? km.getMaKm() : 2;
-                }
-                else {
-                    // Nhap bua` se tra ve 2
-                    maKM = 2;
-                }
                 
                 // Xử lý HD 
                 HoaDonDTO hd = new HoaDonDTO(maNV, this.maKH, maKM, bd, java.sql.Date.valueOf(java.time.LocalDate.now()), 
@@ -1152,6 +1158,13 @@ public class HoaDonForm extends javax.swing.JFrame {
                         hoaDonBUS.deleteHoaDon(hd.getMaHd());
                     }
                 }
+                
+                // Xử lý Điểm tích lũy KH (1đ = 10000VND)
+                int diemTichLuy = (int) tongTien / 10000;
+                KhachHangDTO kh = BUSManager.khachHangBUS.getKhachHangByMaKh(maKH);
+                kh.setDiemTichLuy(kh.getDiemTichLuy() + diemTichLuy);
+                BUSManager.khachHangBUS.updateKhachHang(kh);
+                
             }
             else {
                 JOptionPane.showMessageDialog(null, "Số tiền khách đưa không hợp lệ!");
@@ -1202,7 +1215,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HoaDonForm(12).setVisible(true);
+                new HoaDonForm(1).setVisible(true);
             }
         });
     }

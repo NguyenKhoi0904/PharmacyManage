@@ -83,6 +83,7 @@
                               <Component id="jLabel7" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                               <Component id="jLabel8" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
                               <Component id="lblMaNV1" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="jLabel9" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -94,6 +95,7 @@
                               <Component id="pnlNgayKT" alignment="0" max="32767" attributes="0"/>
                               <Component id="pnlNgayBD" alignment="0" max="32767" attributes="0"/>
                               <Component id="tfTenKM" alignment="0" max="32767" attributes="0"/>
+                              <Component id="tfDiemCanTichLuy" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -127,6 +129,11 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="tfDieuKien" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel9" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="tfDiemCanTichLuy" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -332,6 +339,21 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tfTenKM">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel9">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&#x110;i&#x1ec3;m c&#x1ea7;n t&#xed;ch l&#x169;y:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="tfDiemCanTichLuy">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>

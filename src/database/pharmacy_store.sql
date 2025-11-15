@@ -110,19 +110,21 @@ CREATE TABLE chitiet_pn (
 
 -- 10. Khuyến Mãi
 CREATE TABLE khuyenmai (
-    ma_km INT PRIMARY KEY,
+    ma_km INT PRIMARY KEY AUTO_INCREMENT,
     ten_km VARCHAR(100),
     loai_km VARCHAR(50),
     gia_tri_km DECIMAL(10,2),
     dieu_kien_km VARCHAR(100),
     ngay_bat_dau DATE,
     ngay_ket_thuc DATE,
-    trang_thai INT(2) NOT NULL
+    trang_thai INT(2) NOT NULL, 
+    diem_can_tich_luy INT
+    
 );
 
 -- 11. Hoá Đơn
 CREATE TABLE hoadon (
-    ma_hd INT PRIMARY KEY,
+    ma_hd INT PRIMARY KEY AUTO_INCREMENT,
     ma_nv INT,
     ma_kh INT NULL,
     ma_km INT NULL,
@@ -226,29 +228,29 @@ INSERT INTO danhmucthuoc (ma_dmt, ten_dmt, trang_thai) VALUES
 (220, 'Thuốc nhỏ mắt', 1);
 
 -- 10. Khuyến Mãi
-INSERT INTO khuyenmai (ma_km, ten_km, loai_km, gia_tri_km, dieu_kien_km, ngay_bat_dau, ngay_ket_thuc, trang_thai) VALUES
-(1, 'Giảm 10% cho khách VIP', 'Phần trăm', 10.00, 'Khách hàng có 100 điểm tích lũy', '2025-10-01', '2025-12-31', 1),
-(2, 'Mã mặc định', 'Phần trăm', 0.00, 'KHÔNG', '2025-11-01', '3025-11-30', 1),
-(3, 'Tết 2025 - Giảm 5%', 'Phần trăm', 5.00, 'Tổng > 100k', '2025-01-10', '2025-02-10', 1),
-(4, '8/3 - Giảm 10%', 'Phần trăm', 10.00, 'Khách nữ', '2025-03-01', '2025-03-10', 1),
-(5, 'Ngày thuốc Việt', 'Phần trăm', 7.00, 'Hàng Việt Nam', '2025-04-01', '2025-04-30', 1),
-(6, 'Giảm 20k cho đơn > 200k', 'Giá trị', 20000.00, 'Tổng > 200k', '2025-05-01', '2025-06-01', 1),
-(7, 'Hè năng động', 'Phần trăm', 8.00, 'Mọi khách hàng', '2025-06-01', '2025-07-15', 1),
-(8, 'Back to school', 'Phần trăm', 10.00, 'Học sinh sinh viên', '2025-08-01', '2025-09-01', 1),
-(9, 'Giảm 15% thuốc bổ não', 'Phần trăm', 15.00, 'Danh mục 212', '2025-09-10', '2025-10-10', 1),
-(10, 'Giảm 10% cho đơn trên 500k', 'Phần trăm', 10.00, 'Tổng > 500k', '2025-10-01', '2025-11-01', 1),
-(11, 'Flash sale', 'Phần trăm', 12.00, 'Mọi khách hàng', '2025-11-01', '2025-11-15', 1),
-(12, 'Mừng sinh nhật', 'Phần trăm', 5.00, 'Khách hàng có sinh nhật tháng 11', '2025-11-01', '2025-11-30', 1),
-(13, 'Noel sale', 'Phần trăm', 20.00, 'Đơn > 300k', '2025-12-01', '2025-12-31', 1),
-(14, 'Khuyến mãi đặc biệt', 'Phần trăm', 25.00, 'VIP khách hàng', '2025-12-10', '2025-12-25', 1),
-(15, 'Giảm 30k thuốc cảm', 'Giá trị', 30000.00, 'Danh mục 201', '2025-12-01', '2025-12-31', 1),
-(16, 'Xuân 2026', 'Phần trăm', 10.00, 'Tổng > 150k', '2026-01-10', '2026-02-10', 1),
-(17, 'Giảm 5% mọi đơn', 'Phần trăm', 5.00, 'Không điều kiện', '2025-11-01', '2026-01-01', 1),
-(18, 'Sinh nhật khách hàng', 'Phần trăm', 10.00, 'Theo tháng sinh', '2025-01-01', '2025-12-31', 1),
-(19, 'Tuần lễ vàng', 'Phần trăm', 12.00, 'Đơn > 1 triệu', '2025-07-10', '2025-07-17', 1),
-(20, 'Giảm 10% thực phẩm chức năng', 'Phần trăm', 10.00, 'Danh mục 218', '2025-09-01', '2025-10-01', 1),
-(21, 'Siêu ưu đãi', 'Phần trăm', 8.00, 'Tổng > 300k', '2025-08-10', '2025-09-10', 1),
-(22, 'Ưu đãi khủng', 'Khuyến mãi đặc biệt', 50.00, 'Chọn sản phẩm chỉ định', '2025-10-15', '2025-11-15', 1);
+INSERT INTO khuyenmai (ten_km, loai_km, gia_tri_km, dieu_kien_km, ngay_bat_dau, ngay_ket_thuc, trang_thai, diem_can_tich_luy) VALUES
+('Giảm 10% cho khách VIP', 'Phần trăm', 10.00, 'Khách hàng có 100 điểm tích lũy', '2025-10-01', '2025-12-31', 1, 100),
+('Mã mặc định', 'Phần trăm', 0.00, 'KHÔNG', '2025-11-01', '3025-11-30', 1, 0),
+('Tết 2025 - Giảm 5%', 'Phần trăm', 5.00, 'Tổng > 100k', '2025-01-10', '2025-02-10', 1, 0),
+('8/3 - Giảm 10%', 'Phần trăm', 10.00, 'Khách nữ', '2025-03-01', '2025-03-10', 1, 0),
+('Ngày thuốc Việt', 'Phần trăm', 7.00, 'Hàng Việt Nam', '2025-04-01', '2025-04-30', 1, 0),
+('Giảm 20k cho đơn > 200k', 'Giá trị', 20000.00, 'Tổng > 200k', '2025-05-01', '2025-06-01', 1, 20),
+('Hè năng động', 'Phần trăm', 8.00, 'Mọi khách hàng', '2025-06-01', '2025-07-15', 1, 0),
+('Back to school', 'Phần trăm', 10.00, 'Học sinh sinh viên', '2025-08-01', '2025-09-01', 1, 0),
+('Giảm 15% thuốc bổ não', 'Phần trăm', 15.00, 'Danh mục 212', '2025-09-10', '2025-10-10', 1, 0),
+('Giảm 10% cho đơn trên 500k', 'Phần trăm', 10.00, 'Tổng > 500k', '2025-10-01', '2025-11-01', 1, 0),
+('Flash sale', 'Phần trăm', 12.00, 'Mọi khách hàng', '2025-11-01', '2025-11-15', 1, 0),
+('Mừng sinh nhật', 'Phần trăm', 5.00, 'Khách hàng có sinh nhật tháng 11', '2025-11-01', '2025-11-30', 1, 0),
+('Noel sale', 'Phần trăm', 20.00, 'Đơn > 300k', '2025-12-01', '2025-12-31', 1, 0),
+('Khuyến mãi đặc biệt', 'Phần trăm', 25.00, 'VIP khách hàng', '2025-12-10', '2025-12-25', 1, 100),
+('Giảm 30k thuốc cảm', 'Giá trị', 30000.00, 'Danh mục 201', '2025-12-01', '2025-12-31', 1, 0),
+('Xuân 2026', 'Phần trăm', 10.00, 'Tổng > 150k', '2026-01-10', '2026-02-10', 1, 0),
+('Giảm 5% mọi đơn', 'Phần trăm', 5.00, 'Không điều kiện', '2025-11-01', '2026-01-01', 1, 10),
+('Sinh nhật khách hàng', 'Phần trăm', 10.00, 'Theo tháng sinh', '2025-01-01', '2025-12-31', 1, 0),
+('Tuần lễ vàng', 'Phần trăm', 12.00, 'Đơn > 1 triệu', '2025-07-10', '2025-07-17', 1, 0),
+('Giảm 10% thực phẩm chức năng', 'Phần trăm', 10.00, 'Danh mục 218', '2025-09-01', '2025-10-01', 1, 10),
+('Siêu ưu đãi', 'Phần trăm', 8.00, 'Tổng > 300k', '2025-08-10', '2025-09-10', 1, 0),
+('Ưu đãi khủng', 'Khuyến mãi đặc biệt', 50.00, 'Chọn sản phẩm chỉ định', '2025-10-15', '2025-11-15', 1, 0);
 
 -- 2. Nhân Viên
 INSERT INTO nhanvien (ma_nv, ma_tk, ngay_vao_lam, luong, email, dia_chi, gioi_tinh, ngay_sinh, vi_tri, trang_thai) VALUES
@@ -326,8 +328,8 @@ INSERT INTO thuoc (ma_thuoc, ma_dmt, ten_thuoc, gia, don_vi_tinh, nha_san_xuat, 
 
 -- 6. Lô Hàng
 INSERT INTO lohang (ma_lh, ma_ncc, ma_thuoc, sl_nhap, sl_ton, ngay_sx, han_sd, gia_nhap, trang_thai) VALUES
--- (51, 101, 61, 0, 0, '2024-01-15', '2026-01-15', 12000.00, 1),
--- (52, 102, 62, 0, 0, '2024-08-10', '2025-12-31', 95000.00, 1),
+ (51, 101, 61, 0, 0, '2024-01-15', '2026-01-15', 12000.00, 1),
+ (52, 102, 62, 0, 0, '2024-08-10', '2025-12-31', 95000.00, 1),
 -- (53, 101, 62, 0, 0, '2025-05-01', '2027-05-01', 8000.00, 1), 
 -- (54, 102, 61, 0, 0, '2024-04-10', '2028-12-31', 50000.00, 1),
 (55, 103, 63, 0, 0, '2024-12-01', '2026-12-01', 10000, 1),
@@ -432,37 +434,40 @@ INSERT INTO chitiet_pn (ma_pn, ma_lh, don_gia, so_luong) VALUES
 
 (62, 68, 70000, 50),
 (62, 69, 80000, 60),
-(62, 70, 250000, 30);
+(62, 70, 250000, 30),
+
+(62, 51, 12000, 100),
+(62, 52, 95000, 50);
 
 -- 11. Hoá Đơn 
-INSERT INTO hoadon (ma_hd, ma_nv, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, trang_thai) VALUES
-(1, 1, 11, 1, 120000.00, '2025-10-08', 'Chuyển khoản', 1),
-(2, 1, 11, 2, 50000.00, '2025-10-08', 'Tiền mặt', 1),
-(3, 2, 12, 3, 120000, '2025-05-01', 'Tiền mặt', 1),
-(4, 2, 12, 4, 180000, '2025-05-02', 'Chuyển khoản', 1),
-(5, 3, 13, 5, 220000, '2025-05-03', 'Tiền mặt', 1),
-(6, 3, 13, 6, 150000, '2025-05-04', 'Chuyển khoản', 1),
-(7, 4, 14, 7, 320000, '2025-05-05', 'Tiền mặt', 1),
-(8, 4, 14, 8, 400000, '2025-05-06', 'Chuyển khoản', 1),
-(9, 5, 15, 9, 280000, '2025-05-07', 'Tiền mặt', 1),
-(10, 5, 15, 10, 150000, '2025-05-08', 'Chuyển khoản', 1),
-(11, 6, 16, 11, 250000, '2025-05-09', 'Tiền mặt', 1),
-(12, 6, 16, 12, 370000, '2025-05-10', 'Chuyển khoản', 1),
-(13, 7, 17, 13, 420000, '2025-05-11', 'Tiền mặt', 1),
-(14, 7, 17, 14, 270000, '2025-05-12', 'Chuyển khoản', 1),
-(15, 8, 18, 15, 180000, '2025-05-13', 'Tiền mặt', 1),
-(16, 8, 18, 16, 350000, '2025-05-14', 'Chuyển khoản', 1),
-(17, 9, 19, 17, 240000, '2025-05-15', 'Tiền mặt', 1),
-(18, 9, 19, 18, 190000, '2025-05-16', 'Chuyển khoản', 1),
-(19, 10, 20, 19, 280000, '2025-05-17', 'Tiền mặt', 1),
-(20, 10, 20, 20, 500000, '2025-05-18', 'Chuyển khoản', 1),
-(21, 1, 11, 3, 150000, '2025-05-19', 'Tiền mặt', 1),
-(22, 2, 12, 4, 320000, '2025-05-20', 'Chuyển khoản', 1);
+INSERT INTO hoadon (ma_nv, ma_kh, ma_km, tong_tien, ngay_xuat, phuong_thuc_tt, trang_thai) VALUES
+(1, 11, 1, 120000.00, '2025-10-08', 'Chuyển khoản', 1),
+(1, 11, 2, 50000.00, '2025-10-08', 'Tiền mặt', 1),
+(2, 12, 3, 120000, '2025-05-01', 'Tiền mặt', 1),
+(2, 12, 4, 180000, '2025-05-02', 'Chuyển khoản', 1),
+(3, 13, 5, 220000, '2025-05-03', 'Tiền mặt', 1),
+(3, 13, 6, 150000, '2025-05-04', 'Chuyển khoản', 1),
+(4, 14, 7, 320000, '2025-05-05', 'Tiền mặt', 1),
+(4, 14, 8, 400000, '2025-05-06', 'Chuyển khoản', 1),
+(5, 15, 9, 280000, '2025-05-07', 'Tiền mặt', 1),
+(5, 15, 10, 150000, '2025-05-08', 'Chuyển khoản', 1),
+(6, 16, 11, 250000, '2025-05-09', 'Tiền mặt', 1),
+(6, 16, 12, 370000, '2025-05-10', 'Chuyển khoản', 1),
+(7, 17, 13, 420000, '2025-05-11', 'Tiền mặt', 1),
+(7, 17, 14, 270000, '2025-05-12', 'Chuyển khoản', 1),
+(8, 18, 15, 180000, '2025-05-13', 'Tiền mặt', 1),
+(8, 18, 16, 350000, '2025-05-14', 'Chuyển khoản', 1),
+(9, 19, 17, 240000, '2025-05-15', 'Tiền mặt', 1),
+(9, 19, 18, 190000, '2025-05-16', 'Chuyển khoản', 1),
+(10, 20, 19, 280000, '2025-05-17', 'Tiền mặt', 1),
+(10, 20, 20, 500000, '2025-05-18', 'Chuyển khoản', 1),
+(1, 11, 3, 150000, '2025-05-19', 'Tiền mặt', 1),
+(2, 12, 4, 320000, '2025-05-20', 'Chuyển khoản', 1);
 
 -- 12. Chi Tiết Hoá Đơn
 INSERT INTO chitiet_hd (ma_hd, ma_lh, ma_thuoc, don_gia, so_luong) VALUES
--- (1, 51, 61, 25000.00, 4),
--- (2, 51, 61, 25000.00, 2),
+(1, 51, 61, 25000.00, 4),
+(2, 51, 61, 25000.00, 2),
 (3, 55, 63, 20000, 3),
 (4, 56, 64, 15000, 4),
 (5, 57, 65, 35000, 2),

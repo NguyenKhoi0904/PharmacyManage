@@ -9,6 +9,11 @@ public class KhuyenMaiDTO {
         SAN_PHAM
     }
     
+    public enum DIEU_KIEN_KM {
+        DU_DIEM,
+        MUA_2_TANG_1
+    }
+    
     private int maKm;
     private String tenKm;
     private String loaiKm;
@@ -17,12 +22,14 @@ public class KhuyenMaiDTO {
     private Date ngayBatDau;
     private Date ngayKetThuc;
     private int trangThai;
+    private int diemCanTichLuy;
     
     private LOAI_KM eLoaiKM;
+    private DIEU_KIEN_KM eDieuKienKM;
 
     // Constructor
     public KhuyenMaiDTO(int maKm, String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
-            Date ngayKetThuc, int trangThai) {
+            Date ngayKetThuc, int trangThai, int diemCanTichLuy) {
         this.maKm = maKm;
         this.tenKm = tenKm;
         this.loaiKm = loaiKm;
@@ -31,12 +38,14 @@ public class KhuyenMaiDTO {
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.trangThai = trangThai;
+        this.diemCanTichLuy = diemCanTichLuy;
         
         setELoaiKM(loaiKm);
+        setEDieuKienKM(dieuKienKm);
     }
     
     public KhuyenMaiDTO(String tenKm, String loaiKm, BigDecimal giaTriKm, String dieuKienKm, Date ngayBatDau,
-            Date ngayKetThuc, int trangThai) {
+            Date ngayKetThuc, int trangThai, int diemCanTichLuy) {
         this.tenKm = tenKm;
         this.loaiKm = loaiKm;
         this.giaTriKm = giaTriKm;
@@ -44,8 +53,10 @@ public class KhuyenMaiDTO {
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.trangThai = trangThai;
+        this.diemCanTichLuy = diemCanTichLuy;
         
         setELoaiKM(loaiKm);
+        setEDieuKienKM(dieuKienKm);
     }
     public KhuyenMaiDTO() {
         
@@ -87,10 +98,21 @@ public class KhuyenMaiDTO {
     public LOAI_KM getELoaiKM(){
         return this.eLoaiKM;
     }
+    
+    public DIEU_KIEN_KM getEDieuKienKM(){
+        return this.eDieuKienKM;
+    }
 
+    public int getDiemCanTichLuy(){
+        return this.diemCanTichLuy;
+    }
     // set
     public void setMaKm(int maKm) {
         this.maKm = maKm;
+    }
+    
+    public void setDiemCanTichLuy(int diem) {
+        this.diemCanTichLuy = diem;
     }
 
     public void setTenKm(String tenKm) {
@@ -123,14 +145,21 @@ public class KhuyenMaiDTO {
     }
     
     public void setELoaiKM(String loaiKM){
-        switch (loaiKM) {
+        switch (loaiKM.trim()) {
             case "Phần trăm":
                 this.eLoaiKM = LOAI_KM.PHAN_TRAM;
             default:
                 this.eLoaiKM = LOAI_KM.SAN_PHAM;
         }
     }
-
+    
+    public void setEDieuKienKM(String dieuKien){
+        if (dieuKien != null && dieuKien.toLowerCase().contains("2 tặng 1")) {
+            this.eDieuKienKM = DIEU_KIEN_KM.MUA_2_TANG_1;
+        } else {
+            this.eDieuKienKM = DIEU_KIEN_KM.DU_DIEM;
+        }
+    }
     @Override
     public String toString() {
         return "KhuyenMaiDTO{" +

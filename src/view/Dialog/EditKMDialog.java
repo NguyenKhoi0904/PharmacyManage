@@ -126,6 +126,8 @@ public class EditKMDialog extends javax.swing.JDialog {
         pnlNgayBD = new javax.swing.JPanel();
         lblMaNV1 = new javax.swing.JLabel();
         tfTenKM = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        tfDiemCanTichLuy = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -215,6 +217,11 @@ public class EditKMDialog extends javax.swing.JDialog {
 
         tfTenKM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setText("Điểm cần tích lũy:");
+
+        tfDiemCanTichLuy.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
         pnlInfo.setLayout(pnlInfoLayout);
         pnlInfoLayout.setHorizontalGroup(
@@ -236,7 +243,8 @@ public class EditKMDialog extends javax.swing.JDialog {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMaNV1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblMaNV1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tfMaKM)
@@ -246,7 +254,8 @@ public class EditKMDialog extends javax.swing.JDialog {
                             .addComponent(cbTrangThai, 0, 150, Short.MAX_VALUE)
                             .addComponent(pnlNgayKT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pnlNgayBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfTenKM))))
+                            .addComponent(tfTenKM)
+                            .addComponent(tfDiemCanTichLuy))))
                 .addGap(37, 37, 37))
         );
         pnlInfoLayout.setVerticalGroup(
@@ -271,6 +280,10 @@ public class EditKMDialog extends javax.swing.JDialog {
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfDieuKien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfDiemCanTichLuy, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -336,6 +349,12 @@ public class EditKMDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Giá trị khuyến mãi phải là số!");
             return;
         }
+        
+        if (!ValidationUtils.isValidInt(tfDiemCanTichLuy.getText())) {
+            JOptionPane.showMessageDialog(this, "Tên khuyến mãi không được để trống!");
+            return;
+        }
+        
         BigDecimal giaTri = new BigDecimal(tfGiaTri.getText().trim());
 
         // 🔹 Lấy giá trị ngày từ 2 date chooser
@@ -361,6 +380,7 @@ public class EditKMDialog extends javax.swing.JDialog {
         // 🔹 Nếu tất cả hợp lệ
         try {
             int trangThai = cbTrangThai.getSelectedIndex(); // 0: tam ngung, 1: hoat dong
+            int diemCanTichLuy = Integer.parseInt(tfDiemCanTichLuy.getText());
 
             // 🔹 Chuyển từ util.Date sang sql.Date
             java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
@@ -375,7 +395,8 @@ public class EditKMDialog extends javax.swing.JDialog {
                 tfDieuKien.getText(),
                 sqlStartDate,
                 sqlEndDate,
-                trangThai // trạng thái mặc định là kích hoạt
+                trangThai, // trạng thái mặc định là kích hoạt
+                diemCanTichLuy
             );
 
             // 🔹 Gọi BUS để thêm (nếu có)
@@ -444,6 +465,7 @@ public class EditKMDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblMaKH;
     private javax.swing.JLabel lblMaKM;
     private javax.swing.JLabel lblMaNV;
@@ -451,6 +473,7 @@ public class EditKMDialog extends javax.swing.JDialog {
     private javax.swing.JPanel pnlInfo;
     private javax.swing.JPanel pnlNgayBD;
     private javax.swing.JPanel pnlNgayKT;
+    private javax.swing.JTextField tfDiemCanTichLuy;
     private javax.swing.JTextField tfDieuKien;
     private javax.swing.JTextField tfGiaTri;
     private javax.swing.JTextField tfMaKM;

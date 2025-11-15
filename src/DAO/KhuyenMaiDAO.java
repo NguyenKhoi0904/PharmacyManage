@@ -33,7 +33,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
             while (rs.next()) {
                 result.add(new KhuyenMaiDTO(rs.getInt("ma_km"), rs.getString("ten_km"), rs.getString("loai_km"),
                         rs.getBigDecimal("gia_tri_km"), rs.getString("dieu_kien_km"), rs.getDate("ngay_bat_dau"),
-                        rs.getDate("ngay_ket_thuc"), rs.getInt("trang_thai")));
+                        rs.getDate("ngay_ket_thuc"), rs.getInt("trang_thai"), rs.getInt("diem_can_tich_luy")));
             }
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -53,7 +53,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
             while (rs.next()) {
                 return new KhuyenMaiDTO(rs.getInt("ma_km"), rs.getString("ten_km"), rs.getString("loai_km"),
                         rs.getBigDecimal("gia_tri_km"), rs.getString("dieu_kien_km"), rs.getDate("ngay_bat_dau"),
-                        rs.getDate("ngay_ket_thuc"), rs.getInt("trang_thai"));
+                        rs.getDate("ngay_ket_thuc"), rs.getInt("trang_thai"), rs.getInt("diem_can_tich_luy"));
             }
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -67,7 +67,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
         int result = 0;
         try {
             // init connection
-            String sql = "INSERT INTO khuyenmai (ten_km,loai_km,gia_tri_km,dieu_kien_km,ngay_bat_dau,ngay_ket_thuc,trang_thai) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO khuyenmai (ten_km,loai_km,gia_tri_km,dieu_kien_km,ngay_bat_dau,ngay_ket_thuc,trang_thai, diem_can_tich_luy)) VALUES (?,?,?,?,?,?,?,?)";
             Connection conn = JDBCUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, data.getTenKm());
@@ -77,6 +77,7 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
             ps.setDate(5, data.getNgayBatDau());
             ps.setDate(6, data.getNgayKetThuc());
             ps.setInt(7, data.getTrangThai());
+            ps.setInt(8, data.getDiemCanTichLuy());
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
@@ -100,6 +101,8 @@ public class KhuyenMaiDAO implements DAOinterface<KhuyenMaiDTO> {
             ps.setDate(6, data.getNgayKetThuc());
             ps.setInt(7, data.getTrangThai());
             ps.setInt(8, data.getMaKm());
+            ps.setInt(9, data.getDiemCanTichLuy());
+
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {

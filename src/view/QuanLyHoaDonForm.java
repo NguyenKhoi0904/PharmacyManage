@@ -685,19 +685,19 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
-        if (selectedHD == null) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Tạo và hiển thị dialog chỉnh sửa
-        EditHDDialog dialog = new EditHDDialog((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), selectedHD);
-        dialog.setVisible(true);
-
-        // Sau khi dialog đóng, kiểm tra xem có lưu không
-        if (dialog.isSaved()) {
-            loadHoaDonData(); // reload lại bảng
-        }
+//        if (selectedHD == null) {
+//            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để chỉnh sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//
+//        // Tạo và hiển thị dialog chỉnh sửa
+//        EditHDDialog dialog = new EditHDDialog((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), selectedHD);
+//        dialog.setVisible(true);
+//
+//        // Sau khi dialog đóng, kiểm tra xem có lưu không
+//        if (dialog.isSaved()) {
+//            loadHoaDonData(); // reload lại bảng
+//        }
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed

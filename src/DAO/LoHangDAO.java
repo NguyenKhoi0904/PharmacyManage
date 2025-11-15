@@ -165,7 +165,9 @@ public class LoHangDAO implements DAOinterface<LoHangDTO> {
             // sl_thay_doi: Có thể là dương (thêm vào) hoặc âm (trừ đi)
             ps.setInt(1, sl_thay_doi);
             ps.setInt(2, ma_lh);
-
+            
+            System.out.println(ma_lh  + "");
+            System.out.println( sl_thay_doi + "");
             result = ps.executeUpdate();
             JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {

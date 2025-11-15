@@ -73,7 +73,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
 
     private JTable createMaKmTable() {
         String[] columnNames = {
-            "STT", "Mã", "Tên", "Loại", "Giá trị", "Điều kiện", "Ngày BĐ", "Ngày KT", "Trạng Thái"
+            "STT", "Mã", "Tên", "Loại", "Giá trị", "Điều kiện", "Ngày BĐ", "Ngày KT", "Trạng Thái", "Điểm cần tích lũy"
         };
 
         maKmTableModel = new DefaultTableModel(columnNames, 0);
@@ -153,7 +153,8 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                 km.getDieuKienKm(),
                 (km.getNgayBatDau() != null) ? sdf.format(km.getNgayBatDau()) : "",
                 (km.getNgayKetThuc() != null) ? sdf.format(km.getNgayKetThuc()) : "",
-                km.getTrangThai() > 0 ? "Hoạt động" : "Tạm ngừng"
+                km.getTrangThai() > 0 ? "Hoạt động" : "Tạm ngừng",
+                km.getDiemCanTichLuy()
             };
             maKmTableModel.addRow(row);
         }
@@ -628,7 +629,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         try {
             KhuyenMaiDTO newKM = new KhuyenMaiDTO(selectedKM.getMaKm(), selectedKM.getTenKm(), selectedKM.getLoaiKm(), 
                     selectedKM.getGiaTriKm(),selectedKM.getDieuKienKm(), selectedKM.getNgayBatDau(),
-                    selectedKM.getNgayKetThuc(), 0); // set trang thai ve 0
+                    selectedKM.getNgayKetThuc(), 0, selectedKM.getDiemCanTichLuy()); // set trang thai ve 0
             
             boolean voHieu = BUSManager.khuyenMaiBUS.updateKhuyenMai(newKM);
             if (voHieu) {

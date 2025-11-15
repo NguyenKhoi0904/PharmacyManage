@@ -6,6 +6,8 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import DAO.KhuyenMaiDAO;
+import DTO.ChiTietHdDTO;
+import DTO.KhachHangDTO;
 import DTO.KhuyenMaiDTO;
 import java.time.LocalDate;
 import utils.ValidationUtils;
@@ -195,4 +197,48 @@ public class KhuyenMaiBUS {
 
         return checkEffectiveDate(km);
     }
+    
+    public boolean checkDieuKienKM(KhuyenMaiDTO km, KhachHangDTO kh, ArrayList<ChiTietHdDTO> listCTHD) {
+        switch (km.getEDieuKienKM()) {
+
+            case MUA_2_TANG_1:
+                return checkMua2Tang1(listCTHD);
+
+            case DU_DIEM:
+                return checkDuDiem(km, kh);
+
+            default:
+                return false;
+        }
+    }
+
+
+    /** -------------------------------
+     * 1. Điều kiện "Mua 2 tặng 1"
+     * Phải có ít nhất một mặt hàng có số lượng >= 3
+     --------------------------------*/
+    private boolean checkMua2Tang1(ArrayList<ChiTietHdDTO> listCTHD) {
+        for (ChiTietHdDTO ct : listCTHD) {
+            if (ct.getSoLuong() >= 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /** -------------------------------
+     * 2. Điều kiện "Đủ điểm"
+     * Kiểm tra KH đủ điểm để áp dụng KM
+     * Giả sử km.getDiemCan() là số điểm cần
+     --------------------------------*/
+    private boolean checkDuDiem(KhuyenMaiDTO km, KhachHangDTO kh) {
+        if (kh == null) return false;  
+
+        int diemKH = kh.getDiemTichLuy();
+        int diemCan = km.getDiemCanTichLuy(); // điểm yêu cầu của chương trình KM
+
+        return diemKH >= diemCan;
+    }
 }
+
