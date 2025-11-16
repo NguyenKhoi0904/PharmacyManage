@@ -1,11 +1,9 @@
-package test;
+package view.Dialog;
 
 import java.awt.*;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -14,6 +12,7 @@ import DTO.DanhMucThuocDTO;
 import DTO.ThuocDTO;
 import helper.IDGenerator;
 import helper.ImageSelector;
+import utils.NumberOnlyField;
 
 public class ThemThuocDialog extends JDialog {
     private int maThuoc = IDGenerator.generateUniqueID();
@@ -165,60 +164,24 @@ public class ThemThuocDialog extends JDialog {
     // imageLabel.setIcon(new ImageIcon(scaled));
     // }
 
-    // private void updateImagePreview(String path) {
-    // try {
-    // ImageIcon icon;
-    // if (path.startsWith("/image/placeholder")) {
-    // // Ảnh mặc định trong src/resources
-    // icon = new ImageIcon(getClass().getResource(path));
-    // } else {
-    // // Ảnh do người dùng chọn (file thật trên ổ đĩa)
-    // File imgFile = new File(path);
-    // if (!imgFile.exists()) {
-    // // nếu người dùng lưu theo kiểu /image/product-image/... thì thêm "src"
-    // imgFile = new File("src" + path);
-    // }
-    // icon = new ImageIcon(imgFile.getAbsolutePath());
-    // }
-
-    // Image scaled = icon.getImage().getScaledInstance(250, 250,
-    // Image.SCALE_SMOOTH);
-    // imageLabel.setIcon(new ImageIcon(scaled));
-    // } catch (Exception e) {
-    // System.err.println("Không thể load ảnh: " + path);
-    // e.printStackTrace();
-    // }
-    // }
-
     private void updateImagePreview(String path) {
         try {
-            Image img;
-
-            // 1. Ảnh mặc định trong resources
+            ImageIcon icon;
             if (path.startsWith("/image/placeholder")) {
-                img = ImageIO.read(getClass().getResourceAsStream(path));
-            }
-            // 2. Ảnh nằm ngoài dự án (người dùng chọn)
-            else {
-                File file = new File(path);
-
-                // Nếu path lưu dạng /image/... thì sửa lại đường dẫn cho đúng
-                if (!file.exists()) {
-                    file = new File("src" + File.separator + path);
+                // Ảnh mặc định trong src/resources
+                icon = new ImageIcon(getClass().getResource(path));
+            } else {
+                // Ảnh do người dùng chọn (file thật trên ổ đĩa)
+                File imgFile = new File(path);
+                if (!imgFile.exists()) {
+                    // nếu người dùng lưu theo kiểu /image/product-image/... thì thêm "src"
+                    imgFile = new File("src" + path);
                 }
-
-                if (!file.exists()) {
-                    System.err.println("File ảnh không tồn tại: " + file.getAbsolutePath());
-                    return;
-                }
-
-                img = ImageIO.read(file);
+                icon = new ImageIcon(imgFile.getAbsolutePath());
             }
 
-            // 3. Resize mượt
-            Image scaled = img.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+            Image scaled = icon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
             imageLabel.setIcon(new ImageIcon(scaled));
-
         } catch (Exception e) {
             System.err.println("Không thể load ảnh: " + path);
             e.printStackTrace();

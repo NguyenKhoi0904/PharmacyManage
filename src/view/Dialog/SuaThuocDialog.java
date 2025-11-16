@@ -1,36 +1,37 @@
-package test;
+package view.Dialog;
+
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-
-import BUS.BUSManager;
 import DTO.DanhMucThuocDTO;
 import DTO.ThuocDTO;
-import helper.IDGenerator;
 import helper.ImageSelector;
+import utils.NumberOnlyField;
+import BUS.BUSManager;
 
-public class ThemThuocDialog extends JDialog {
-    private int maThuoc = IDGenerator.generateUniqueID();
+public class SuaThuocDialog extends JDialog {
+    private ThuocDTO thuocDTO;
     private JTextField txtTenThuoc, txtDonViTinh, txtNhaSanXuat, txtXuatXu;
     private NumberOnlyField txtGia;
     private JComboBox<DanhMucThuocDTO> comboDanhMuc;
     private JLabel imageLabel;
-    private String imagePath = "/image/product-image/placeholder_them_thuoc.jpg";
+    private String imagePath;
     private boolean confirmed = false;
 
-    public ThemThuocDialog(JFrame parent) {
-        super(parent, "🩺 Thêm thuốc mới", true);
+    public SuaThuocDialog(Frame parent, ThuocDTO thuocDTO) {
+        super(parent, "Sửa thông tin thuốc", true);
         setSize(1280, 720);
         setResizable(false);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(15, 15));
         getContentPane().setBackground(Color.WHITE);
+        this.thuocDTO = thuocDTO;
+        imagePath = thuocDTO.getUrlAnh();
 
         // ======= PANEL CHÍNH =======
         JPanel mainPanel = new JPanel(new GridLayout(1, 2, 15, 0));
@@ -51,44 +52,54 @@ public class ThemThuocDialog extends JDialog {
 
         // Mã thuốc
         infoPanel.add(new JLabel("Mã thuốc:", SwingConstants.RIGHT));
-        JLabel lblMaThuoc = new JLabel(String.valueOf(maThuoc));
+        JLabel lblMaThuoc = new JLabel(String.valueOf(thuocDTO.getMaThuoc()));
         lblMaThuoc.setFont(font);
         infoPanel.add(lblMaThuoc);
 
         // Danh mục thuốc
+        int currentSelectedIndex = -1;
+        ArrayList<DanhMucThuocDTO> listDmt = BUSManager.danhMucThuocBUS.getListDanhMucThuoc();
+        for (int i = 0; i < listDmt.size(); i++) {
+            if (thuocDTO.getMaDmt() == listDmt.get(i).getMaDmt()) {
+                currentSelectedIndex = i;
+                break;
+            }
+            currentSelectedIndex++;
+        }
         infoPanel.add(new JLabel("Danh mục:", SwingConstants.RIGHT));
         comboDanhMuc = new JComboBox<>();
         comboDanhMuc.setFont(font);
         loadDanhMuc();
+        comboDanhMuc.setSelectedIndex(currentSelectedIndex);
         infoPanel.add(comboDanhMuc);
 
         // Tên thuốc
         infoPanel.add(new JLabel("Tên thuốc:", SwingConstants.RIGHT));
-        txtTenThuoc = new JTextField();
+        txtTenThuoc = new JTextField(thuocDTO.getTenThuoc());
         txtTenThuoc.setFont(font);
         infoPanel.add(txtTenThuoc);
 
         // Giá
         infoPanel.add(new JLabel("Giá tiền (VND):", SwingConstants.RIGHT));
-        txtGia = new NumberOnlyField();
+        txtGia = new NumberOnlyField(thuocDTO.getGia().toString());
         txtGia.setFont(font);
         infoPanel.add(txtGia);
 
         // Đơn vị tính
         infoPanel.add(new JLabel("Đơn vị tính:", SwingConstants.RIGHT));
-        txtDonViTinh = new JTextField();
+        txtDonViTinh = new JTextField(thuocDTO.getDonViTinh());
         txtDonViTinh.setFont(font);
         infoPanel.add(txtDonViTinh);
 
         // Nhà sản xuất
         infoPanel.add(new JLabel("Nhà sản xuất:", SwingConstants.RIGHT));
-        txtNhaSanXuat = new JTextField();
+        txtNhaSanXuat = new JTextField(thuocDTO.getNhaSanXuat());
         txtNhaSanXuat.setFont(font);
         infoPanel.add(txtNhaSanXuat);
 
         // Xuất xứ
         infoPanel.add(new JLabel("Xuất xứ:", SwingConstants.RIGHT));
-        txtXuatXu = new JTextField();
+        txtXuatXu = new JTextField(thuocDTO.getXuatXu());
         txtXuatXu.setFont(font);
         infoPanel.add(txtXuatXu);
 
@@ -165,60 +176,24 @@ public class ThemThuocDialog extends JDialog {
     // imageLabel.setIcon(new ImageIcon(scaled));
     // }
 
-    // private void updateImagePreview(String path) {
-    // try {
-    // ImageIcon icon;
-    // if (path.startsWith("/image/placeholder")) {
-    // // Ảnh mặc định trong src/resources
-    // icon = new ImageIcon(getClass().getResource(path));
-    // } else {
-    // // Ảnh do người dùng chọn (file thật trên ổ đĩa)
-    // File imgFile = new File(path);
-    // if (!imgFile.exists()) {
-    // // nếu người dùng lưu theo kiểu /image/product-image/... thì thêm "src"
-    // imgFile = new File("src" + path);
-    // }
-    // icon = new ImageIcon(imgFile.getAbsolutePath());
-    // }
-
-    // Image scaled = icon.getImage().getScaledInstance(250, 250,
-    // Image.SCALE_SMOOTH);
-    // imageLabel.setIcon(new ImageIcon(scaled));
-    // } catch (Exception e) {
-    // System.err.println("Không thể load ảnh: " + path);
-    // e.printStackTrace();
-    // }
-    // }
-
     private void updateImagePreview(String path) {
         try {
-            Image img;
-
-            // 1. Ảnh mặc định trong resources
+            ImageIcon icon;
             if (path.startsWith("/image/placeholder")) {
-                img = ImageIO.read(getClass().getResourceAsStream(path));
-            }
-            // 2. Ảnh nằm ngoài dự án (người dùng chọn)
-            else {
-                File file = new File(path);
-
-                // Nếu path lưu dạng /image/... thì sửa lại đường dẫn cho đúng
-                if (!file.exists()) {
-                    file = new File("src" + File.separator + path);
+                // Ảnh mặc định trong src/resources
+                icon = new ImageIcon(getClass().getResource(path));
+            } else {
+                // Ảnh do người dùng chọn (file thật trên ổ đĩa)
+                File imgFile = new File(path);
+                if (!imgFile.exists()) {
+                    // nếu người dùng lưu theo kiểu /image/product-image/... thì thêm "src"
+                    imgFile = new File("src" + path);
                 }
-
-                if (!file.exists()) {
-                    System.err.println("File ảnh không tồn tại: " + file.getAbsolutePath());
-                    return;
-                }
-
-                img = ImageIO.read(file);
+                icon = new ImageIcon(imgFile.getAbsolutePath());
             }
 
-            // 3. Resize mượt
-            Image scaled = img.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+            Image scaled = icon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
             imageLabel.setIcon(new ImageIcon(scaled));
-
         } catch (Exception e) {
             System.err.println("Không thể load ảnh: " + path);
             e.printStackTrace();
@@ -252,7 +227,7 @@ public class ThemThuocDialog extends JDialog {
     public ThuocDTO getThuoc() {
         DanhMucThuocDTO dmt = (DanhMucThuocDTO) comboDanhMuc.getSelectedItem();
         return new ThuocDTO(
-                maThuoc,
+                thuocDTO.getMaThuoc(),
                 dmt != null ? dmt.getMaDmt() : 0,
                 txtTenThuoc.getText(),
                 new BigDecimal(txtGia.getText()),

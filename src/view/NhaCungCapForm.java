@@ -1,5 +1,6 @@
 package view;
 
+import BUS.BUSManager;
 import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
 
@@ -17,7 +18,8 @@ public class NhaCungCapForm extends JFrame {
     private JTable table;
     private JButton btnThem, btnXoa, btnSua, btnLamMoi;
 
-    private NhaCungCapBUS nccBUS = NhaCungCapBUS.getInstance();
+    // Thêm BUS
+    // private NhaCungCapBUS nccBUS = NhaCungCapBUS.getInstance();
 
     public NhaCungCapForm() {
         setTitle("Quản Lý Nhà Cung Cấp");
@@ -49,53 +51,62 @@ public class NhaCungCapForm extends JFrame {
 
         JLabel lblMaNCC = new JLabel("Mã NCC:");
         lblMaNCC.setFont(lblFont);
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         inputPanel.add(lblMaNCC, gbc);
 
         txtMaNCC = new JTextField(15);
         txtMaNCC.setFont(txtFont);
-        txtMaNCC.setEditable(false); // user không sửa mã
-        gbc.gridx = 1; gbc.gridy = 0;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         inputPanel.add(txtMaNCC, gbc);
 
         JLabel lblTenNCC = new JLabel("Tên NCC:");
         lblTenNCC.setFont(lblFont);
-        gbc.gridx = 2; gbc.gridy = 0;
+        gbc.gridx = 2;
+        gbc.gridy = 0;
         inputPanel.add(lblTenNCC, gbc);
 
         txtTenNCC = new JTextField(15);
         txtTenNCC.setFont(txtFont);
-        gbc.gridx = 3; gbc.gridy = 0;
+        gbc.gridx = 3;
+        gbc.gridy = 0;
         inputPanel.add(txtTenNCC, gbc);
 
         JLabel lblSoDT = new JLabel("Số điện thoại:");
         lblSoDT.setFont(lblFont);
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         inputPanel.add(lblSoDT, gbc);
 
         txtSoDT = new JTextField(15);
         txtSoDT.setFont(txtFont);
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         inputPanel.add(txtSoDT, gbc);
 
         JLabel lblEmail = new JLabel("Email:");
         lblEmail.setFont(lblFont);
-        gbc.gridx = 2; gbc.gridy = 1;
+        gbc.gridx = 2;
+        gbc.gridy = 1;
         inputPanel.add(lblEmail, gbc);
 
         txtEmail = new JTextField(15);
         txtEmail.setFont(txtFont);
-        gbc.gridx = 3; gbc.gridy = 1;
+        gbc.gridx = 3;
+        gbc.gridy = 1;
         inputPanel.add(txtEmail, gbc);
 
         JLabel lblDiaChi = new JLabel("Địa chỉ:");
         lblDiaChi.setFont(lblFont);
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         inputPanel.add(lblDiaChi, gbc);
 
         txtDiaChi = new JTextField(35);
         txtDiaChi.setFont(txtFont);
-        gbc.gridx = 1; gbc.gridy = 2;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
         gbc.gridwidth = 3;
         inputPanel.add(txtDiaChi, gbc);
         gbc.gridwidth = 1;
@@ -110,17 +121,14 @@ public class NhaCungCapForm extends JFrame {
         txtTimKiem = new JTextField(15);
         txtTimKiem.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         txtTimKiem.putClientProperty(
-            FlatClientProperties.TEXT_FIELD_LEADING_ICON,
-            new FlatSVGIcon("image/search.svg", 20, 20)
-        );
+                FlatClientProperties.TEXT_FIELD_LEADING_ICON,
+                new FlatSVGIcon("image/search.svg", 20, 20));
         txtTimKiem.putClientProperty(
-            FlatClientProperties.PLACEHOLDER_TEXT,
-            "Tìm kiếm ..."
-        );
+                FlatClientProperties.PLACEHOLDER_TEXT,
+                "Tìm kiếm ...");
         txtTimKiem.putClientProperty(
-            FlatClientProperties.STYLE,
-            "arc: 8;"
-        );
+                FlatClientProperties.STYLE,
+                "arc: 8;");
 
         buttonPanel.add(btnThem);
         buttonPanel.add(btnXoa);
@@ -135,7 +143,8 @@ public class NhaCungCapForm extends JFrame {
         centerPanel.add(topCenterPanel, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
 
-        String[] columnNames = {"Mã NCC", "Tên NCC", "Số điện thoại", "Email", "Địa chỉ"};
+        // ================= BẢNG DỮ LIỆU =================
+        String[] columnNames = { "Mã NCC", "Tên NCC", "Số điện thoại", "Email", "Địa chỉ", "Trạng thái" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);
         table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -146,13 +155,15 @@ public class NhaCungCapForm extends JFrame {
         add(scrollPane, BorderLayout.SOUTH);
 
         addEventHandlers();
+
+        // setVisible(true);
         loadTableNCC();
         findRealTime();
         autoGenerateMaNCC();
     }
 
     private void autoGenerateMaNCC() {
-        txtMaNCC.setText(String.valueOf(nccBUS.generate_maNCC()));
+        txtMaNCC.setText(String.valueOf(BUSManager.nhaCungCapBUS.generate_maNCC()));
     }
 
     private JButton createStyledButton(String text) {
@@ -164,7 +175,8 @@ public class NhaCungCapForm extends JFrame {
         btn.setFocusPainted(false);
         return btn;
     }
-    private JButton createStyledButton1(String text) {
+
+    private JButton createStyledButton1(String text) { // XÓA
         JButton btn = new JButton(text);
         btn.setBackground(new Color(244, 67, 54));
         btn.setForeground(Color.WHITE);
@@ -173,7 +185,8 @@ public class NhaCungCapForm extends JFrame {
         btn.setFocusPainted(false);
         return btn;
     }
-    private JButton createStyledButton2(String text) {
+
+    private JButton createStyledButton2(String text) { // SUA
         JButton btn = new JButton(text);
         btn.setBackground(new Color(255, 152, 0));
         btn.setForeground(Color.WHITE);
@@ -182,7 +195,18 @@ public class NhaCungCapForm extends JFrame {
         btn.setFocusPainted(false);
         return btn;
     }
-    private JButton createStyledButton3(String text) {
+
+    private JButton createStyledButton3(String text) { // LAM MOI
+        JButton btn = new JButton(text);
+        btn.setBackground(new Color(25, 118, 210));
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btn.setPreferredSize(new Dimension(140, 45));
+        btn.setFocusPainted(false);
+        return btn;
+    }
+
+    private JButton createStyledButton4(String text) { // TIM KIEM
         JButton btn = new JButton(text);
         btn.setBackground(new Color(25, 118, 210));
         btn.setForeground(Color.WHITE);
@@ -196,11 +220,11 @@ public class NhaCungCapForm extends JFrame {
 
         btnThem.addActionListener(e -> {
             try {
-                int ma = nccBUS.generate_maNCC(); // tự tạo mã
+                int ma = BUSManager.nhaCungCapBUS.generate_maNCC(); // tự tạo mã
                 NhaCungCapDTO ncc = new NhaCungCapDTO(ma, txtTenNCC.getText(), txtSoDT.getText(),
                         txtDiaChi.getText(), txtEmail.getText(), 1);
 
-                if (nccBUS.addNhaCungCap(ncc)) {
+                if (BUSManager.nhaCungCapBUS.addNhaCungCap(ncc)) {
                     JOptionPane.showMessageDialog(this, "Thêm thành công!");
                     loadTableNCC();
                     autoGenerateMaNCC();
@@ -216,7 +240,7 @@ public class NhaCungCapForm extends JFrame {
                 NhaCungCapDTO ncc = new NhaCungCapDTO(ma, txtTenNCC.getText(), txtSoDT.getText(),
                         txtDiaChi.getText(), txtEmail.getText(), 1);
 
-                if (nccBUS.updateNhaCungCap(ncc)) {
+                if (BUSManager.nhaCungCapBUS.updateNhaCungCap(ncc)) {
                     JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
                     loadTableNCC();
                 }
@@ -228,7 +252,7 @@ public class NhaCungCapForm extends JFrame {
         btnXoa.addActionListener(e -> {
             try {
                 int ma = Integer.parseInt(txtMaNCC.getText());
-                if (nccBUS.deleteNhaCungCap(ma)) {
+                if (BUSManager.nhaCungCapBUS.deleteNhaCungCap(ma)) {
                     JOptionPane.showMessageDialog(this, "Xóa thành công!");
                     loadTableNCC();
                     autoGenerateMaNCC();
@@ -262,8 +286,8 @@ public class NhaCungCapForm extends JFrame {
     private void loadTableNCC() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
-        for (NhaCungCapDTO ncc : nccBUS.getListNhaCungCap()) {
-            model.addRow(new Object[]{
+        for (NhaCungCapDTO ncc : BUSManager.nhaCungCapBUS.getListNhaCungCap()) {
+            model.addRow(new Object[] {
                     ncc.getMaNcc(),
                     ncc.getTenNcc(),
                     ncc.getSdtNcc(),
@@ -272,12 +296,12 @@ public class NhaCungCapForm extends JFrame {
             });
         }
     }
-    
-    private void findRealTime(){
-        DefaultTableModel model = (DefaultTableModel)table.getModel();
+
+    private void findRealTime() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
         TableRowSorter<DefaultTableModel> sorted = new TableRowSorter<>(model);
         table.setRowSorter(sorted);
-        
+
         txtTimKiem.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -293,12 +317,12 @@ public class NhaCungCapForm extends JFrame {
             public void changedUpdate(DocumentEvent e) {
                 filters();
             }
-            
-            private void filters(){
+
+            private void filters() {
                 String keyword = txtTimKiem.getText();
-                if(keyword.isEmpty()){
+                if (keyword.isEmpty()) {
                     sorted.setRowFilter(null);
-                }else{
+                } else {
                     java.util.List<RowFilter<Object, Object>> filter = new ArrayList<>();
                     filter.add(RowFilter.regexFilter("(?i)" + keyword, 0));
                     filter.add(RowFilter.regexFilter("(?i)" + keyword, 1));
