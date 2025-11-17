@@ -216,6 +216,7 @@ public class HoaDonBUS {
                             JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
+                System.out.println("SLTON X SOLUONG: " +lh.getSlTon() + "" + ct.getSoLuong());
                 if (lh.getSlTon() < ct.getSoLuong()) {
                     JOptionPane.showMessageDialog(null, "Không đủ tồn kho cho lô hàng " + ct.getMaLh(), "Lỗi",
                             JOptionPane.ERROR_MESSAGE);

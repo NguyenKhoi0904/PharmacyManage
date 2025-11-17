@@ -151,7 +151,7 @@ public class LoHangBUS {
         if (this.loHangDAO.updateSlTon(ma_lh, so_luong) > 0) {
             LoHangDTO lh = getLoHangByMaLh(ma_lh);
             if (lh != null)
-                lh.setSlTon(so_luong);
+                lh.setSlTon(lh.getSlTon( )+ so_luong);
             return true;
         }
         return false;
