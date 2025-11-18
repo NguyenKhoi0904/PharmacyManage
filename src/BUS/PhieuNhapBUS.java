@@ -117,26 +117,31 @@ public class PhieuNhapBUS {
         // lấy chi tiết phiếu nhập trước khi xóa để hoàn tác tồn kho
         ArrayList<ChiTietPnDTO> chiTietList = this.chiTietPnBUS.getListChiTietPnByMaPn(ma_pn);
 
-        if (this.phieuNhapDAO.deleteById(String.valueOf(ma_pn)) > 0) {
+        if (chiTietList.isEmpty()) {
+            // Nếu không có chi tiết, chỉ cần xóa phiếu nhập
+            if (this.phieuNhapDAO.deleteById(String.valueOf(ma_pn)) > 0) {
+                this.listPhieuNhap.removeIf(pn -> pn.getMaPn() == ma_pn);
+                return true;
+            }
+            JOptionPane.showMessageDialog(null, "Không thể xoá phiếu nhập.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
-            // cập nhật tồn kho trong bảng lohang sau khi xoá phiếu nhập
-            if (chiTietList != null) {
-                for (ChiTietPnDTO chiTiet : chiTietList) {
-                    // trừ đi số lượng nhập trước đó
-                    int sl_hoan_tac = -(chiTiet.getSoLuong());
-                    this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), sl_hoan_tac);
-                }
+        if (this.chiTietPnBUS.deleteAllByMaPn(ma_pn)) {
+
+            // xoá phiếu nhập
+            if (this.phieuNhapDAO.deleteById(String.valueOf(ma_pn)) > 0) {
+
+                // cập nhật cache phiếu nhập
+                this.listPhieuNhap.removeIf(pn -> pn.getMaPn() == ma_pn);
+                return true;
             }
 
-            // xoá chi tiết phiếu nhập
-            this.chiTietPnBUS.deleteAllByMaPn(ma_pn);
-
-            // cập nhật cache
-            this.listPhieuNhap.removeIf(pn -> pn.getMaPn() == ma_pn);
-            return true;
+            JOptionPane.showMessageDialog(null, "Xóa chi tiết thành công nhưng không thể xoá Phiếu nhập.", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        JOptionPane.showMessageDialog(null, "Không thể xoá phiếu nhập.", "Lỗi",
-                JOptionPane.ERROR_MESSAGE);
+
         return false;
     }
 

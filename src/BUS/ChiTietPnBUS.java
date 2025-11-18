@@ -77,12 +77,6 @@ public class ChiTietPnBUS {
             JOptionPane.showMessageDialog(null, "Chi tiết phiếu nhập không tồn tại!", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
 
-
-
-
-
-
-
             return false;
         }
 
@@ -93,10 +87,6 @@ public class ChiTietPnBUS {
                     this.listChiTietPn.set(i, chiTietPnDTO);
                     break;
                 }
-
-
-
-
 
             }
             return true;
@@ -123,10 +113,7 @@ public class ChiTietPnBUS {
             if (chiTiet != null && this.loHangBUS != null) {
                 this.loHangBUS.updateSlTonLoHang(chiTiet.getMaLh(), -chiTiet.getSoLuong());
 
-
-
             }
-
 
             // Nếu phiếu nhập không còn chi tiết -> xoá phiếu nhập
             if (this.chiTietPnDAO.selectAllByMaPn(maPn).isEmpty()) {
@@ -135,14 +122,6 @@ public class ChiTietPnBUS {
 
             this.listChiTietPn.removeIf(ct -> ct.getMaPn() == maPn && ct.getMaLh() == maLh);
             return true;
-
-
-
-
-
-
-
-
 
         }
 
@@ -197,7 +176,7 @@ public class ChiTietPnBUS {
 
     }
 
-    private ChiTietPnDTO getChiTietPnByKey(int maPn, int maLh) {
+    public ChiTietPnDTO getChiTietPnByKey(int maPn, int maLh) {
         for (ChiTietPnDTO ct : this.listChiTietPn) {
             if (ct.getMaPn() == maPn && ct.getMaLh() == maLh) {
                 return ct;

@@ -114,12 +114,6 @@ public class NhanVienDTO {
 
     @Override
     public String toString() {
-        return "NhanVienDTO{" +
-                "maNv=" + this.maNv +
-                ", maTk=" + this.maTk +
-                ", ngayVaoLam=" + this.ngayVaoLam +
-                ", luong=" + this.luong +
-                ", trangThai=" + this.trangThai +
-                '}';
+        return this.maNv + " - " + this.gioiTinh + " - " + this.ngaySinh;
     }
 }

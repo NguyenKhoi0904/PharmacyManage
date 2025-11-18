@@ -105,13 +105,7 @@ public class LoHangDTO {
 
     @Override
     public String toString() {
-        return "LoHangDTO{" +
-                "maLh=" + this.maLh +
-                ", maNcc=" + this.maNcc +
-                ", slTon=" + this.slTon +
-                ", hanSd=" + this.hanSd +
-                ", giaNhap=" + this.giaNhap +
-                ", trangthai=" + this.trangThai +
-                '}';
+        return maLh + " - " + slNhap + " - " + slTon + " - " + ngaySx + " - "
+                + hanSd + " - " + giaNhap;
     }
 }
