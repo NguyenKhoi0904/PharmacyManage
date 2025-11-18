@@ -88,6 +88,7 @@ public class AdminLayout extends javax.swing.JFrame {
         
         //
         JFrame jFrame_HoaDon = new HoaDonForm(ma_NV);
+        JFrame jFrame_QLHD = new QuanLyHoaDonForm();
         JFrame jFrame_LoHang = new LoHangForm();
         JFrame jFrame_PhieuNhap = new PhieuNhapForm();
         JFrame jFrame_KhachHang = new KhachHangForm();
@@ -115,6 +116,7 @@ public class AdminLayout extends javax.swing.JFrame {
         // /* Lấy container trong JFrame
         
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_HoaDon), "HoaDon");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_QLHD), "QuanLyHoaDon");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_LoHang), "LoHang");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_PhieuNhap), "PhieuNhap");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(jFrame_KhachHang), "KhachHang");
@@ -127,6 +129,7 @@ public class AdminLayout extends javax.swing.JFrame {
         
         // /* Dispose giải phóng bộ nhớ
         jFrame_HoaDon.dispose();
+        jFrame_QLHD.dispose();
         jFrame_LoHang.dispose();
         jFrame_PhieuNhap.dispose();
         jFrame_Thuoc.dispose();
@@ -153,6 +156,7 @@ public class AdminLayout extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jToggleButton_HoaDon = new javax.swing.JToggleButton();
+        jToggleButton_QLHD = new javax.swing.JToggleButton();
         jToggleButton_PhieuNhap = new javax.swing.JToggleButton();
         jToggleButton_LoHang = new javax.swing.JToggleButton();
         jToggleButton_NhaCungCap = new javax.swing.JToggleButton();
@@ -170,6 +174,7 @@ public class AdminLayout extends javax.swing.JFrame {
         jButton_DangXuat = new javax.swing.JButton();
 
         buttonGroup1.add(jToggleButton_HoaDon);
+        buttonGroup1.add(jToggleButton_QLHD);
         buttonGroup1.add(jToggleButton_LoHang);
         buttonGroup1.add(jToggleButton_NhaCungCap);
         buttonGroup1.add(jToggleButton_PhieuNhap);
@@ -184,7 +189,7 @@ public class AdminLayout extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1920, 1080));
 
         jPanel2.setBackground(new Color(255, 255, 255));
-        jPanel2.setLayout(new java.awt.GridLayout(0, 1, 10, 20));
+        jPanel2.setLayout(new java.awt.GridLayout(0, 1, 10, 15));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         jToggleButton_HoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -210,6 +215,28 @@ public class AdminLayout extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jToggleButton_HoaDon);
+
+        jToggleButton_QLHD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton_QLHD.setText("QL Hóa Đơn");
+        jToggleButton_QLHD.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jToggleButton_QLHD.setIcon(new FlatSVGIcon("image/bill-import.svg", 20, 20));
+        jToggleButton_QLHD.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_QLHD.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_QLHD.setIconTextGap(5);
+        jToggleButton_QLHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_QLHDActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jToggleButton_QLHD);
 
         jToggleButton_PhieuNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton_PhieuNhap.setText("Phiếu Nhập");
@@ -428,13 +455,13 @@ public class AdminLayout extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton_DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jButton_DangXuat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton_DangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                .addComponent(jButton_DangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -469,14 +496,13 @@ public class AdminLayout extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(21, 21, 21)
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 154, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
@@ -542,6 +568,12 @@ public class AdminLayout extends javax.swing.JFrame {
         card_layout.show(jPanel3, "PhieuNhap");
     }//GEN-LAST:event_jToggleButton_PhieuNhapActionPerformed
 
+    private void jToggleButton_QLHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_QLHDActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "QuanLyHoaDon");
+    }//GEN-LAST:event_jToggleButton_QLHDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -592,6 +624,7 @@ public class AdminLayout extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton_NhaCungCap;
     private javax.swing.JToggleButton jToggleButton_NhanVien;
     private javax.swing.JToggleButton jToggleButton_PhieuNhap;
+    private javax.swing.JToggleButton jToggleButton_QLHD;
     private javax.swing.JToggleButton jToggleButton_Thuoc;
     // End of variables declaration//GEN-END:variables
 }

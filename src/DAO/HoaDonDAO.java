@@ -80,7 +80,11 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
             } else {
                 ps.setInt(2, data.getMaKh());
             }
-            ps.setInt(3, data.getMaKm());
+            if (data.getMaKm() == null || data.getMaKm() <= 0) {
+                ps.setNull(3, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(3, data.getMaKm());
+            }
             ps.setBigDecimal(4, data.getTongTien());
             ps.setDate(5, data.getNgayXuat());
             ps.setString(6, data.getPhuongThucTt());
@@ -120,7 +124,11 @@ public class HoaDonDAO implements DAOinterface<HoaDonDTO> {
             } else {
                 ps.setInt(2, data.getMaKh());
             }
-            ps.setInt(3, data.getMaKm());
+            if (data.getMaKm() == null || data.getMaKm() <= 0) {
+                ps.setNull(3, java.sql.Types.INTEGER); // cho phep hd khong co km
+            } else {
+                ps.setInt(3, data.getMaKm());
+            }
             ps.setBigDecimal(4, data.getTongTien());
             ps.setDate(5, data.getNgayXuat());
             ps.setString(6, data.getPhuongThucTt());

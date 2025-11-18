@@ -471,7 +471,11 @@ public class HoaDonForm extends javax.swing.JFrame {
                 this.maKH = kh.getMaKh();
             }
             else
+            {
                 tfTenKH.setText("");
+                this.maKH = -1;
+            }
+                
         }
     }
 
@@ -1121,25 +1125,38 @@ public class HoaDonForm extends javax.swing.JFrame {
         }
         
         // MA KM
-        int maKM = 2;
-        KhuyenMaiDTO km = new KhuyenMaiDTO();
+        Integer maKM = null;   // <-- cho phép NULL
+        KhuyenMaiDTO km = null;
 
-        if (ValidationUtils.isValidIntBiggerThanZero(tfMaKM.getText())) {
-            maKM = Integer.parseInt(tfMaKM.getText());
+        String txtMaKM = tfMaKM.getText().trim();
+
+        // Nếu người dùng có nhập hợp lệ
+        if (ValidationUtils.isValidIntBiggerThanZero(txtMaKM)) {
+            maKM = Integer.parseInt(txtMaKM);
             km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
-            // Set ma km ve 2 neu ma hien tai het han
-            maKM = BUSManager.khuyenMaiBUS.isKMValid(km) ? km.getMaKm() : 2;
-            
-            if (!BUSManager.khuyenMaiBUS.checkDieuKienKM(km, BUSManager.khachHangBUS.getKhachHangByMaKh(this.maKH), listCTHD)) {
-                JOptionPane.showMessageDialog(this, "Không đạt đủ điều kiện");
-                return;
+
+            // Nếu mã KM tồn tại nhưng đã hết hạn → set null
+            if (!BUSManager.khuyenMaiBUS.isKMValid(km)) {
+                maKM = null;
+            } 
+            else {
+                // Kiểm tra điều kiện KM
+                if (!BUSManager.khuyenMaiBUS.checkDieuKienKM(
+                        km,
+                        BUSManager.khachHangBUS.getKhachHangByMaKh(this.maKH),
+                        listCTHD
+                )) {
+                    JOptionPane.showMessageDialog(this, "Không đạt đủ điều kiện khuyến mãi");
+                    return;
+                }
             }
         }
+        // Người dùng để trống hoặc nhập sai → maKM = null
         else {
-            // Nhap bua` se tra ve 2
-            maKM = 2;
+            maKM = null;
         }
-        
+
+
         try {
             float tienKhachDua = Float.parseFloat(money);
             float tongTien = Float.parseFloat(tfTongTien.getText());
@@ -1159,11 +1176,13 @@ public class HoaDonForm extends javax.swing.JFrame {
                     }
                 }
                 
-                // Xử lý Điểm tích lũy KH (1đ = 10000VND)
-                int diemTichLuy = (int) tongTien / 10000;
-                KhachHangDTO kh = BUSManager.khachHangBUS.getKhachHangByMaKh(maKH);
-                kh.setDiemTichLuy(kh.getDiemTichLuy() + diemTichLuy);
-                BUSManager.khachHangBUS.updateKhachHang(kh);
+                if (!tfTenKH.getText().isBlank()) {
+                    // Xử lý Điểm tích lũy KH (1đ = 10000VND)
+                    int diemTichLuy = (int) tongTien / 10000;
+                    KhachHangDTO kh = BUSManager.khachHangBUS.getKhachHangByMaKh(maKH);
+                    kh.setDiemTichLuy(kh.getDiemTichLuy() + diemTichLuy);
+                    BUSManager.khachHangBUS.updateKhachHang(kh);
+                }
                 
             }
             else {

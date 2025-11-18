@@ -15,11 +15,13 @@ import DTO.NhanVienDTO;
 import DTO.HoaDonDTO;
 import DTO.KhuyenMaiDTO;
 import DTO.TaiKhoanDTO;
+import DTO.ChiTietHdDTO;
 import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.HoaDonBUS;
 import BUS.KhuyenMaiBUS;
 import BUS.TaiKhoanBUS;
+import BUS.ChiTietHdBUS;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.*;
@@ -275,9 +277,13 @@ public class QuanLyHoaDon extends javax.swing.JFrame {
             return;
         }
         
-        int ma_hd = (int)jTable1.getValueAt(isSelected, 0);
-        
         try{
+            int ma_hd = (int)jTable1.getValueAt(isSelected, 0);
+            int ma_kh = (int)jTable1.getValueAt(isSelected, 2);
+            ArrayList<ChiTietHdDTO> list_cthd = ChiTietHdBUS.getInstance().getListChiTietHdByMaHd(ma_hd);
+            for (ChiTietHdDTO cthd : list_cthd){
+                
+            }
             boolean flag = HoaDonBUS.getInstance().deleteHoaDon(ma_hd);
             if(flag){
                 JOptionPane.showMessageDialog(rootPane, "Xóa hóa đơn thành công");

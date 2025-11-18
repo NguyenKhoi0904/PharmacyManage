@@ -61,6 +61,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
     private DefaultTableModel listHDTableModel;
     public QuanLyHoaDonForm() {
         initComponents();
+        editButton.setVisible(false);
         // DEBUG ONLY !!!
         BUSManager.initAllBUS();
         listHD = HoaDonBUS.getInstance().getListHoaDon();
