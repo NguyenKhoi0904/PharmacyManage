@@ -43,63 +43,63 @@ public class PhieuNhapForm extends JFrame {
         headerPanel.add(lblTitle);
         add(headerPanel, BorderLayout.NORTH);
 
-        JPanel inputPanel = new JPanel(new GridBagLayout());
-        inputPanel.setBackground(new Color(245, 245, 245));
-        inputPanel.setBorder(BorderFactory.createTitledBorder("Thông tin phiếu nhập"));
+        // JPanel inputPanel = new JPanel(new GridBagLayout());
+        // inputPanel.setBackground(new Color(245, 245, 245));
+        // inputPanel.setBorder(BorderFactory.createTitledBorder("Thông tin phiếu nhập"));
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // GridBagConstraints gbc = new GridBagConstraints();
+        // gbc.insets = new Insets(10, 10, 10, 10);
+        // gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        Font lblFont = new Font("Segoe UI", Font.PLAIN, 18);
-        Font txtFont = new Font("Segoe UI", Font.PLAIN, 16);
+        // Font lblFont = new Font("Segoe UI", Font.PLAIN, 18);
+        // Font txtFont = new Font("Segoe UI", Font.PLAIN, 16);
 
-        JLabel lblMaPn = new JLabel("Mã PN:");
-        lblMaPn.setFont(lblFont);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        inputPanel.add(lblMaPn, gbc);
+        // JLabel lblMaPn = new JLabel("Mã PN:");
+        // lblMaPn.setFont(lblFont);
+        // gbc.gridx = 0;
+        // gbc.gridy = 0;
+        // inputPanel.add(lblMaPn, gbc);
 
-        txtMaPn = new JTextField(15);
-        txtMaPn.setFont(txtFont);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        inputPanel.add(txtMaPn, gbc);
+        // txtMaPn = new JTextField(15);
+        // txtMaPn.setFont(txtFont);
+        // gbc.gridx = 1;
+        // gbc.gridy = 0;
+        // inputPanel.add(txtMaPn, gbc);
 
-        JLabel lblDiaDiem = new JLabel("Địa điểm:");
-        lblDiaDiem.setFont(lblFont);
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        inputPanel.add(lblDiaDiem, gbc);
+        // JLabel lblDiaDiem = new JLabel("Địa điểm:");
+        // lblDiaDiem.setFont(lblFont);
+        // gbc.gridx = 2;
+        // gbc.gridy = 0;
+        // inputPanel.add(lblDiaDiem, gbc);
 
-        txtDiaDiem = new JTextField(20);
-        txtDiaDiem.setFont(txtFont);
-        gbc.gridx = 3;
-        gbc.gridy = 0;
-        inputPanel.add(txtDiaDiem, gbc);
+        // txtDiaDiem = new JTextField(20);
+        // txtDiaDiem.setFont(txtFont);
+        // gbc.gridx = 3;
+        // gbc.gridy = 0;
+        // inputPanel.add(txtDiaDiem, gbc);
 
-        JLabel lblNv = new JLabel("Nhân viên:");
-        lblNv.setFont(lblFont);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        inputPanel.add(lblNv, gbc);
+        // JLabel lblNv = new JLabel("Nhân viên:");
+        // lblNv.setFont(lblFont);
+        // gbc.gridx = 0;
+        // gbc.gridy = 1;
+        // inputPanel.add(lblNv, gbc);
 
-        JTextField txtNhanVien = new JTextField(20);
-        txtNhanVien.setFont(txtFont);
-        txtNhanVien.setEditable(false);
-        TaiKhoanDTO tk = TaiKhoanBUS.getCurrentUser();
-        int maNv = 0;
-        var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(tk.getMaTk());
-        if (nv != null) {
-            maNv = nv.getMaNv(); // Nếu tài khoản thuộc nhân viên}
-            txtNhanVien.setText("Mã NV: " + maNv);
-        }
+        // JTextField txtNhanVien = new JTextField(20);
+        // txtNhanVien.setFont(txtFont);
+        // txtNhanVien.setEditable(false);
+        // TaiKhoanDTO tk = TaiKhoanBUS.getCurrentUser();
+        // int maNv = 0;
+        // var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(tk.getMaTk());
+        // if (nv != null) {
+        //     maNv = nv.getMaNv(); // Nếu tài khoản thuộc nhân viên}
+        //     txtNhanVien.setText("Mã NV: " + maNv);
+        // }
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = 3;
-        inputPanel.add(txtNhanVien, gbc);
-        gbc.gridwidth = 1;
+        // gbc.gridx = 1;
+        // gbc.gridy = 1;
+        // gbc.gridwidth = 3;
+        // inputPanel.add(txtNhanVien, gbc);
+        // gbc.gridwidth = 1;
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
         buttonPanel.setBackground(new Color(245, 245, 245));
@@ -115,7 +115,7 @@ public class PhieuNhapForm extends JFrame {
         buttonPanel.add(btnLamMoi);
 
         JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(inputPanel, BorderLayout.CENTER);
+        // topPanel.add(inputPanel, BorderLayout.CENTER);
         topPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         add(topPanel, BorderLayout.NORTH);
@@ -158,8 +158,8 @@ public class PhieuNhapForm extends JFrame {
                 int row = tblPhieuNhap.getSelectedRow();
                 if (row >= 0) {
                     int maPn = (int) modelPhieuNhap.getValueAt(row, 0);
-                    txtMaPn.setText(String.valueOf(maPn));
-                    txtDiaDiem.setText(String.valueOf(modelPhieuNhap.getValueAt(row, 3)));
+                    // txtMaPn.setText(String.valueOf(maPn));
+                    // txtDiaDiem.setText(String.valueOf(modelPhieuNhap.getValueAt(row, 3)));
                     loadChiTietData(maPn);
                 }
             }
@@ -202,8 +202,8 @@ public class PhieuNhapForm extends JFrame {
     }
 
     private void lamMoiForm() {
-        txtMaPn.setText("");
-        txtDiaDiem.setText("");
+        // txtMaPn.setText("");
+        // txtDiaDiem.setText("");
         modelChiTiet.setRowCount(0);
         loadPhieuNhapData();
     }
