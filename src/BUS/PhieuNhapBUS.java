@@ -85,9 +85,9 @@ public class PhieuNhapBUS {
         return false;
     }
 
-    public boolean updatePhieuNhap(int ma_pn, PhieuNhapDTO phieuNhapDTO) {
+    public boolean updatePhieuNhap(PhieuNhapDTO phieuNhapDTO, ArrayList<ChiTietPnDTO> dsChiTiet) {
         // kiểm tra nếu mã phiếu nhập không tồn tại
-        if (!this.getMapByMaPn().containsKey(ma_pn)) {
+        if (!this.getMapByMaPn().containsKey(phieuNhapDTO.getMaPn())) {
             JOptionPane.showMessageDialog(null, "Mã phiếu nhập không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -99,9 +99,15 @@ public class PhieuNhapBUS {
         }
 
         if (this.phieuNhapDAO.update(phieuNhapDTO) > 0) {
+            // cập nhật chi tiết phiếu nhập
+            this.chiTietPnBUS.deleteAllByMaPn(phieuNhapDTO.getMaPn());
+            for (ChiTietPnDTO chitiet : dsChiTiet) {
+                this.chiTietPnBUS.addChiTietPn(chitiet);
+            }
+
             // cập nhật cache
             for (int i = 0; i < this.listPhieuNhap.size(); i++) {
-                if (this.listPhieuNhap.get(i).getMaPn() == ma_pn) {
+                if (this.listPhieuNhap.get(i).getMaPn() == phieuNhapDTO.getMaPn()) {
                     this.listPhieuNhap.set(i, phieuNhapDTO);
                     break;
                 }

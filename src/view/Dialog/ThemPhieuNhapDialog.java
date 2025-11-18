@@ -18,7 +18,7 @@ import DTO.PhieuNhapDTO;
 import helper.IDGenerator;
 import view.PhieuNhapForm;
 
-public class AddPhieuNhapDialog extends JDialog {
+public class ThemPhieuNhapDialog extends JDialog {
     private int maPn = IDGenerator.generateUniqueID();
 
     private JTextField txtDiadiem;
@@ -29,7 +29,7 @@ public class AddPhieuNhapDialog extends JDialog {
     private ArrayList<ChiTietPnDTO> dsChiTiet;
     private Timestamp timestamp;
 
-    public AddPhieuNhapDialog(PhieuNhapForm parent) {
+    public ThemPhieuNhapDialog(PhieuNhapForm parent) {
         super(parent, "Thêm Phiếu Nhập Mới", true);
         setSize(1280, 720);
         setLocationRelativeTo(parent);
@@ -153,7 +153,7 @@ public class AddPhieuNhapDialog extends JDialog {
         // ===== THÊM CHI TIẾT =====
         btnThem.addActionListener(e -> {
             // Lấy danh sách mã PN và mã lô hàng (bạn tự truyền từ BUS)
-            AddChiTietPhieuNhapDialog dialog = new AddChiTietPhieuNhapDialog(
+            ThemChiTietPhieuNhapDialog dialog = new ThemChiTietPhieuNhapDialog(
                     this,
                     String.valueOf(maPn));
 

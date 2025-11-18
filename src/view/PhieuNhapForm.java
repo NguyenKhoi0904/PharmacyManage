@@ -9,7 +9,8 @@ import BUS.TaiKhoanBUS;
 import DTO.PhieuNhapDTO;
 import DTO.ChiTietPnDTO;
 import DTO.TaiKhoanDTO;
-import view.Dialog.AddPhieuNhapDialog;
+import view.Dialog.SuaPhieuNhapDialog;
+import view.Dialog.ThemPhieuNhapDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +28,7 @@ public class PhieuNhapForm extends JFrame {
     private DefaultTableModel modelChiTiet;
 
     private JButton btnThem, btnSua, btnXoa, btnLamMoi;
-    private JTextField txtMaPn, txtDiaDiem;
+    // private JTextField txtMaPn, txtDiaDiem;
 
     public PhieuNhapForm() {
         setTitle("Quản Lý Phiếu Nhập");
@@ -42,64 +43,6 @@ public class PhieuNhapForm extends JFrame {
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 32));
         headerPanel.add(lblTitle);
         add(headerPanel, BorderLayout.NORTH);
-
-        // JPanel inputPanel = new JPanel(new GridBagLayout());
-        // inputPanel.setBackground(new Color(245, 245, 245));
-        // inputPanel.setBorder(BorderFactory.createTitledBorder("Thông tin phiếu nhập"));
-
-        // GridBagConstraints gbc = new GridBagConstraints();
-        // gbc.insets = new Insets(10, 10, 10, 10);
-        // gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        // Font lblFont = new Font("Segoe UI", Font.PLAIN, 18);
-        // Font txtFont = new Font("Segoe UI", Font.PLAIN, 16);
-
-        // JLabel lblMaPn = new JLabel("Mã PN:");
-        // lblMaPn.setFont(lblFont);
-        // gbc.gridx = 0;
-        // gbc.gridy = 0;
-        // inputPanel.add(lblMaPn, gbc);
-
-        // txtMaPn = new JTextField(15);
-        // txtMaPn.setFont(txtFont);
-        // gbc.gridx = 1;
-        // gbc.gridy = 0;
-        // inputPanel.add(txtMaPn, gbc);
-
-        // JLabel lblDiaDiem = new JLabel("Địa điểm:");
-        // lblDiaDiem.setFont(lblFont);
-        // gbc.gridx = 2;
-        // gbc.gridy = 0;
-        // inputPanel.add(lblDiaDiem, gbc);
-
-        // txtDiaDiem = new JTextField(20);
-        // txtDiaDiem.setFont(txtFont);
-        // gbc.gridx = 3;
-        // gbc.gridy = 0;
-        // inputPanel.add(txtDiaDiem, gbc);
-
-        // JLabel lblNv = new JLabel("Nhân viên:");
-        // lblNv.setFont(lblFont);
-        // gbc.gridx = 0;
-        // gbc.gridy = 1;
-        // inputPanel.add(lblNv, gbc);
-
-        // JTextField txtNhanVien = new JTextField(20);
-        // txtNhanVien.setFont(txtFont);
-        // txtNhanVien.setEditable(false);
-        // TaiKhoanDTO tk = TaiKhoanBUS.getCurrentUser();
-        // int maNv = 0;
-        // var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(tk.getMaTk());
-        // if (nv != null) {
-        //     maNv = nv.getMaNv(); // Nếu tài khoản thuộc nhân viên}
-        //     txtNhanVien.setText("Mã NV: " + maNv);
-        // }
-
-        // gbc.gridx = 1;
-        // gbc.gridy = 1;
-        // gbc.gridwidth = 3;
-        // inputPanel.add(txtNhanVien, gbc);
-        // gbc.gridwidth = 1;
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
         buttonPanel.setBackground(new Color(245, 245, 245));
@@ -183,7 +126,7 @@ public class PhieuNhapForm extends JFrame {
 
     public void loadPhieuNhapData() {
         modelPhieuNhap.setRowCount(0);
-        ArrayList<PhieuNhapDTO> list = PhieuNhapBUS.getInstance().getListPhieuNhap();
+        ArrayList<PhieuNhapDTO> list = BUSManager.phieuNhapBUS.getListPhieuNhap();
         for (PhieuNhapDTO pn : list) {
             modelPhieuNhap.addRow(new Object[] {
                     pn.getMaPn(), pn.getMaNv(), pn.getThoiGianNhap(), pn.getDiaDiem()
@@ -209,43 +152,20 @@ public class PhieuNhapForm extends JFrame {
     }
 
     private void themPhieuNhap() {
-        AddPhieuNhapDialog dialog = new AddPhieuNhapDialog(this);
+        ThemPhieuNhapDialog dialog = new ThemPhieuNhapDialog(this);
         dialog.setVisible(true);
-
     }
 
     private void suaPhieuNhap() {
-        try {
-            int row = tblPhieuNhap.getSelectedRow();
-            if (row < 0) {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu cần sửa!");
-                return;
-            }
-
-            int maPn = Integer.parseInt(txtMaPn.getText());
-            TaiKhoanDTO tk = TaiKhoanBUS.getCurrentUser();
-            int maNv = 0;
-            var nv = NhanVienBUS.getInstance().getNhanVienByMaTk(tk.getMaTk());
-            if (nv != null) {
-                maNv = nv.getMaNv();
-            }
-
-            String diaDiem = txtDiaDiem.getText().trim();
-
-            Timestamp thoiGianNhap = (Timestamp) modelPhieuNhap.getValueAt(row, 2);
-
-            PhieuNhapDTO pn = new PhieuNhapDTO(maPn, maNv, thoiGianNhap, diaDiem, 1);
-            boolean result = PhieuNhapBUS.getInstance().updatePhieuNhap(maPn, pn);
-
-            if (result) {
-                JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
-                lamMoiForm();
-            } else {
-                JOptionPane.showMessageDialog(this, "Không thể cập nhật phiếu nhập!");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật: " + ex.getMessage());
+        int row = tblPhieuNhap.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu cần sửa!");
+            return;
         }
+        int modelRow = tblPhieuNhap.convertRowIndexToModel(row);
+        int maPn = (Integer) modelPhieuNhap.getValueAt(modelRow, 0);
+        SuaPhieuNhapDialog dialog = new SuaPhieuNhapDialog(this,BUSManager.phieuNhapBUS.getPhieuNhapByMaPn(maPn));
+        dialog.setVisible(true);
     }
 
     private void xoaPhieuNhap() {
@@ -270,12 +190,5 @@ public class PhieuNhapForm extends JFrame {
                 JOptionPane.showMessageDialog(this, "Không thể xóa phiếu nhập!");
             }
         }
-    }
-
-    public static void main(String[] args) {
-        TaiKhoanDTO fakeUser = new TaiKhoanDTO(
-                3, "nhanvien1", "123456", "Nguyen Van A", "0123456789", "admin", 1);
-        TaiKhoanBUS.setCurrentUser(fakeUser);
-        SwingUtilities.invokeLater(() -> new PhieuNhapForm().setVisible(true));
     }
 }

@@ -11,7 +11,7 @@ import java.awt.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class AddChiTietPhieuNhapDialog extends JDialog {
+public class SuaChiTietPhieuNhapDialog extends JDialog {
 
     private JLabel lblMaPn;
     private JComboBox<LoHangDTO> cboMaLh;
@@ -20,7 +20,7 @@ public class AddChiTietPhieuNhapDialog extends JDialog {
 
     private ChiTietPnDTO result = null; // <= dữ liệu trả về
 
-    public AddChiTietPhieuNhapDialog(JDialog parent, String maPn) {
+    public SuaChiTietPhieuNhapDialog(JDialog parent, String maPn) {
         super(parent, "Thêm Chi Tiết Phiếu Nhập", true);
         // ArrayList<LoHangDTO> listLoHang = BUSManager.loHangBUS.getListLoHang();
         setSize(750, 300);
