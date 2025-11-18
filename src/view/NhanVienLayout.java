@@ -27,20 +27,20 @@ public class NhanVienLayout extends javax.swing.JFrame {
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         
         HoaDonForm HoaDon = new HoaDonForm(11);
-        PhieuNhapForm PhieuNhap = new PhieuNhapForm();
         KhachHangForm KhachHang = new KhachHangForm();
         ThuocForm1 Thuoc = new ThuocForm1();
+        ThongKe tk = new ThongKe();
         
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "HoaDon");
-        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "PhieuNhap");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(KhachHang), "KhachHang");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(Thuoc), "Thuoc");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(tk), "ThongKe");
         
         // /*
         HoaDon.dispose();
-        PhieuNhap.dispose();
         KhachHang.dispose();
         Thuoc.dispose();
+        tk.dispose();
         
         // */
         
@@ -54,20 +54,20 @@ public class NhanVienLayout extends javax.swing.JFrame {
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         
         HoaDonForm HoaDon = new HoaDonForm(ma_NV);
-        PhieuNhapForm PhieuNhap = new PhieuNhapForm();
         KhachHangForm KhachHang = new KhachHangForm();
         ThuocForm1 Thuoc = new ThuocForm1();
+        ThongKe tk = new ThongKe();
         
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "HoaDon");
-        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(HoaDon), "PhieuNhap");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(KhachHang), "KhachHang");
         jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(Thuoc), "Thuoc");
+        jPanel3.add(Convert_JFrame_To_JPanel.get_components_from_jFrame(tk), "ThongKe");
         
         // /*
         HoaDon.dispose();
-        PhieuNhap.dispose();
         KhachHang.dispose();
         Thuoc.dispose();
+        tk.dispose();
         
         // */
         
@@ -92,6 +92,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
         jToggleButton_HoaDon = new javax.swing.JToggleButton();
         jToggleButton_KhachHang = new javax.swing.JToggleButton();
         jToggleButton_Thuoc = new javax.swing.JToggleButton();
+        jToggleButton_ThongKe = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jButton_DangXuat = new javax.swing.JButton();
@@ -102,6 +103,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
         buttonGroup1.add(jToggleButton_HoaDon);
         buttonGroup1.add(jToggleButton_KhachHang);
         buttonGroup1.add(jToggleButton_Thuoc);
+        buttonGroup1.add(jToggleButton_ThongKe);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -200,6 +202,28 @@ public class NhanVienLayout extends javax.swing.JFrame {
         });
         jPanel2.add(jToggleButton_Thuoc);
 
+        jToggleButton_ThongKe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton_ThongKe.setText("Thống Kê");
+        jToggleButton_ThongKe.setIcon(new FlatSVGIcon("image/statistics.svg", 20, 20));
+        jToggleButton_ThongKe.putClientProperty(FlatClientProperties.STYLE, ""
+            + "background: #FFFFFF;"
+            + "borderWidth: 0;"
+            + "focusWidth: 0;"
+            + "innerFocusWidth: 0;"
+            + "shadowWidth: 0;"
+            + "arc: 8;"
+            + "hoverBackground: #A8FFED;"
+            + "selectedBackground: #4EF5D1;");
+        jToggleButton_ThongKe.setHorizontalAlignment(SwingConstants.LEFT);
+        jToggleButton_ThongKe.setHorizontalTextPosition(SwingConstants.RIGHT);
+        jToggleButton_ThongKe.setIconTextGap(5);
+        jToggleButton_ThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_ThongKeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jToggleButton_ThongKe);
+
         jPanel3.setPreferredSize(new java.awt.Dimension(1350, 800));
         jPanel3.setLayout(new java.awt.CardLayout());
 
@@ -256,10 +280,10 @@ public class NhanVienLayout extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(321, Short.MAX_VALUE))
+                .addContainerGap(327, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,10 +295,10 @@ public class NhanVienLayout extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(367, 367, 367)
+                        .addGap(339, 339, 339)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +306,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(0, 0, Short.MAX_VALUE))))
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         pack();
@@ -312,6 +336,12 @@ public class NhanVienLayout extends javax.swing.JFrame {
         CardLayout card_layout = (CardLayout) jPanel3.getLayout();
         card_layout.show(jPanel3, "KhachHang");
     }//GEN-LAST:event_jToggleButton_KhachHangActionPerformed
+
+    private void jToggleButton_ThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_ThongKeActionPerformed
+        // TODO add your handling code here:
+        CardLayout card_layout = (CardLayout) jPanel3.getLayout();
+        card_layout.show(jPanel3, "ThongKe");
+    }//GEN-LAST:event_jToggleButton_ThongKeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,6 +386,7 @@ public class NhanVienLayout extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToggleButton jToggleButton_HoaDon;
     private javax.swing.JToggleButton jToggleButton_KhachHang;
+    private javax.swing.JToggleButton jToggleButton_ThongKe;
     private javax.swing.JToggleButton jToggleButton_Thuoc;
     // End of variables declaration//GEN-END:variables
 }
