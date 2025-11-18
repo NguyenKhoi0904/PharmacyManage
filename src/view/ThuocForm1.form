@@ -35,10 +35,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="jPanel5" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="553" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="417" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -114,7 +115,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="46" max="32767" attributes="0"/>
+                  <EmptySpace pref="9" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -122,63 +123,45 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btnThem">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="50" green="50" red="50" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/plus.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnThem.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;selectedBackground: #EBEBEB;&quot;);&#xa;btnThem.setIcon(new FlatSVGIcon(&quot;image/add.svg&quot;, 40, 40));&#xa;btnThem.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnThem.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnThem.setHorizontalAlignment(SwingConstants.CENTER);&#xa;btnThem.setIconTextGap(5);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnSua">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="50" green="50" red="50" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/wrench.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnSua.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;selectedBackground: #EBEBEB;&quot;);&#xa;btnSua.setIcon(new FlatSVGIcon(&quot;image/update.svg&quot;, 40, 40));&#xa;btnSua.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnSua.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnSua.setHorizontalAlignment(SwingConstants.CENTER);&#xa;btnSua.setIconTextGap(5);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnXoa">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="50" green="50" red="50" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/remove.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnXoa.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;selectedBackground: #EBEBEB;&quot;);&#xa;btnXoa.setIcon(new FlatSVGIcon(&quot;image/delete.svg&quot;, 40, 40));&#xa;btnXoa.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnXoa.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnXoa.setHorizontalAlignment(SwingConstants.CENTER);&#xa;btnXoa.setIconTextGap(5);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnInfo">
           <Properties>
@@ -193,9 +176,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Info"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInfoActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnImport">
           <Properties>
@@ -210,20 +190,23 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Import"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnExport">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="50" green="50" red="50" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Export"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExportActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnExport.putClientProperty(FlatClientProperties.STYLE, &quot;&quot;&#xa;    + &quot;background: #FFFFFF;&quot;&#xa;    + &quot;borderWidth: 0;&quot;&#xa;    + &quot;focusWidth: 0;&quot;&#xa;    + &quot;innerFocusWidth: 0;&quot;&#xa;    + &quot;shadowWidth: 0;&quot;&#xa;    + &quot;arc: 8;&quot;&#xa;    + &quot;selectedBackground: #EBEBEB;&quot;);&#xa;btnExport.setIcon(new FlatSVGIcon(&quot;image/export.svg&quot;, 50, 50));&#xa;btnExport.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnExport.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnExport.setHorizontalAlignment(SwingConstants.CENTER);&#xa;btnExport.setIconTextGap(5);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnThuoctinh">
           <Properties>
@@ -238,15 +221,12 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Thu&#x1ed9;c t&#xed;nh"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThuoctinhActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox4">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
@@ -257,9 +237,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnTimkiem">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/image/search.png"/>
             </Property>
@@ -273,9 +250,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField4">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
@@ -301,20 +275,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="546" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="194" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
+              <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
+              <Component id="jLabel1" alignment="0" pref="71" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -327,9 +293,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="TH&#xd4;NG TIN THU&#x1ed0;C"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
@@ -348,14 +312,8 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="tblThuoc">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="7" rowCount="24">
