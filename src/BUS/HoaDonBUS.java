@@ -8,6 +8,7 @@ import DAO.HoaDonDAO;
 import DTO.HoaDonDTO;
 import DTO.LoHangDTO;
 import DTO.ChiTietHdDTO;
+import DTO.KhachHangDTO;
 import java.math.BigDecimal;
 
 public class HoaDonBUS {
@@ -179,7 +180,14 @@ public class HoaDonBUS {
             JOptionPane.showMessageDialog(null, "Mã khuyến mãi không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
+        
+        // điểm tích lũy
+        int diemTichLuy = hoaDonDTO.getTongTien().divide(BigDecimal.valueOf(10000)).intValue();
+        if (!returnDiemTichLuy(hoaDonDTO.getMaKh(), diemTichLuy))
+        {
+            return false;
+        }
+        
         // ======== 2. THÊM HÓA ĐƠN ========
         if (this.hoaDonDAO.insert(hoaDonDTO) > 0) {
             this.listHoaDon.add(hoaDonDTO);
@@ -257,12 +265,51 @@ public class HoaDonBUS {
             return false;
         }
     }
+    public boolean returnDiemTichLuy(int maKH, int diem) {
+        // hoàn trả (hoặc + thêm) điểm tích lũy KH
+        KhachHangDTO kh = BUSManager.khachHangBUS.getKhachHangByMaKh(maKH);
+        if (kh != null)
+        {
+            int diemSauXoa = kh.getDiemTichLuy() + diem;
 
+            // Không cho điểm âm
+            if (diemSauXoa < 0) {
+                diemSauXoa = 0;
+            }
+            
+            kh.setDiemTichLuy(diemSauXoa);
+            if (!BUSManager.khachHangBUS.updateKhachHang(kh)){
+                JOptionPane.showMessageDialog(null, "Lỗi khi trả điểm cho KH!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+        }
+        
+        return true;
+    }
     public boolean updateHoaDon(int ma_hd, HoaDonDTO hoaDonDTO) {
         // kiểm tra nếu mã hoá đơn không tồn tại
         if (!this.getMapByMaHd().containsKey(ma_hd)) {
             JOptionPane.showMessageDialog(null, "Mã hoá đơn không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
+        }
+        
+        int diemTichLuy;
+        HoaDonDTO hd = getMapByMaHd().get(ma_hd);
+        // Tổng tiền cũ và mới
+        BigDecimal tongTienCu = hd.getTongTien();
+        BigDecimal tongTienMoi = hoaDonDTO.getTongTien();
+
+        // Chênh lệch tiền
+        BigDecimal chenhLech = tongTienMoi.subtract(tongTienCu);
+        if (chenhLech.compareTo(BigDecimal.ZERO) > 0)
+        {
+            // Tính điểm theo chênh lệch
+            diemTichLuy = chenhLech.divide(BigDecimal.valueOf(10000)).intValue();
+
+            if (!returnDiemTichLuy(hoaDonDTO.getMaKh(), diemTichLuy))
+            {
+                return false;
+            }
         }
 
         if (this.hoaDonDAO.update(hoaDonDTO) > 0) {
@@ -310,15 +357,22 @@ public class HoaDonBUS {
             JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết hoá đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
+        
+        // hoàn trả điểm tích lũy
+        HoaDonDTO hd = getMapByMaHd().get(ma_hd);
+        int diemTichLuy = hd.getTongTien().divide(BigDecimal.valueOf(10000)).intValue();
+        if (!returnDiemTichLuy(hd.getMaKh(), -diemTichLuy))
+        {
+            return false;
+        }
+        
         if (this.hoaDonDAO.deleteById(String.valueOf(ma_hd)) > 0) {
 
             // cập nhật cache
-            this.listHoaDon.removeIf(hd -> hd.getMaHd() == ma_hd);
-
+            this.listHoaDon.remove(hd);
             return true;
         }
-
+        
         JOptionPane.showMessageDialog(null, "Lỗi CSDL khi xoá hoá đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -327,7 +381,6 @@ public class HoaDonBUS {
 
     public boolean checkIfMaHdExist(int maHD) {
         if (this.getMapByMaHd().containsKey(maHD)) {
-            JOptionPane.showMessageDialog(null, "Mã hoá đơn đã tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return true;
         }
         return false;

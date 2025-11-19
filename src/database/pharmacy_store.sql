@@ -502,7 +502,7 @@ sl_ton = (
     WHERE chitiet_pn.ma_lh = lohang.ma_lh
 )
 WHERE EXISTS (
-    SELECT 1
+    SELECT 1    
     FROM chitiet_pn
     WHERE chitiet_pn.ma_lh = lohang.ma_lh
 );

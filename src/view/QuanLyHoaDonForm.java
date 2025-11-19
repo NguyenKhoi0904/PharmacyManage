@@ -12,6 +12,7 @@ import BUS.HoaDonBUS;
 import DTO.ChiTietHdDTO;
 import DTO.DanhMucThuocDTO;
 import DTO.HoaDonDTO;
+import DTO.KhachHangDTO;
 import DTO.ThuocDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -358,16 +359,11 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
 
                         // ✅ Kiểm tra xem mã KM có tồn tại trong DB không
                         if (!BUSManager.khuyenMaiBUS.checkIfMaKmExist(maKm)) {
-                            System.out.println("⚠️ Mã KM " + maKm + " không tồn tại. Gán mặc định = 2");
-                            maKm = 2; // mã khuyến mãi mặc định
+                            System.out.println("⚠️ Mã KM " + maKm + " không tồn tại.");
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println("⚠️ Lỗi định dạng mã KM: " + maKmStr + " → Gán mặc định = 2");
-                        maKm = 2;
+                        System.out.println("⚠️ Lỗi định dạng mã KM: " + maKmStr);
                     }
-                } else {
-                    // Nếu NULL hoặc trống → gán mặc định
-                    maKm = 2;
                 }
 
                 hd.setMaKm(maKm);

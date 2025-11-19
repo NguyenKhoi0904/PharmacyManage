@@ -1175,15 +1175,6 @@ public class HoaDonForm extends javax.swing.JFrame {
                         hoaDonBUS.deleteHoaDon(hd.getMaHd());
                     }
                 }
-                
-                if (!tfTenKH.getText().isBlank()) {
-                    // Xử lý Điểm tích lũy KH (1đ = 10000VND)
-                    int diemTichLuy = (int) tongTien / 10000;
-                    KhachHangDTO kh = BUSManager.khachHangBUS.getKhachHangByMaKh(maKH);
-                    kh.setDiemTichLuy(kh.getDiemTichLuy() + diemTichLuy);
-                    BUSManager.khachHangBUS.updateKhachHang(kh);
-                }
-                
             }
             else {
                 JOptionPane.showMessageDialog(null, "Số tiền khách đưa không hợp lệ!");
