@@ -5,10 +5,8 @@ import BUS.NhanVienBUS;
 import BUS.BUSManager;
 import BUS.ChiTietPnBUS;
 import BUS.PhieuNhapBUS;
-import BUS.TaiKhoanBUS;
 import DTO.PhieuNhapDTO;
 import DTO.ChiTietPnDTO;
-import DTO.TaiKhoanDTO;
 import view.Dialog.SuaPhieuNhapDialog;
 import view.Dialog.ThemPhieuNhapDialog;
 
@@ -16,10 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import java.awt.Color;
 
 public class PhieuNhapForm extends JFrame {
     private JTable tblPhieuNhap;
@@ -164,31 +159,65 @@ public class PhieuNhapForm extends JFrame {
         }
         int modelRow = tblPhieuNhap.convertRowIndexToModel(row);
         int maPn = (Integer) modelPhieuNhap.getValueAt(modelRow, 0);
-        SuaPhieuNhapDialog dialog = new SuaPhieuNhapDialog(this,BUSManager.phieuNhapBUS.getPhieuNhapByMaPn(maPn));
+        SuaPhieuNhapDialog dialog = new SuaPhieuNhapDialog(this, BUSManager.phieuNhapBUS.getPhieuNhapByMaPn(maPn));
         dialog.setVisible(true);
     }
 
     private void xoaPhieuNhap() {
-        int row = tblPhieuNhap.getSelectedRow();
-        if (row < 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu cần xóa!");
+
+        int rowCT = tblChiTiet.getSelectedRow();
+        int rowPN = tblPhieuNhap.getSelectedRow();
+
+        // --- TH1: Không chọn gì ---
+        if (rowCT < 0 && rowPN < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xoá!");
             return;
         }
 
-        int maPn = (int) modelPhieuNhap.getValueAt(row, 0);
-        int confirm = JOptionPane.showConfirmDialog(this,
-                "Bạn có chắc muốn xóa phiếu nhập " + maPn + " ?", "Xác nhận",
-                JOptionPane.YES_NO_OPTION);
+        // --- TH2: Ưu tiên xoá chi tiết phiếu nhập ---
+        if (rowCT >= 0) {
+            int maPn = (int) modelChiTiet.getValueAt(rowCT, 0);
+            int maLh = (int) modelChiTiet.getValueAt(rowCT, 1);
 
-        if (confirm == JOptionPane.YES_OPTION) {
-            // boolean result = PhieuNhapBUS.getInstance().deletePhieuNhap(maPn);
-            boolean result = BUSManager.phieuNhapBUS.deletePhieuNhap(maPn);
-            if (result) {
-                JOptionPane.showMessageDialog(this, "Đã xóa phiếu nhập!");
-                lamMoiForm();
-            } else {
-                JOptionPane.showMessageDialog(this, "Không thể xóa phiếu nhập!");
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Bạn có chắc muốn xoá chi tiết: Mã PN " + maPn + " - Lô hàng " + maLh + " ?",
+                    "Xác nhận", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                // boolean res = ChiTietPnBUS.getInstance().deleteChiTiet(maPn, maLo);
+                boolean res = BUSManager.chiTietPnBUS.deleteChiTietPn(maPn, maLh);
+
+                if (res) {
+                    JOptionPane.showMessageDialog(this, "Đã xoá chi tiết phiếu nhập!");
+                    loadChiTietData(maPn);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không thể xoá chi tiết!");
+                }
+            }
+            return;
+        }
+
+        // --- TH3: Nếu không chọn chi tiết → xoá phiếu nhập ---
+        if (rowPN >= 0) {
+            int maPn = (int) modelPhieuNhap.getValueAt(rowPN, 0);
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Bạn có chắc muốn xoá phiếu nhập " + maPn + " ?\n(bao gồm tất cả chi tiết liên quan)",
+                    "Xác nhận", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean res = BUSManager.phieuNhapBUS.deletePhieuNhap(maPn);
+
+                if (res) {
+                    JOptionPane.showMessageDialog(this, "Đã xoá phiếu nhập!");
+                    lamMoiForm();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không thể xoá phiếu nhập!");
+                }
             }
         }
     }
+
 }
