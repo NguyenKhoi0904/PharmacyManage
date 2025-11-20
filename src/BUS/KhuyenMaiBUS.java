@@ -131,9 +131,10 @@ public class KhuyenMaiBUS {
     private boolean checkEffectiveDate(KhuyenMaiDTO khuyenMaiDTO) {
         LocalDate start = khuyenMaiDTO.getNgayBatDau().toLocalDate();
         LocalDate end = khuyenMaiDTO.getNgayKetThuc().toLocalDate();
+        LocalDate today = LocalDate.now();
 
-        // Nếu ngày bắt đầu sau ngày kết thúc thì sai
-        return !start.isAfter(end);
+        // Nếu ngày bắt đầu sau ngày kết thúc thì sai hoặc hôm nay sau ngày hiệu lực
+        return !start.isAfter(end) || !today.isAfter(end);
     }
 
     // ========== GET DỮ LIỆU ==========

@@ -55,7 +55,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         initComponents();
         
         // DEBUG ONLY !!!
-        BUSManager.initAllBUS();
+        // BUSManager.initAllBUS();
         listKM = BUSManager.khuyenMaiBUS.getListKhuyenMai();
         
         setIcons();

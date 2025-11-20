@@ -62,12 +62,6 @@ public class KhachHangDTO {
 
     @Override
     public String toString() {
-        return "KhachHangDTO{" +
-                "maKh=" + this.maKh +
-                ", maTk=" + this.maTk +
-                ", ngayDangKy=" + this.ngayDangKy +
-                ", diemTichLuy=" + this.diemTichLuy +
-                ", trangthai=" + this.trangThai +
-                '}';
+        return maKh + " - " + ngayDangKy + " - " + diemTichLuy;
     }
 }

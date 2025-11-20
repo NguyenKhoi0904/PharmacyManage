@@ -229,10 +229,10 @@ INSERT INTO danhmucthuoc (ma_dmt, ten_dmt, trang_thai) VALUES
 
 -- 10. Khuyến Mãi
 INSERT INTO khuyenmai (ten_km, loai_km, gia_tri_km, dieu_kien_km, ngay_bat_dau, ngay_ket_thuc, trang_thai, diem_can_tich_luy) VALUES
-('Giảm 10% cho khách VIP', 'Phần trăm', 10.00, 'Khách hàng có 100 điểm tích lũy', '2025-10-01', '2025-12-31', 1, 100),
 ('Mã mặc định', 'Phần trăm', 0.00, 'KHÔNG', '2025-11-01', '3025-11-30', 1, 0),
-('Tết 2025 - Giảm 5%', 'Phần trăm', 5.00, 'Tổng > 100k', '2025-01-10', '2025-02-10', 1, 0),
-('8/3 - Giảm 10%', 'Phần trăm', 10.00, 'Khách nữ', '2025-03-01', '2025-03-10', 1, 0),
+('Giảm 10% cho khách VIP', 'Phần trăm', 10.00, 'Khách hàng có 100 điểm tích lũy', '2026-10-01', '2025-12-31', 1, 100),
+('Tết 2025 - Giảm 5%', 'Phần trăm', 5.00, 'Tổng > 100k', '2025-01-10', '2026-02-10', 1, 0),
+('8/3 - Giảm 10%', 'Phần trăm', 10.00, 'Khách nữ', '2025-03-01', '2026-03-10', 1, 0),
 ('Ngày thuốc Việt', 'Phần trăm', 7.00, 'Hàng Việt Nam', '2025-04-01', '2025-04-30', 1, 0),
 ('Giảm 20k cho đơn > 200k', 'Giá trị', 20000.00, 'Tổng > 200k', '2025-05-01', '2025-06-01', 1, 20),
 ('Hè năng động', 'Phần trăm', 8.00, 'Mọi khách hàng', '2025-06-01', '2025-07-15', 1, 0),
@@ -303,28 +303,28 @@ INSERT INTO phieunhap (ma_pn, ma_nv, thoi_gian_nhap, dia_diem, trang_thai) VALUE
 
 -- 9. Thuốc
 INSERT INTO thuoc (ma_thuoc, ma_dmt, ten_thuoc, gia, don_vi_tinh, nha_san_xuat, xuat_xu, url_anh, trang_thai) VALUES
-(61, 201, 'Panadol Cold & Flu', 25000.00, 'Vỉ (10 viên)', 'GSK', 'Anh', '/product-image/panadol_cold_and_flu.jpg', 1),
-(62, 202, 'Amoxicillin 500mg', 15000.00, 'Hộp (20 viên)', 'DHG Pharma', 'Việt Nam', '/product-image/amoxicillin.png', 1),
-(63, 203, 'Vitamin C 500mg', 20000, 'Vỉ (10 viên)', 'Traphaco', 'Việt Nam', '/product-image/vitamin_c.jpg', 1),
-(64, 204, 'Paracetamol 500mg', 15000, 'Vỉ (10 viên)', 'DHG', 'Việt Nam', '/product-image/paracetamol.jpg', 1),
-(65, 205, 'Smecta', 35000, 'Hộp (10 gói)', 'Ipsen', 'Pháp', '/product-image/smecta.jpg', 1),
-(66, 206, 'Prospan', 90000, 'Chai 100ml', 'Engelhard', 'Đức', '/product-image/prospan.jpg', 1),
-(67, 207, 'Natrilix SR', 80000, 'Hộp (30 viên)', 'Servier', 'Pháp', '/product-image/natrilix_sr.jpg', 1),
-(68, 208, 'Fucidin Cream', 95000, 'Tuýp 15g', 'Leo Pharma', 'Đan Mạch', '/product-image/fucidin_cream.jpg', 1),
-(69, 209, 'Piracetam 800mg', 50000, 'Hộp (30 viên)', 'DHG', 'Việt Nam', '/product-image/piracetam.jpg', 1),
-(70, 210, 'Loratadin 10mg', 25000, 'Vỉ (10 viên)', 'Stada', 'Việt Nam', '/product-image/loratadine.jpg', 1),
-(71, 211, 'Mobic 7.5mg', 70000, 'Hộp (10 viên)', 'Boehringer', 'Đức', '/product-image/mobic.jpg', 1),
-(72, 212, 'Ginkgo Biloba', 120000, 'Hộp (60 viên)', 'Traphaco', 'Việt Nam', '/product-image/ginkgo_biloba.jpg', 1),
-(73, 213, 'Metformin 500mg', 30000, 'Hộp (20 viên)', 'DHG', 'Việt Nam', '/product-image/metformin.jpg', 1),
-(74, 214, 'Atorvastatin 10mg', 45000, 'Hộp (20 viên)', 'Stada', 'Việt Nam', '/product-image/atorvastatin.jpg', 1),
-(75, 215, 'Omeprazol 20mg', 40000, 'Hộp (14 viên)', 'DHG', 'Việt Nam', '/product-image/omeprazol.jpg', 1),
-(76, 216, 'Canesten Cream', 85000, 'Tuýp 20g', 'Bayer', 'Đức', '/product-image/canesten_cream.jfif', 1),
-(77, 217, 'Sertraline 50mg', 90000, 'Hộp (30 viên)', 'Pfizer', 'Anh', '/product-image/sertraline.jpg', 1),
-(78, 218, 'Blackmores Fish Oil', 350000, 'Lọ (100 viên)', 'Blackmores', 'Úc', '/product-image/fishoil.png', 1),
-(79, 219, 'Tamiflu 75mg', 220000, 'Hộp (10 viên)', 'Roche', 'Thụy Sĩ', '/product-image/tamiflu.jpg', 1),
-(80, 220, 'V.Rohto', 40000, 'Chai 13ml', 'Rohto', 'Nhật Bản', '/product-image/rohto.jpg', 1),
-(81, 203, 'Vitamin D3 1000IU', 50000, 'Lọ (60 viên)', 'Traphaco', 'Việt Nam', '/product-image/vitaminD3.jpg', 1),
-(82, 205, 'Enterogermina', 95000, 'Hộp (10 ống)', 'Sanofi', 'Pháp', '/product-image/enterogermina.jpg', 1);
+(61, 201, 'Panadol Cold & Flu', 25000.00, 'Vỉ (10 viên)', 'GSK', 'Anh', '/image/product-image/panadol_cold_and_flu.jpg', 1),
+(62, 202, 'Amoxicillin 500mg', 15000.00, 'Hộp (20 viên)', 'DHG Pharma', 'Việt Nam', '/image/product-image/amoxicillin.png', 1),
+(63, 203, 'Vitamin C 500mg', 20000, 'Vỉ (10 viên)', 'Traphaco', 'Việt Nam', '/image/product-image/vitamin_c.jpg', 1),
+(64, 204, 'Paracetamol 500mg', 15000, 'Vỉ (10 viên)', 'DHG', 'Việt Nam', '/image/product-image/paracetamol.jpg', 1),
+(65, 205, 'Smecta', 35000, 'Hộp (10 gói)', 'Ipsen', 'Pháp', '/image/product-image/smecta.jpg', 1),
+(66, 206, 'Prospan', 90000, 'Chai 100ml', 'Engelhard', 'Đức', '/image/product-image/prospan.jpg', 1),
+(67, 207, 'Natrilix SR', 80000, 'Hộp (30 viên)', 'Servier', 'Pháp', '/image/product-image/natrilix_sr.jpg', 1),
+(68, 208, 'Fucidin Cream', 95000, 'Tuýp 15g', 'Leo Pharma', 'Đan Mạch', '/image/product-image/fucidin_cream.jpg', 1),
+(69, 209, 'Piracetam 800mg', 50000, 'Hộp (30 viên)', 'DHG', 'Việt Nam', '/image/product-image/piracetam.jpg', 1),
+(70, 210, 'Loratadin 10mg', 25000, 'Vỉ (10 viên)', 'Stada', 'Việt Nam', '/image/product-image/loratadine.jpg', 1),
+(71, 211, 'Mobic 7.5mg', 70000, 'Hộp (10 viên)', 'Boehringer', 'Đức', '/image/product-image/mobic.jpg', 1),
+(72, 212, 'Ginkgo Biloba', 120000, 'Hộp (60 viên)', 'Traphaco', 'Việt Nam', '/image/product-image/ginkgo_biloba.jpg', 1),
+(73, 213, 'Metformin 500mg', 30000, 'Hộp (20 viên)', 'DHG', 'Việt Nam', '/image/product-image/metformin.jpg', 1),
+(74, 214, 'Atorvastatin 10mg', 45000, 'Hộp (20 viên)', 'Stada', 'Việt Nam', '/image/product-image/atorvastatin.jpg', 1),
+(75, 215, 'Omeprazol 20mg', 40000, 'Hộp (14 viên)', 'DHG', 'Việt Nam', '/image/product-image/omeprazol.jpg', 1),
+(76, 216, 'Canesten Cream', 85000, 'Tuýp 20g', 'Bayer', 'Đức', '/image/product-image/canesten_cream.jfif', 1),
+(77, 217, 'Sertraline 50mg', 90000, 'Hộp (30 viên)', 'Pfizer', 'Anh', '/image/product-image/sertraline.jpg', 1),
+(78, 218, 'Blackmores Fish Oil', 350000, 'Lọ (100 viên)', 'Blackmores', 'Úc', '/image/product-image/fishoil.png', 1),
+(79, 219, 'Tamiflu 75mg', 220000, 'Hộp (10 viên)', 'Roche', 'Thụy Sĩ', '/image/product-image/tamiflu.jpg', 1),
+(80, 220, 'V.Rohto', 40000, 'Chai 13ml', 'Rohto', 'Nhật Bản', '/image/product-image/rohto.jpg', 1),
+(81, 203, 'Vitamin D3 1000IU', 50000, 'Lọ (60 viên)', 'Traphaco', 'Việt Nam', '/image/product-image/vitaminD3.jpg', 1),
+(82, 205, 'Enterogermina', 95000, 'Hộp (10 ống)', 'Sanofi', 'Pháp', '/image/product-image/enterogermina.jpg', 1);
 
 -- 6. Lô Hàng
 INSERT INTO lohang (ma_lh, ma_ncc, ma_thuoc, sl_nhap, sl_ton, ngay_sx, han_sd, gia_nhap, trang_thai) VALUES
