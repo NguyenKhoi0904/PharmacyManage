@@ -82,6 +82,7 @@ public class EditKMDialog extends javax.swing.JDialog {
         setCBLoaiKM();
         tfGiaTri.setText(khuyenMai.getGiaTriKm() + "");
         tfDieuKien.setText(khuyenMai.getDieuKienKm());
+        tfDiemCanTichLuy.setText(String.valueOf(khuyenMai.getDiemCanTichLuy()));
         
         // Set Date chooser base on khuyenMai
         startDateChooser.setDate(khuyenMai.getNgayBatDau());
