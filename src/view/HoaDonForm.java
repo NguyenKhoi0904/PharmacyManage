@@ -61,7 +61,8 @@ public class HoaDonForm extends javax.swing.JFrame {
      */
     public HoaDonForm(int maNV) {
         initComponents();
-        
+        tfMaKH.setVisible(false);
+        tfMaKM.setVisible(false);
         this.maNV = maNV;
         
         // DEBUG ONLY !!!
@@ -74,6 +75,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         setIcons();
         setupListProduct();
         setupCartProducts();
+        setupCBMaKH();
+        setupCBMaKM();
         
         addEventForInvoicePanel();
         addEventForSearching(tfTimKiemThuoc ,thuocTable, listThuoc);
@@ -128,7 +131,22 @@ public class HoaDonForm extends javax.swing.JFrame {
         IconUtils.setIcon(addButton, "cart.png", true);
         IconUtils.setIcon(deleteButton, "trash.png", true);
     }
+    
+    private void setupCBMaKH() {
+        cbMaKH.removeAllItems();
+        for (KhachHangDTO kh : BUSManager.khachHangBUS.getListKhachHang())
+        {
+            cbMaKH.addItem(kh.getMaKh() + "");
+        }
+    }
 
+    private void setupCBMaKM() {
+        cbMaKM.removeAllItems();
+        for (KhuyenMaiDTO km : BUSManager.khuyenMaiBUS.getListKhuyenMai())
+        {
+            cbMaKM.addItem(km.getMaKm() + "");
+        }
+    }
     private JTable createThuocTable() {
         String[] columnNames = {
             "Mã thuốc", "Tên thuốc", "Danh mục", "Xuất xứ",
@@ -450,16 +468,16 @@ public class HoaDonForm extends javax.swing.JFrame {
         // Ma KM
         tfMaKH.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) { refreshTenKH(); }
+            public void insertUpdate(DocumentEvent e) { refreshInfoKH(); }
             @Override
-            public void removeUpdate(DocumentEvent e) { refreshTenKH(); }
+            public void removeUpdate(DocumentEvent e) { refreshInfoKH(); }
             @Override
-            public void changedUpdate(DocumentEvent e) { refreshTenKH(); }
+            public void changedUpdate(DocumentEvent e) { refreshInfoKH(); }
         });
     }
     
     // Tam thoi chua co field tenKH
-    private void refreshTenKH(){
+    private void refreshInfoKH(){
         if (ValidationUtils.isValidInt(tfMaKH.getText())){
             int maKH = Integer.parseInt(tfMaKH.getText());
             KhachHangDTO kh = BUSManager.khachHangBUS.getKhachHangByMaKh(maKH);
@@ -467,12 +485,13 @@ public class HoaDonForm extends javax.swing.JFrame {
             {
                 TaiKhoanDTO tk = BUSManager.taiKhoanBUS.getTaiKhoanByMaTk(kh.getMaTk());
                 tfTenKH.setText(tk.getTen() + "");
-                
+                tfSDT.setText(tk.getSdt());
                 this.maKH = kh.getMaKh();
             }
             else
             {
                 tfTenKH.setText("");
+                tfSDT.setText("");
                 this.maKH = -1;
             }
                 
@@ -528,13 +547,15 @@ public class HoaDonForm extends javax.swing.JFrame {
         tfTienKhachDua = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         tfTienThua = new javax.swing.JTextField();
-        genderComboBox = new javax.swing.JComboBox<>();
+        cbGender = new javax.swing.JComboBox<>();
         btnIn = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
         tfMaKM = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         paymentComboBox = new javax.swing.JComboBox<>();
         tfMaKH = new javax.swing.JTextField();
+        cbMaKH = new javax.swing.JComboBox<>();
+        cbMaKM = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1350, 800));
@@ -857,6 +878,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel10.setText("Số điện thoại:");
 
         tfSDT.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tfSDT.setEnabled(false);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel11.setText("Tên KH");
@@ -881,7 +903,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         tfTienThua.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tfTienThua.setEnabled(false);
 
-        genderComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
+        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
+        cbGender.setEnabled(false);
 
         btnIn.setBackground(new java.awt.Color(51, 255, 0));
         btnIn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -900,6 +923,7 @@ public class HoaDonForm extends javax.swing.JFrame {
 
         tfMaKM.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tfMaKM.setText("Mã KM");
+        tfMaKM.setEnabled(false);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel15.setText("Phương thức thanh toán:");
@@ -909,6 +933,7 @@ public class HoaDonForm extends javax.swing.JFrame {
 
         tfMaKH.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tfMaKH.setText("Mã KH");
+        tfMaKH.setEnabled(false);
 
         javax.swing.GroupLayout invoicePanelLayout = new javax.swing.GroupLayout(invoicePanel);
         invoicePanel.setLayout(invoicePanelLayout);
@@ -945,11 +970,13 @@ public class HoaDonForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tfTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(genderComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfMaKM, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                            .addComponent(tfMaKH, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
-                        .addContainerGap(62, Short.MAX_VALUE))
+                        .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfMaKM, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(tfMaKH)
+                            .addComponent(cbMaKH, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbMaKM, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, invoicePanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -963,33 +990,37 @@ public class HoaDonForm extends javax.swing.JFrame {
             .addGroup(invoicePanelLayout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tfMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tfSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(cbMaKH))
                 .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(invoicePanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(invoicePanelLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(genderComboBox))
+                        .addComponent(cbGender))
                     .addGroup(invoicePanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbMaKM))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(invoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1237,8 +1268,10 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JButton btnIn;
     private javax.swing.JPanel cartPanel;
     private javax.swing.JPanel cartProductsPanel;
+    private javax.swing.JComboBox<String> cbGender;
+    private javax.swing.JComboBox<String> cbMaKH;
+    private javax.swing.JComboBox<String> cbMaKM;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JComboBox<String> genderComboBox;
     private javax.swing.JPanel invoicePanel;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;
@@ -1279,4 +1312,6 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JTextField tfTimKiemThuoc;
     private javax.swing.JTextField tfTongTien;
     // End of variables declaration//GEN-END:variables
+
+
 }
