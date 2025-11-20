@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import DAO.ChiTietHdDAO;
 import DTO.ChiTietHdDTO;
 import DTO.HoaDonDTO;
+import DTO.ThuocDTO;
 import java.math.BigDecimal;
 
 public class ChiTietHdBUS {
@@ -126,6 +127,12 @@ public class ChiTietHdBUS {
 
             // Xóa chi tiết
             if (this.chiTietHdDAO.deleteById(ma_hd, ma_lh, ma_thuoc) > 0) {
+                // Hoan tra diem tich luy
+                ThuocDTO thuoc = BUSManager.thuocBUS.getThuocByMaThuoc(ma_thuoc);
+                HoaDonDTO hd = BUSManager.hoaDonBUS.getHoaDonByMaHd(ma_hd);
+                int diem = thuoc.getGia().divide(BigDecimal.valueOf(10000)).intValue();
+                BUSManager.hoaDonBUS.returnDiemTichLuy(hd.getMaHd(), -diem);
+                
                 listChiTietHd.remove(ctToDelete);
                 return true;
             }
