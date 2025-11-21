@@ -64,7 +64,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         initComponents();
         editButton.setVisible(false);
         // DEBUG ONLY !!!
-        BUSManager.initAllBUS();
+        // BUSManager.initAllBUS();
         listHD = HoaDonBUS.getInstance().getListHoaDon();
         
         setupListHoaDon();

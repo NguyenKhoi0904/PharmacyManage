@@ -15,6 +15,7 @@ public class ChiTietHdBUS {
     private static ChiTietHdBUS instance;
 
     private final ChiTietHdDAO chiTietHdDAO;
+    private HoaDonBUS hoaDonBUS;
     private ArrayList<ChiTietHdDTO> listChiTietHd;
 
     private ChiTietHdBUS() {
@@ -50,7 +51,7 @@ public class ChiTietHdBUS {
 
                 return true;
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Không thể cập nhật HĐ: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Không thể thêm HĐ: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
         return false;
@@ -192,5 +193,9 @@ public class ChiTietHdBUS {
 
     public ChiTietHdDTO getCTHDBy3Key(int maHd, int maLh, int maThuoc) {
         return ChiTietHdDAO.getInstance().selectByCompositeKey(maHd, maLh, maThuoc);
+    }
+
+    public void setHoaDonBUS(HoaDonBUS hoaDonBUS) {
+        this.hoaDonBUS = hoaDonBUS;
     }
 }

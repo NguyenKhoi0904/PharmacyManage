@@ -287,16 +287,10 @@ public class LoHangForm extends javax.swing.JFrame {
         jLabel_GiaNhap.setText("Giá Nhập");
 
         jTextField_SL_Nhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField_TimKiem.putClientProperty(
-            FlatClientProperties.STYLE,
-            "arc: 8;"
-        );
+        jTextField_SL_Nhap.putClientProperty(FlatClientProperties.STYLE, "arc: 8;");
 
         jTextField_GiaNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField_TimKiem.putClientProperty(
-            FlatClientProperties.STYLE,
-            "arc: 8;"
-        );
+        jTextField_GiaNhap.putClientProperty(FlatClientProperties.STYLE, "arc: 8;");
 
         jLabel_Thuoc.setBackground(new java.awt.Color(0, 0, 0));
         jLabel_Thuoc.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N

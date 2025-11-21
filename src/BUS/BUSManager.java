@@ -49,6 +49,7 @@ public class BUSManager {
         hoaDonBUS.setKhuyenMaiBUS(khuyenMaiBUS);
         hoaDonBUS.setLoHangBUS(loHangBUS);
         hoaDonBUS.setNhanVienBUS(nhanVienBUS);
+        chiTietHdBUS.setHoaDonBUS(hoaDonBUS);
 
         System.out.println("BUSManager init hoàn tất.");
     }

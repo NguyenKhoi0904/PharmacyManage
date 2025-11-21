@@ -3,6 +3,8 @@ package DTO;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import helper.IDGenerator;
+
 public class HoaDonDTO {
     private int maHd;
     private int maNv;
@@ -29,7 +31,8 @@ public class HoaDonDTO {
     
     public HoaDonDTO(int maNv, int maKh, Integer maKm, BigDecimal tongTien, Date ngayXuat,
             String phuongThucTt,
-            int trangThai) {    
+            int trangThai) {   
+        this.maHd = IDGenerator.generateUniqueID(); 
         this.maNv = maNv;
         this.maKh = maKh;
         this.maKm = maKm;

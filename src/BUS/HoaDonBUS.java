@@ -27,12 +27,12 @@ public class HoaDonBUS {
 
     private HoaDonBUS() {
         this.hoaDonDAO = HoaDonDAO.getInstance();
-        // this.chiTietHdBUS = ChiTietHdBUS.getInstance();
+        this.chiTietHdBUS = ChiTietHdBUS.getInstance();
         this.listHoaDon = this.hoaDonDAO.selectAll();
-        // this.nhanVienBUS = NhanVienBUS.getInstance();
-        // this.khachHangBUS = KhachHangBUS.getInstance();
-        // this.khuyenMaiBUS = KhuyenMaiBUS.getInstance();
-        // this.loHangBUS = LoHangBUS.getInstance();
+        this.nhanVienBUS = NhanVienBUS.getInstance();
+        this.khachHangBUS = KhachHangBUS.getInstance();
+        this.khuyenMaiBUS = KhuyenMaiBUS.getInstance();
+        this.loHangBUS = LoHangBUS.getInstance();
     }
 
     // singleton init
@@ -90,7 +90,7 @@ public class HoaDonBUS {
         ArrayList<ChiTietHdDTO> daThemChiTiet = new ArrayList<>();
         boolean hoaDonDaThem = false;
 
-        try {
+        // try {
             // thêm hóa đơn
             if (this.hoaDonDAO.insert(hoaDonDTO) <= 0) {
                 JOptionPane.showMessageDialog(null, "Không thể thêm hóa đơn vào CSDL", "Lỗi",
@@ -106,10 +106,10 @@ public class HoaDonBUS {
                 // giảm số lượng tồn kho trước khi add
                 this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), -ct.getSoLuong());
 
-                if (!this.chiTietHdBUS.addChiTietHd(ct)) {
-                    JOptionPane.showMessageDialog(null, "Không thể thêm chi tiết hoá đơn", "Lỗi",
+                if (this.chiTietHdBUS.addChiTietHd(ct)) {
+                    JOptionPane.showMessageDialog(null, "Thêm chi tiết hoá đơn thành công", "Lỗi",
                             JOptionPane.ERROR_MESSAGE);
-                    throw new Exception("Lỗi thêm chi tiết hóa đơn " + ct.getMaLh());
+                    // throw new Exception("Lỗi thêm chi tiết hóa đơn " + ct.getMaLh());
                 }
 
                 daThemChiTiet.add(ct);
@@ -120,43 +120,37 @@ public class HoaDonBUS {
             JOptionPane.showMessageDialog(null, "Thêm hoá đơn thành công!", "Thành công",
                     JOptionPane.INFORMATION_MESSAGE);
             return true;
-        }
+        // }
 
         // ======== 4. ROLLBACK KHI CÓ LỖI ========
-        catch (Exception e) {
-            System.err.println("Rollback vì lỗi: " + e.getMessage());
+        // catch (Exception e) {
+        //     System.err.println("Rollback vì lỗi: " + e.getMessage());
 
-            // phục hồi tồn kho
-            for (ChiTietHdDTO ct : daThemChiTiet) {
-                this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), ct.getSoLuong());
-                if (!this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(),
-                        ct.getMaThuoc())) {
-                    JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết hoá đơn", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            if (!daThemChiTiet.isEmpty()) {
-                for (ChiTietHdDTO ct : daThemChiTiet) {
-                    this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), ct.getSoLuong());
-                    this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(), ct.getMaThuoc());
-                    // if (!this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(),
-                    // ct.getMaThuoc())) {
-                    // JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết hoá đơn", "Lỗi",
-                    // JOptionPane.ERROR_MESSAGE);
-                    // return false;
-                    // }
-                }
-            }
+        //     // phục hồi tồn kho
+        //     for (ChiTietHdDTO ct : daThemChiTiet) {
+        //         this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), ct.getSoLuong());
+        //         if (!this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(),
+        //                 ct.getMaThuoc())) {
+        //             JOptionPane.showMessageDialog(null, "Không thể xoá chi tiết hoá đơn", "Lỗi",
+        //                     JOptionPane.ERROR_MESSAGE);
+        //         }
+        //     }
+        //     if (!daThemChiTiet.isEmpty()) {
+        //         for (ChiTietHdDTO ct : daThemChiTiet) {
+        //             this.loHangBUS.updateSlTonLoHang(ct.getMaLh(), ct.getSoLuong());
+        //             this.chiTietHdBUS.deleteChiTietHd(ct.getMaHd(), ct.getMaLh(), ct.getMaThuoc());
+        //         }
+        //     }
 
-            // xoá hóa đơn nếu đã thêm
-            if (hoaDonDaThem) {
-                this.hoaDonDAO.deleteById(String.valueOf(hoaDonDTO.getMaHd()));
-            }
+        //     // xoá hóa đơn nếu đã thêm
+        //     if (hoaDonDaThem) {
+        //         this.hoaDonDAO.deleteById(String.valueOf(hoaDonDTO.getMaHd()));
+        //     }
 
-            JOptionPane.showMessageDialog(null, "Thêm hoá đơn thất bại! Dữ liệu đã được phục hồi.", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+        //     JOptionPane.showMessageDialog(null, "Thêm hoá đơn thất bại! Dữ liệu đã được phục hồi.", "Lỗi",
+        //             JOptionPane.ERROR_MESSAGE);
+        //     return false;
+        // }
     }
 
     public boolean addHD(HoaDonDTO hoaDonDTO) {
