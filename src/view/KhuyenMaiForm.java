@@ -57,6 +57,13 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         // DEBUG ONLY !!!
         // BUSManager.initAllBUS();
         listKM = BUSManager.khuyenMaiBUS.getListKhuyenMai();
+        refreshLabel.addMouseListener(new MouseAdapter() {
+                
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    loadData();
+                }
+            });
         
         setIcons();
         setupListMaKM();
@@ -399,7 +406,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         actionPanel = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        // jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         magnifyingGlassLabel = new javax.swing.JLabel();
         tfTimKiemKM = new javax.swing.JTextField();
@@ -422,13 +429,13 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
         jLabel2.setText("THÔNG TIN MÃ KM");
         jLabel2.setOpaque(true);
 
-        jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "A - Z", "Z - A", "Giá tăng" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
+        // jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        // jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "A - Z", "Z - A", "Giá tăng" }));
+        // jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         jComboBox1ActionPerformed(evt);
+        //     }
+        // });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -532,8 +539,8 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(actionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                // .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                // .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(refreshLabel)
@@ -550,7 +557,8 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
                         .addComponent(refreshLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING)))
+                            // .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING)
+                            ))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -727,7 +735,7 @@ public class KhuyenMaiForm extends javax.swing.JFrame {
     private javax.swing.JButton editButton;
     private javax.swing.JButton exportButton;
     private javax.swing.JButton importButton;
-    private javax.swing.JComboBox<String> jComboBox1;
+    // private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
