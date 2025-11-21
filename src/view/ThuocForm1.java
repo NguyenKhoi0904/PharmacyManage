@@ -98,7 +98,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
         btnImport = new javax.swing.JButton();
         btnExport = new javax.swing.JButton();
         btnThuoctinh = new javax.swing.JButton();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        // jComboBox4 = new javax.swing.JComboBox<>();
         // btnTimkiem = new javax.swing.JButton();
         jTextField4 = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
@@ -262,9 +262,9 @@ public class ThuocForm1 extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 // .addComponent(btnThuoctinh)
                                 .addComponent(btnThuoctinh, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 100,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                // .addGap(18, 18, 18)
+                                // .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 100,
+                                //         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 // .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 // .addComponent(btnTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
                                 // javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,9 +326,10 @@ public class ThuocForm1 extends javax.swing.JFrame {
                                                         // javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         // .addGap(9, 9, 9)
                                                         )
-                                                        .addComponent(jComboBox4,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        // .addComponent(jComboBox4,
+                                                        //         javax.swing.GroupLayout.PREFERRED_SIZE, 58,
+                                                        //         javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            )))
                                 .addContainerGap(9, Short.MAX_VALUE)));
 
         jPanel5.setBackground(new java.awt.Color(153, 255, 255));
@@ -624,7 +625,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
     private javax.swing.JButton btnThuoctinh;
     // private javax.swing.JButton btnTimkiem;
     private javax.swing.JButton btnXoa;
-    private javax.swing.JComboBox<String> jComboBox4;
+    // private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
