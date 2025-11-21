@@ -502,7 +502,17 @@ sl_ton = (
     WHERE chitiet_pn.ma_lh = lohang.ma_lh
 )
 WHERE EXISTS (
-    SELECT 1    
+    SELECT 1
     FROM chitiet_pn
     WHERE chitiet_pn.ma_lh = lohang.ma_lh
 );
+
+-- Cập nhật lại tổng tiền hóa đơn
+UPDATE hoadon h
+JOIN (
+    SELECT ma_hd, SUM(don_gia * so_luong) AS tong_moi
+    FROM chitiet_hd
+    GROUP BY ma_hd
+) c ON h.ma_hd = c.ma_hd
+SET h.tong_tien = c.tong_moi
+WHERE h.ma_hd = c.ma_hd; -- KEY column
