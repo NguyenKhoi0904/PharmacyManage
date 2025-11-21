@@ -64,11 +64,13 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         initComponents();
         editButton.setVisible(false);
         // DEBUG ONLY !!!
-        // BUSManager.initAllBUS();
+         BUSManager.initAllBUS();
         listHD = HoaDonBUS.getInstance().getListHoaDon();
         
         setupListHoaDon();
         IconUtils.setIcon(magnifyingGlassLabel4, "magnifying-glass.png", true);
+        IconUtils.setIcon(refreshLabel, "refresh.png", true);
+
         
         addEventForSearching(tfTimKiemHoaDon, tblListHD, listHD);
     }
@@ -221,7 +223,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 hd.getTongTien() != null ? hd.getTongTien() : "",
                 ngayXuatFormatted,
                 hd.getPhuongThucTt(),
-                hd.getTrangThai()
+                hd.getTrangThai() == 1 ? "Hoàn tất" : "Đang xử lý"
             });
         }
     }
@@ -515,6 +517,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         magnifyingGlassLabel4 = new javax.swing.JLabel();
         tfTimKiemHoaDon = new javax.swing.JTextField();
+        refreshLabel = new javax.swing.JLabel();
         pnlListHD = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -622,6 +625,13 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        refreshLabel.setText("jLabel8");
+        refreshLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout actionPanelLayout = new javax.swing.GroupLayout(actionPanel);
         actionPanel.setLayout(actionPanelLayout);
         actionPanelLayout.setHorizontalGroup(
@@ -629,6 +639,8 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(refreshLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
@@ -639,8 +651,10 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
                 .addGap(0, 11, Short.MAX_VALUE)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(refreshLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -778,6 +792,13 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
         exportHoaDonToExcel(listHD, BUSManager.chiTietHdBUS.getListChiTietHd(), "HoaDon.xlsx");
     }//GEN-LAST:event_exportButtonActionPerformed
 
+    private void refreshLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshLabelMouseClicked
+        // TODO add your handling code here:
+        // Update UI
+        loadHoaDonData();
+        updateHoaDonTable(listHD, tblListHD);
+    }//GEN-LAST:event_refreshLabelMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -825,6 +846,7 @@ public class QuanLyHoaDonForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel magnifyingGlassLabel4;
     private javax.swing.JPanel pnlListHD;
+    private javax.swing.JLabel refreshLabel;
     private javax.swing.JTextField tfTimKiemHoaDon;
     // End of variables declaration//GEN-END:variables
 }

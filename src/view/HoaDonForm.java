@@ -532,7 +532,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 // Lấy tổng tiền hiện tại của giỏ hàng
                 BigDecimal tongTienHienTai = getCartSum();
                 BigDecimal tongTienMoi = tongTienHienTai;
-                BigDecimal phanTramGiam = BigDecimal.ZERO;
+                BigDecimal giaTriKM = BigDecimal.ZERO;
                 try {
 
                         // Ma KM trong UI la so thi parse
@@ -542,14 +542,18 @@ public class HoaDonForm extends javax.swing.JFrame {
                         KhuyenMaiDTO km = (KhuyenMaiDTO) cbMaKM.getSelectedItem();
 
                         if (km != null & BUSManager.khuyenMaiBUS.isKMValid(km)) {
+//                            if (km.getELoaiKM() == KhuyenMaiDTO.LOAI_KM.PHAN_TRAM)
+                            {
                                 // Lấy mã KM và tính giảm giá nếu có
-                                phanTramGiam = km.getGiaTriKm();
+                                giaTriKM = km.getGiaTriKm();
                                 // tongTienMoi =
                                 // tongTienHienTai.subtract(tongTienHienTai.multiply(phanTramGiam));
                                 // Đảm bảo chia an toàn bằng cách sử dụng RoundingMode
                                 tongTienMoi = tongTienHienTai.subtract(
-                                                tongTienHienTai.multiply(phanTramGiam).divide(new BigDecimal("100"), 2,
+                                                tongTienHienTai.multiply(giaTriKM).divide(new BigDecimal("100"), 2,
                                                                 RoundingMode.HALF_UP));
+                            }
+                                
                         }
                         // }
 
