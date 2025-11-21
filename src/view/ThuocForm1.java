@@ -94,7 +94,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
-        btnInfo = new javax.swing.JButton();
+        // btnInfo = new javax.swing.JButton();
         btnImport = new javax.swing.JButton();
         btnExport = new javax.swing.JButton();
         btnThuoctinh = new javax.swing.JButton();
@@ -174,18 +174,19 @@ public class ThuocForm1 extends javax.swing.JFrame {
             }
         });
 
-        btnInfo.setBackground(new java.awt.Color(80, 80, 80));
-        btnInfo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnInfo.setForeground(new java.awt.Color(255, 255, 255));
-        btnInfo.setText("Info");
+        // btnInfo.setBackground(new java.awt.Color(80, 80, 80));
+        // btnInfo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        // btnInfo.setForeground(new java.awt.Color(255, 255, 255));
+        // btnInfo.setText("Info");
 
         btnImport.setBackground(new java.awt.Color(80, 80, 80));
         btnImport.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnImport.setForeground(new java.awt.Color(255, 255, 255));
-        btnImport.setText("Import");
+        btnImport.setText("Xem ảnh");
         btnImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportActionPerformed(evt);
+                // btnImportActionPerformed(evt);
+                btnXemAnhActionPerformed(evt);
             }
         });
 
@@ -210,10 +211,10 @@ public class ThuocForm1 extends javax.swing.JFrame {
             }
         });
 
-        btnThuoctinh.setBackground(new java.awt.Color(80, 80, 80));
+        btnThuoctinh.setBackground(Color.BLACK);
         btnThuoctinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThuoctinh.setForeground(new java.awt.Color(255, 255, 255));
-        btnThuoctinh.setText("Thuộc tính");
+        btnThuoctinh.setText("Làm mới");
         btnThuoctinh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThuoctinhActionPerformed(evt);
@@ -250,16 +251,17 @@ public class ThuocForm1 extends javax.swing.JFrame {
                                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 109,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 85,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 85,
+                                // .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 85,
+                                //         javax.swing.GroupLayout.PREFERRED_SIZE)
+                                // .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 120,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43)
                                 .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 102,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnThuoctinh)
+                                // .addComponent(btnThuoctinh)
+                                .addComponent(btnThuoctinh, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 100,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -291,9 +293,9 @@ public class ThuocForm1 extends javax.swing.JFrame {
                                                                 .addComponent(btnXoa,
                                                                         javax.swing.GroupLayout.PREFERRED_SIZE, 84,
                                                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(btnInfo,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 84,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                // .addComponent(btnInfo,
+                                                                //         javax.swing.GroupLayout.PREFERRED_SIZE, 84,
+                                                                //         javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addComponent(btnImport,
                                                                         javax.swing.GroupLayout.PREFERRED_SIZE, 84,
                                                                         javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -416,10 +418,11 @@ public class ThuocForm1 extends javax.swing.JFrame {
 
     private void btnThuoctinhActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnThuoctinhActionPerformed
         // TODO add your handling code here:
+        loadData();
     }// GEN-LAST:event_btnThuoctinhActionPerformed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnImportActionPerformed
-        // TODO add your handling code here:
+        
     }// GEN-LAST:event_btnImportActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnExportActionPerformed
@@ -615,7 +618,7 @@ public class ThuocForm1 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExport;
     private javax.swing.JButton btnImport;
-    private javax.swing.JButton btnInfo;
+    // private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnThuoctinh;
@@ -629,6 +632,4 @@ public class ThuocForm1 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTable tblThuoc;
     // End of variables declaration//GEN-END:variables
-
-    private javax.swing.JButton btnXemAnh;
 }
