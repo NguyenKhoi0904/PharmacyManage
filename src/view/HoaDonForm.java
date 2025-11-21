@@ -540,18 +540,25 @@ public class HoaDonForm extends javax.swing.JFrame {
                         // int maKM = Integer.parseInt(tfMaKM.getText());
                         // KhuyenMaiDTO km = BUSManager.khuyenMaiBUS.getKhuyenMaiByMaKm(maKM);
                         KhuyenMaiDTO km = (KhuyenMaiDTO) cbMaKM.getSelectedItem();
+                        km.setELoaiKM(km.getLoaiKm());
 
                         if (km != null & BUSManager.khuyenMaiBUS.isKMValid(km)) {
-//                            if (km.getELoaiKM() == KhuyenMaiDTO.LOAI_KM.PHAN_TRAM)
+                            // Lấy mã KM và tính giảm giá
+                            giaTriKM = km.getGiaTriKm();
+                            
+                            if (km.getELoaiKM() == KhuyenMaiDTO.LOAI_KM.PHAN_TRAM)
                             {
-                                // Lấy mã KM và tính giảm giá nếu có
-                                giaTriKM = km.getGiaTriKm();
+                                
                                 // tongTienMoi =
                                 // tongTienHienTai.subtract(tongTienHienTai.multiply(phanTramGiam));
                                 // Đảm bảo chia an toàn bằng cách sử dụng RoundingMode
                                 tongTienMoi = tongTienHienTai.subtract(
                                                 tongTienHienTai.multiply(giaTriKM).divide(new BigDecimal("100"), 2,
                                                                 RoundingMode.HALF_UP));
+                            }
+                            else {
+                                // GIA TRI
+                                tongTienMoi = tongTienHienTai.subtract(giaTriKM);
                             }
                                 
                         }

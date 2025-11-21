@@ -6,7 +6,7 @@ import java.sql.Date;
 public class KhuyenMaiDTO {
     public enum LOAI_KM {
         PHAN_TRAM,
-        SAN_PHAM
+        GIA_TRI
     }
 
     public enum DIEU_KIEN_KM {
@@ -147,11 +147,16 @@ public class KhuyenMaiDTO {
     }
 
     public void setELoaiKM(String loaiKM) {
-        switch (loaiKM.trim()) {
-            case "Phần trăm":
-                this.eLoaiKM = LOAI_KM.PHAN_TRAM;
-            default:
-                this.eLoaiKM = LOAI_KM.SAN_PHAM;
+        if (loaiKM.trim().equals("Phần trăm"))
+        {
+            this.eLoaiKM = LOAI_KM.PHAN_TRAM;
+            return;
+        }
+
+        if (loaiKM.trim().equals("Giá trị"))
+        {
+            this.eLoaiKM = LOAI_KM.GIA_TRI;
+            return;
         }
     }
 
